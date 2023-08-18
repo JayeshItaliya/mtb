@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mtb/screens/profileFlow/editProfileScreen.dart';
+import 'package:mtb/screens/profileFlow/profileScreen.dart';
+
+import 'carouselSlider.dart';
+import 'mainPage.dart';
 import 'package:mtb/screens/authFlow/splashScreen.dart';
 import 'package:mtb/screens/following/filterBillsScreen.dart';
 
