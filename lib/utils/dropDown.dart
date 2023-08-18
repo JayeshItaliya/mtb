@@ -49,21 +49,13 @@ Widget CommonDropDown(
             value: item,
             child: Padding(
               padding: EdgeInsets.only(left: Resp.size(20),),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item,
-                    style: TextStyle(
-                      fontSize: Resp.size(14),
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                  ),
-                  // HeightBox(Resp.size(10)),
-                  // CustomDivider(width: Resp.size(double.infinity),start: 0.00),
-                ],
+              child: Text(
+                item,
+                style: TextStyle(
+                  fontSize: Resp.size(14),
+                  fontWeight: FontWeight.w400,
+                  color: Colors.white,
+                ),
               ),
             ),
           )).toList(),

@@ -157,6 +157,7 @@ Widget customAppBar({
   double? prefixImageHeight,
   double? prefixImageWidth,
   Color? fontColor,
+  bool showCrossBackButton=false,
   required String? title,
   required BuildContext context,
 }) {
@@ -168,7 +169,7 @@ Widget customAppBar({
                 onBack(context);
               },
               child: Image.asset(
-                'assets/common/back.png',
+                'assets/common/${!showCrossBackButton?'back':'cross_back'}.png',
                 fit: BoxFit.cover,
                 alignment: Alignment.center,
                 scale: 3,

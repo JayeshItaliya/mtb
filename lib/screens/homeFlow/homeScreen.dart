@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mtb/utils/appColors.dart';
 import 'package:mtb/utils/interText.dart';
+import '../../utils/commonWidgets.dart';
 import '../../utils/pageNavgation.dart';
 import '../../utils/responsiveUi.dart';
 import '../../utils/utils.dart';
@@ -182,33 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget StatusCard(String text, {bool isActive = false}) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: !isActive && text == 'Introduced' ? Resp.size(11) : 0,
-        right: !isActive && text == 'In Effect' ? Resp.size(11) : 0,
-      ),
-      child: Container(
-        decoration: ShapeDecoration(
-          color:
-              isActive ? AppColors.grey.withOpacity(0.25) : Colors.transparent,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(Resp.size(5))),
-        ),
-        padding: isActive
-            ? EdgeInsets.symmetric(
-                vertical: Resp.size(10), horizontal: Resp.size(8))
-            : EdgeInsets.symmetric(vertical: Resp.size(13)),
-        margin: EdgeInsets.all(Resp.size(3)),
-        child: InterText(
-          text: text,
-          textAlign: TextAlign.center,
-          fontWeight: FontWeight.w400,
-          fontSize: 10,
-        ),
-      ),
-    );
-  }
+
   Widget commonContainer(String text, {bool isTag=true}){
     return Container(
       decoration: ShapeDecoration(

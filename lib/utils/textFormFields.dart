@@ -54,7 +54,7 @@ class AppWidget {
     TextAlign? labelTextAlign,
     FontWeight? hintFontWeight,
     double? hintFontSize,
-    Color? hintTextColor,
+    Color hintTextColor=Colors.white,
     TextAlign? hintTextAlign,
     double? fontSize,
     FontWeight? inputFontWeight,
@@ -85,10 +85,12 @@ class AppWidget {
             fontSize: Resp.size(fontSize ?? 16)),
         decoration: InputDecoration(
           hintText: hintText,
+          counterText: '',
+          prefixIcon: preFixIcon,
           hintStyle: GoogleFonts.inter(
             fontSize: Resp.size(hintFontSize ?? 14),
             fontWeight: FontWeight.w400,
-            color: Colors.white,
+            color: hintTextColor,
           ),
           contentPadding: EdgeInsets.only(
               right: Resp.size(20),
