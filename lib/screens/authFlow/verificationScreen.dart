@@ -54,7 +54,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
             fontSize: 16,
             textAlign: TextAlign.center,
           ),
-          HeightBox(Resp.size(25)),
+          HeightBox(25),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: Resp.size(39)),
             child: SizedBox(
@@ -96,7 +96,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
               ),
             ),
           ),
-          HeightBox(Resp.size(25)),
+          HeightBox(25),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,

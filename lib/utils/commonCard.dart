@@ -6,7 +6,8 @@ class CommonCard extends StatelessWidget {
   double? height;
   double? width;
   Widget? cardChild;
-  CommonCard({super.key, this.height, this.width, this.cardChild});
+  Color? color;
+  CommonCard({super.key, this.height, this.width, this.cardChild,this.color=AppColors.white});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class CommonCard extends StatelessWidget {
       height: height,
       width: width,
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: color,
         borderRadius: BorderRadius.circular(Resp.crosslength*0.01),
         boxShadow: [
           BoxShadow(

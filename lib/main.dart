@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mtb/screens/profileFlow/editProfileScreen.dart';
+import 'package:mtb/screens/profileFlow/profileScreen.dart';
 
+import 'carouselSlider.dart';
 import 'mainPage.dart';
 
 void main() {
@@ -14,7 +17,7 @@ class MyApp extends StatelessWidget {
     return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Mind The Bill',
-      home: MainPageScreen(),
+      home: ProfileScreen(),
     );
   }
 }

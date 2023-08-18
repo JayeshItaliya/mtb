@@ -13,6 +13,7 @@ CommonController cx = Get.put(CommonController());
 String location = '';
 String address = '';
 String bookingId = '';
+String demoText = 'Lorem It is a long established fact that a reader will betai by the readable content of a page when looking at its is layout. The point of using Lorem Ipsum is that it has and more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English. Many desktop publishing packagesdf and web page editors now use Lorem Ipsum as their dei ult model text, and a search for lorem ipsum will uncov er many web sites still in their infancy. Various versions have evolved over the years, sometimes by accidentsc sometimes on \n\nLorem It is a long established fact that a reader will betai by the readable content of a page when looking at its is layout. The point of using Lorem Ipsum is that it has and more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English. Many desktop publishing packagesdf and web page editors now use Lorem Ipsum as their dei ult model text, and a search for lorem ipsum will uncov er many web sites still in their infancy. Various versions have evolved over the years, sometimes by accidentsc sometimes on ';
 
 showLongToast(String s) {
   Fluttertoast.showToast(
@@ -59,26 +60,26 @@ Widget noInternetLottie({bool? backbutton}) {
     children: [
       backbutton ?? false
           ? Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: cx.responsive(20, 15, 12),
-                      top: cx.responsive(43, 35, 30)),
-                  child: Container(
-                      alignment: Alignment.centerLeft,
-                      child: InkWell(
-                        onTap: () => Get.back(),
-                        child: const Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          size: 27,
-                          color: Colors.black,
-                        ),
-                      )),
-                ),
-              ],
-            )
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(
+                left: cx.responsive(20, 15, 12),
+                top: cx.responsive(43, 35, 30)),
+            child: Container(
+                alignment: Alignment.centerLeft,
+                child: InkWell(
+                  onTap: () => Get.back(),
+                  child: const Icon(
+                    Icons.arrow_back_ios_new_rounded,
+                    size: 27,
+                    color: Colors.black,
+                  ),
+                )),
+          ),
+        ],
+      )
           : Container(),
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -164,16 +165,16 @@ Widget customAppBar({
     children: [
       isPrefix
           ? InkWell(
-              onTap: () {
-                onBack(context);
-              },
-              child: Image.asset(
-                'assets/common/back.png',
-                fit: BoxFit.cover,
-                alignment: Alignment.center,
-                scale: 3,
-              ),
-            )
+        onTap: () {
+          onBack(context);
+        },
+        child: Image.asset(
+          'assets/common/back.png',
+          fit: BoxFit.cover,
+          alignment: Alignment.center,
+          scale: 3,
+        ),
+      )
           : Container(),
       if (!isPrefix && isSuffix) ...{Container(width: Resp.size(30))},
       Expanded(
@@ -189,11 +190,11 @@ Widget customAppBar({
       if (isPrefix && !isSuffix) ...{Container(width: Resp.size(30))},
       isSuffix
           ? Image.asset(
-              'assets/common/filter.png',
-              fit: BoxFit.cover,
-              alignment: Alignment.center,
-              scale: 3,
-            )
+        'assets/common/filter.png',
+        fit: BoxFit.cover,
+        alignment: Alignment.center,
+        scale: 3,
+      )
           : Container(),
     ],
   );
