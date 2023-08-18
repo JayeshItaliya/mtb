@@ -379,81 +379,111 @@ class _BillDetailsScreenState extends State<BillDetailsScreen> {
           ),
         ],
       ),
-      bottomSheet: BottomSheet(
-
-        onClosing: () {  },
-        builder: (BuildContext context) {
-          return Container(
-            color: AppColors.lightBlack,
-            height: Resp.size(76),
-            /*decoration: ShapeDecoration(
-            color: AppColors.lightBlack,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(
+      extendBody: true,
+      bottomSheet: Container(
+        child: BottomSheet(
+          backgroundColor: AppColors.lightBlack,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
               topLeft: Radius.circular(Resp.size(15)),
               topRight: Radius.circular(Resp.size(15)),
               bottomRight: Radius.circular(Resp.size(0)),
               bottomLeft: Radius.circular(Resp.size(0)),
-            )),
-          ),*/
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/homeFlow/news.svg',
-                      width: Resp.size(26),
-                      height: Resp.size(26),
-                    ),
-                    const HeightBox(10),
-                    InterText(
-                      text: 'News',
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                    )
-                  ],
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/homeFlow/add.svg',
-                      width: Resp.size(26),
-                      height: Resp.size(26),
-                    ),
-                    const HeightBox(10),
-                    InterText(
-                      text: 'Follow',
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                    )
-                  ],
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/homeFlow/share.svg',
-                      width: Resp.size(26),
-                      height: Resp.size(26),
-                    ),
-                    const HeightBox(10),
-                    InterText(
-                      text: 'Share',
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                    )
-                  ],
-                ),
-              ],
             ),
-          );
-        },
+          ),
+          onClosing: () {},
+          builder: (BuildContext context) {
+            return Container(
+              height: Resp.size(76),
+              // color: AppColors.lightBlack,
+
+              decoration: ShapeDecoration(
+                color: AppColors.lightBlack,
+                shadows: const [
+                  BoxShadow(
+                      color: AppColors.lightBlack,
+                      spreadRadius: 0,
+                      blurRadius: 10),
+                ],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(Resp.size(15)),
+                    topRight: Radius.circular(Resp.size(15)),
+                    bottomRight: Radius.circular(Resp.size(0)),
+                    bottomLeft: Radius.circular(Resp.size(0)),
+                  ),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/homeFlow/news.svg',
+                        width: Resp.size(26),
+                        height: Resp.size(26),
+                      ),
+                      const HeightBox(10),
+                      InterText(
+                        text: 'News',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                      )
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/homeFlow/add.svg',
+                        width: Resp.size(26),
+                        height: Resp.size(26),
+                      ),
+                      const HeightBox(10),
+                      InterText(
+                        text: 'Follow',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                      )
+                    ],
+                  ),
+                  InkWell(
+                    onTap: (){
+                      onShareData(
+                          text: "\*Download Mind The Bill Now😍"
+                              "\*\n\nLink For iOS:\nhttps://apps.apple.com/us/app/domez/id6444339880"
+                              "\n\nLink For Android:"
+                              "\nhttps://play.google.com/store/apps/details?id=domez.io\n"
+                      );
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          'assets/homeFlow/share.svg',
+                          width: Resp.size(26),
+                          height: Resp.size(26),
+                        ),
+                        const HeightBox(10),
+                        InterText(
+                          text: 'Share',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
