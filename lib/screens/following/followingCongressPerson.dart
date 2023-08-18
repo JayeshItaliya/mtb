@@ -112,7 +112,7 @@ class _FollowingCongressPersonState extends State<FollowingCongressPerson> {
               ),
             ),
           ),
-          // WidthBox(Resp.size(12)),
+          // WidthBox(12),
         ],
       ),
     );

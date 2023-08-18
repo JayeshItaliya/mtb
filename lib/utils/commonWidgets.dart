@@ -27,7 +27,6 @@ Widget StatusCard(String text, {bool isActive = false}) {
         text: text,
         textAlign: TextAlign.center,
         fontWeight: FontWeight.w400,
-        fontSize: 10,
       ),
     ),
   );

@@ -109,7 +109,7 @@ class _TopicsForYouState extends State<TopicsForYou> {
               ),
             ),
           ),
-          // WidthBox(Resp.size(12)),
+          // WidthBox(12),
         ],
       ),
     );

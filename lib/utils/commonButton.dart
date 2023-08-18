@@ -33,9 +33,7 @@ class _CommonButtonState extends State<CommonButton> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        HeightBox(
-          Resp.size(40),
-        ),
+        HeightBox(40),
         GestureDetector(
           onTap: () {
             widget.onTap();

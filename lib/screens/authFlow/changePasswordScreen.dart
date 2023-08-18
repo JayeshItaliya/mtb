@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mtb/controller/authFlowController/changePasswordController.dart';
+import 'package:mtb/screens/authFlow/signInScreen.dart';
 import 'package:mtb/screens/authFlow/verificationScreen.dart';
 import 'package:mtb/utils/textFormFields.dart';
 import '../../utils/appColors.dart';
@@ -25,7 +26,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       backgroundColor: Colors.black,
       body: ListView(
         shrinkWrap: true,
-        padding: EdgeInsets.symmetric(horizontal: Resp.size(4)),
+        padding: EdgeInsets.symmetric(horizontal: Resp.size(12)),
         children: [
           customAppBar(title: 'Change Password',isSuffix: false,context: context),
           Image.asset(
@@ -54,6 +55,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               textEditingController: changeController.newPasswordController.value,
               isPassword: true
           ),
+          const HeightBox(20),
           AppWidget.getTextField(
               hintText: "Confirm Password",
               inputAction: TextInputAction.done,
@@ -64,7 +66,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             text: "Submit",
             onTap: () {
               toPushNavigator(
-                  context: context, PageName: const VerificationScreen());
+                  context: context, PageName: const SignInScreen());
             },
           ),
         ],

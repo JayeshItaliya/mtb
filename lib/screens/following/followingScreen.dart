@@ -8,7 +8,8 @@ import 'package:mtb/utils/interText.dart';
 import '../../utils/pageNavgation.dart';
 import '../../utils/responsiveUi.dart';
 import '../../utils/utils.dart';
-import '../homeFlow/forScreen.dart';
+import 'filterBillsScreen.dart';
+import 'filterTopicScreen.dart';
 import 'followingBill.dart';
 import 'followingCongressPerson.dart';
 import 'followingTopicScreen.dart';
@@ -32,7 +33,8 @@ class _FollowingScreenState extends State<FollowingScreen> {
           customAppBar(
               title: 'Following',
               isSuffix: false,
-              context: context
+              context: context,
+            isPrefix: false
           ),
           const HeightBox(20),
           Expanded(
@@ -76,7 +78,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
                               onTap: () {
                                 toPushNavigator(
                                     context: context,
-                                    PageName: const ForScreen());
+                                    PageName: const FilterBillsScreen());
                               },
                               child: SvgPicture.asset(
                                   'assets/following/filter.svg',
@@ -198,9 +200,9 @@ class _FollowingScreenState extends State<FollowingScreen> {
                             ),
                             InkWell(
                               onTap: () {
-                                toPushNavigator(
-                                    context: context,
-                                    PageName: const ForScreen());
+                                // toPushNavigator(
+                                //     context: context,
+                                //     PageName: const ForScreen());
                               },
                               child: SvgPicture.asset(
                                 'assets/following/filter.svg',
@@ -227,7 +229,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
                         },
                         child: Padding(
                           padding: EdgeInsets.fromLTRB(
-                            Resp.size(12),
+                            Resp.size(0),
                             Resp.size(12),
                             Resp.size(12),
                             Resp.size(0),
@@ -283,7 +285,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
                               onTap: () {
                                 toPushNavigator(
                                     context: context,
-                                    PageName: const ForScreen());
+                                    PageName: const FilterTopicScreen());
                               },
                               child: SvgPicture.asset(
                                 'assets/following/filter.svg',
@@ -499,7 +501,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
                     textAlign: TextAlign.center,
                     textOverflow: TextOverflow.ellipsis,
                     color: Colors.black),
-                HeightBox(20),
+                const HeightBox(20),
                 Expanded(
                   child: ListView(
                     shrinkWrap: true,
@@ -567,7 +569,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
               ),
             ),
           ),
-          WidthBox(Resp.size(12)),
+          WidthBox(12),
         ],
       ),
     );
@@ -605,7 +607,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
               ),
             ),
           ),
-          WidthBox(Resp.size(12)),
+          WidthBox(12),
         ],
       ),
     );

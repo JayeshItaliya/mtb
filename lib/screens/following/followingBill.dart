@@ -116,7 +116,7 @@ class _FollowingBillState extends State<FollowingBill> {
               ),
             ),
           ),
-          // WidthBox(Resp.size(12)),
+          // WidthBox(12),
         ],
       ),
     );

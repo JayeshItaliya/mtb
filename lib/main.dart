@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mtb/screens/searchFilter/filterScreen.dart';
-import 'package:mtb/screens/searchFilter/searchScreen.dart';
-
-import 'mainPage.dart';
+import 'package:mtb/screens/authFlow/splashScreen.dart';
+import 'package:mtb/screens/following/filterBillsScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +14,7 @@ class MyApp extends StatelessWidget {
     return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Mind The Bill',
-      home: FilterScreen(),
+      home: SplashScreen(),
     );
   }
 }

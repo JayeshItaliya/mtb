@@ -1,12 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mtb/screens/homeFlow/againstScreen.dart';
 import 'package:mtb/screens/homeFlow/forScreen.dart';
 import 'package:mtb/screens/homeFlow/relatedToScreen.dart';
 import 'package:mtb/utils/appColors.dart';
 import 'package:mtb/utils/interText.dart';
+import '../../controller/homeController/billDetailsController.dart';
 import '../../utils/pageNavgation.dart';
 import '../../utils/responsiveUi.dart';
 import '../../utils/utils.dart';
@@ -19,6 +21,8 @@ class BillDetailsScreen extends StatefulWidget {
 }
 
 class _BillDetailsScreenState extends State<BillDetailsScreen> {
+  final billDetailsController = Get.put(BillDetailsController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,12 +66,10 @@ class _BillDetailsScreenState extends State<BillDetailsScreen> {
                           fontSize: 12,
                           color: Colors.white.withOpacity(0.5),
                         ),
-                        trailing: Container(
-                          child: SvgPicture.asset(
-                            'assets/homeFlow/followBill.svg',
-                            width: Resp.size(69),
-                            height: Resp.size(31),
-                          ),
+                        trailing: SvgPicture.asset(
+                          'assets/homeFlow/followBill.svg',
+                          width: Resp.size(69),
+                          height: Resp.size(31),
                         ),
                         dense: true,
                         contentPadding: EdgeInsets.zero,
@@ -87,7 +89,6 @@ class _BillDetailsScreenState extends State<BillDetailsScreen> {
                           children: [
                             InterText(
                               text: 'Status in Congress',
-                              fontSize: 10,
                               fontWeight: FontWeight.w400,
                             ),
                             const HeightBox(10),
@@ -307,16 +308,30 @@ class _BillDetailsScreenState extends State<BillDetailsScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    SvgPicture.asset(
-                      'assets/homeFlow/up.svg',
-                      width: Resp.size(55),
-                      height: Resp.size(55),
-                    ),
-                    SvgPicture.asset(
-                      'assets/homeFlow/down.svg',
-                      width: Resp.size(55),
-                      height: Resp.size(55),
-                    ),
+                    InkWell(
+                        onTap: () {
+                          billDetailsController.upValue.value =
+                              !billDetailsController.upValue.value;
+                        },
+                        child: SvgPicture.asset(
+                          billDetailsController.upValue.value
+                              ? 'assets/homeFlow/up.svg'
+                              : 'assets/homeFlow/noneUp.svg',
+                          width: Resp.size(55),
+                          height: Resp.size(55),
+                        )),
+                    InkWell(
+                        onTap: () {
+                          billDetailsController.downValue.value =
+                              !billDetailsController.downValue.value;
+                        },
+                        child: SvgPicture.asset(
+                          billDetailsController.downValue.value
+                              ? 'assets/homeFlow/down.svg'
+                              : 'assets/homeFlow/noneDown.svg',
+                          width: Resp.size(55),
+                          height: Resp.size(55),
+                        )),
                   ],
                 ),
                 const HeightBox(30),
@@ -380,110 +395,107 @@ class _BillDetailsScreenState extends State<BillDetailsScreen> {
         ],
       ),
       extendBody: true,
-      bottomSheet: Container(
-        child: BottomSheet(
-          backgroundColor: AppColors.lightBlack,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(Resp.size(15)),
-              topRight: Radius.circular(Resp.size(15)),
-              bottomRight: Radius.circular(Resp.size(0)),
-              bottomLeft: Radius.circular(Resp.size(0)),
-            ),
+      bottomSheet: BottomSheet(
+        backgroundColor: AppColors.lightBlack,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(Resp.size(15)),
+            topRight: Radius.circular(Resp.size(15)),
+            bottomRight: Radius.circular(Resp.size(0)),
+            bottomLeft: Radius.circular(Resp.size(0)),
           ),
-          onClosing: () {},
-          builder: (BuildContext context) {
-            return Container(
-              height: Resp.size(76),
-              // color: AppColors.lightBlack,
+        ),
+        onClosing: () {},
+        builder: (BuildContext context) {
+          return Container(
+            height: Resp.size(76),
+            // color: AppColors.lightBlack,
 
-              decoration: ShapeDecoration(
-                color: AppColors.lightBlack,
-                shadows: const [
-                  BoxShadow(
-                      color: AppColors.lightBlack,
-                      spreadRadius: 0,
-                      blurRadius: 10),
-                ],
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(Resp.size(15)),
-                    topRight: Radius.circular(Resp.size(15)),
-                    bottomRight: Radius.circular(Resp.size(0)),
-                    bottomLeft: Radius.circular(Resp.size(0)),
-                  ),
+            decoration: ShapeDecoration(
+              color: AppColors.lightBlack,
+              shadows: const [
+                BoxShadow(
+                    color: AppColors.lightBlack,
+                    spreadRadius: 0,
+                    blurRadius: 10),
+              ],
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(Resp.size(15)),
+                  topRight: Radius.circular(Resp.size(15)),
+                  bottomRight: Radius.circular(Resp.size(0)),
+                  bottomLeft: Radius.circular(Resp.size(0)),
                 ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/homeFlow/news.svg',
-                        width: Resp.size(26),
-                        height: Resp.size(26),
-                      ),
-                      const HeightBox(10),
-                      InterText(
-                        text: 'News',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                      )
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/homeFlow/add.svg',
-                        width: Resp.size(26),
-                        height: Resp.size(26),
-                      ),
-                      const HeightBox(10),
-                      InterText(
-                        text: 'Follow',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                      )
-                    ],
-                  ),
-                  InkWell(
-                    onTap: (){
-                      onShareData(
-                          text: "\*Download Mind The Bill Now😍"
-                              "\*\n\nLink For iOS:\nhttps://apps.apple.com/us/app/domez/id6444339880"
-                              "\n\nLink For Android:"
-                              "\nhttps://play.google.com/store/apps/details?id=domez.io\n"
-                      );
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          'assets/homeFlow/share.svg',
-                          width: Resp.size(26),
-                          height: Resp.size(26),
-                        ),
-                        const HeightBox(10),
-                        InterText(
-                          text: 'Share',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14,
-                        )
-                      ],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/homeFlow/news.svg',
+                      width: Resp.size(26),
+                      height: Resp.size(26),
                     ),
+                    const HeightBox(10),
+                    InterText(
+                      text: 'News',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    )
+                  ],
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/homeFlow/add.svg',
+                      width: Resp.size(26),
+                      height: Resp.size(26),
+                    ),
+                    const HeightBox(10),
+                    InterText(
+                      text: 'Follow',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    )
+                  ],
+                ),
+                InkWell(
+                  onTap: () {
+                    onShareData(
+                        text: "\*Download Mind The Bill Now😍"
+                            "\*\n\nLink For iOS:\nhttps://apps.apple.com/us/app/domez/id6444339880"
+                            "\n\nLink For Android:"
+                            "\nhttps://play.google.com/store/apps/details?id=domez.io\n");
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/homeFlow/share.svg',
+                        width: Resp.size(26),
+                        height: Resp.size(26),
+                      ),
+                      const HeightBox(10),
+                      InterText(
+                        text: 'Share',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                      )
+                    ],
                   ),
-                ],
-              ),
-            );
-          },
-        ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -573,14 +585,14 @@ class _BillDetailsScreenState extends State<BillDetailsScreen> {
           fontSize: Resp.size(12),
         ),
         children: <TextSpan>[
-          desc.length > 150
+          desc.length > 120
               ? TextSpan(
-                  text: desc.substring(0, 150),
+                  text: desc.substring(0, 120),
                 )
               : TextSpan(
                   text: desc.toString(),
                 ),
-          desc.length > 150
+          desc.length > 120
               ? TextSpan(
                   text: '...See More',
                   style: GoogleFonts.inter(
@@ -591,12 +603,12 @@ class _BillDetailsScreenState extends State<BillDetailsScreen> {
                   ),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
-                      showDialog(
-                          barrierDismissible: false,
-                          context: context,
-                          builder: (BuildContext context) {
-                            return moreDialog(title, desc);
-                          });
+                      // showDialog(
+                      //     barrierDismissible: false,
+                      //     context: context,
+                      //     builder: (BuildContext context) {
+                      //       return moreDialog(title, desc);
+                      //     });
                     },
                 )
               : TextSpan(text: ''),
@@ -604,68 +616,6 @@ class _BillDetailsScreenState extends State<BillDetailsScreen> {
       ),
     );
   }
-
-  Widget moreDialog(String title, String desc) =>
-      StatefulBuilder(builder: (BuildContext context,
-          StateSetter setState /*You can rename this!*/) {
-        return Dialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-          insetPadding: EdgeInsets.zero,
-          child: Container(
-            width: cx.width / 1.15,
-            height: cx.height / 1.1,
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      icon: const Icon(
-                        Icons.cancel,
-                        color: Colors.red,
-                        size: 30,
-                      ),
-                    ),
-                  ],
-                ),
-                InterText(
-                    height: 1.2,
-                    text: title,
-                    fontSize: cx.height > 800 ? 23 : 20,
-                    fontWeight: FontWeight.w600,
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                    textOverflow: TextOverflow.ellipsis,
-                    color: Colors.black),
-                HeightBox(20),
-                Expanded(
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(12.0, 8, 10, 8),
-                        child: InterText(
-                          color: Color(0xFF444444),
-                          fontWeight: FontWeight.w500,
-                          fontSize: cx.height > 800 ? 18 : 16,
-                          textAlign: TextAlign.start,
-                          text: desc,
-                          maxLines: 100000,
-                        ),
-                      ),
-                      HeightBox(20),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      });
 
   Widget PersonCard() {
     return Expanded(
@@ -709,7 +659,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen> {
               ),
             ),
           ),
-          WidthBox(Resp.size(12)),
+          WidthBox(12),
         ],
       ),
     );
@@ -748,7 +698,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen> {
               ),
             ),
           ),
-          WidthBox(Resp.size(12)),
+          WidthBox(12),
         ],
       ),
     );

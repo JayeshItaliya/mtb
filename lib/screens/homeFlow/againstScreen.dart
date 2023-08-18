@@ -113,7 +113,7 @@ class _AgainstScreenState extends State<AgainstScreen> {
               ),
             ),
           ),
-          // WidthBox(Resp.size(12)),
+          // WidthBox(12),
         ],
       ),
     );

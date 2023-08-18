@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../utils/appColors.dart';
-import '../../utils/interText.dart';
 import '../../utils/responsiveUi.dart';
 import '../../utils/utils.dart';
 
@@ -110,7 +109,7 @@ class _FollowingTopicState extends State<FollowingTopic> {
               ),
             ),
           ),
-          // WidthBox(Resp.size(12)),
+          // WidthBox(12),
         ],
       ),
     );

@@ -7,7 +7,6 @@ import '../../utils/pageNavgation.dart';
 import '../../utils/responsiveUi.dart';
 import '../../utils/utils.dart';
 import '../homeFlow/billDetailsScreen.dart';
-import '../homeFlow/forScreen.dart';
 
 class TrendingScreen extends StatefulWidget {
   const TrendingScreen({super.key});
@@ -466,7 +465,6 @@ class _TrendingScreenState extends State<TrendingScreen> {
           text: text,
           textAlign: TextAlign.center,
           fontWeight: FontWeight.w400,
-          fontSize: 10,
         ),
       ),
     );
@@ -514,7 +512,7 @@ class _TrendingScreenState extends State<TrendingScreen> {
               ),
             ),
           ),
-          WidthBox(Resp.size(12)),
+          WidthBox(12),
         ],
       ),
     );
@@ -533,7 +531,6 @@ class _TrendingScreenState extends State<TrendingScreen> {
         text: text,
         textAlign: TextAlign.center,
         fontWeight: FontWeight.w400,
-        fontSize: 10,
       ),
     );
   }

@@ -27,7 +27,7 @@ class _DemoGraphicsScreenState extends State<DemoGraphicsScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: Resp.size(4)),
+        padding: EdgeInsets.symmetric(horizontal: Resp.size(12)),
         decoration: const BoxDecoration(color: Colors.black),
         child: ListView(
           shrinkWrap: true,

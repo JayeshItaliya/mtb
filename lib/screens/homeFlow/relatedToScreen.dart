@@ -116,7 +116,7 @@ class _RelatedToScreenState extends State<RelatedToScreen> {
               ),
             ),
           ),
-          // WidthBox(Resp.size(12)),
+          // WidthBox(12),
         ],
       ),
     );
