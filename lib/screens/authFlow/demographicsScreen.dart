@@ -33,6 +33,32 @@ class _DemoGraphicsScreenState extends State<DemoGraphicsScreen> {
         physics: ClampingScrollPhysics(),
         children: [
           if(widget.isFromProfile)...{
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: Resp.size(12)),
+        decoration: const BoxDecoration(color: Colors.black),
+        child: ListView(
+          shrinkWrap: true,
+          physics: ClampingScrollPhysics(),
+          children: [
+            const HeightBox(20),
+            InterText(
+                text: "Input your Demographic",
+                fontSize: 24,
+                fontWeight: FontWeight.w600),
+            InterText(
+                text: "Information", fontSize: 24, fontWeight: FontWeight.w600),
+            const HeightBox(10),
+            Padding(
+              padding: const EdgeInsets.only(right: 26),
+              child: InterText(
+                  text:
+                      "This information is used to personalize your legislative feed. It will not be used or sent anywhere.",
+                  fontSize: 12,
+                  textOverflow: TextOverflow.clip,
+                  color: AppColors.lightGrey,
+                  maxLines: 2,
+                  fontWeight: FontWeight.w600),
+            ),
             const HeightBox(30),
             customAppBar(title: '', context: context, isSuffix: false),
           },

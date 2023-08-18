@@ -113,7 +113,7 @@ class _ForScreenState extends State<ForScreen> {
               ),
             ),
           ),
-          // WidthBox(Resp.size(12)),
+          // WidthBox(12),
         ],
       ),
     );

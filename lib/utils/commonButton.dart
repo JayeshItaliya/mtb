@@ -7,20 +7,21 @@ import 'package:mtb/utils/utils.dart';
 class CommonButton extends StatefulWidget {
   final String? text;
   final Function onTap;
-  final double? height;
   final double? width;
   final double? fontSize;
   final Color? color;
   final Widget? child;
+  final FontWeight fontWeight;
   const CommonButton(
       {Key? key,
       this.text,
       required this.onTap,
-      this.height,
       this.fontSize,
       this.width,
       this.child,
-      this.color})
+      this.color,
+        this.fontWeight= FontWeight.w700
+      })
       : super(key: key);
 
   @override
@@ -32,9 +33,7 @@ class _CommonButtonState extends State<CommonButton> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        HeightBox(
-          Resp.size(40),
-        ),
+        HeightBox(40),
         GestureDetector(
           onTap: () {
             widget.onTap();
@@ -42,9 +41,8 @@ class _CommonButtonState extends State<CommonButton> {
           child: Container(
             alignment: Alignment.center,
             padding: EdgeInsets.symmetric(
-              vertical: Resp.crosslength * 0.018,
+              vertical: Resp.crosslength * 0.016,
             ),
-            height: widget.height ?? Resp.size(52),
             width: widget.width,
             decoration: BoxDecoration(
                 color: widget.color ?? AppColors.primaryColor,
@@ -53,7 +51,7 @@ class _CommonButtonState extends State<CommonButton> {
             child: widget.child??InterText(
               text: widget.text??"",
               color: AppColors.white,
-              fontWeight: FontWeight.w700,
+              fontWeight:widget.fontWeight,
               fontSize: widget.fontSize??Resp.size(18),
             ),
           ),

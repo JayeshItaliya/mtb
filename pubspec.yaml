@@ -55,7 +55,10 @@ flutter:
    - assets/common/
    - assets/searchFlow/
    - assets/profileFlow/
-
+   - assets/following/
+   - assets/trending/
+   - assets/searchFilter/
+   
   # fonts:
   #   - family: Schyler
   #     fonts:

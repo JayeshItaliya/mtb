@@ -38,12 +38,9 @@ class _SignInScreenState extends State<SignInScreen> {
             )),
         child: ListView(
           physics: const ClampingScrollPhysics(),
-          padding: EdgeInsets.symmetric(horizontal: Resp.size(4)),
+          padding: EdgeInsets.symmetric(horizontal: Resp.size(12)),
           children: [
-            // HeightBox(88),
-            SizedBox(
-              height: Resp.size(88),
-            ),
+            const HeightBox(75),
             SizedBox(
               height: Resp.size(78),
               width: Resp.size(188),
@@ -59,21 +56,21 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
             ),
             // HeightBox(110),
-            SizedBox(
-              height: Resp.size(110),
-            ),
+            const HeightBox(100,),
             AppWidget.getTextField(
               hintText: "Email",
               inputAction: TextInputAction.next,
               keyboardType: TextInputType.emailAddress,
               textEditingController: signInController.emailController.value,
             ),
+            const HeightBox(20),
             AppWidget.getTextField(
                 hintText: "Password",
                 inputAction: TextInputAction.next,
                 keyboardType: TextInputType.emailAddress,
                 textEditingController: signInController.emailController.value,
                 isPassword: true),
+            const HeightBox(15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -94,10 +91,10 @@ class _SignInScreenState extends State<SignInScreen> {
                                 "assets/authFlow/unCheck.png",
                                 scale: 2.7,
                               ),
-                        WidthBox(Resp.size(10)),
+                        WidthBox(10),
                         InterText(
                           text: "Remember me",
-                          fontSize: Resp.size(13),
+                          fontSize:13,
                           color: AppColors.lightGrey,
                           fontWeight: FontWeight.w400,
                         ),
@@ -111,7 +108,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   },
                   child: InterText(
                     text: "Forgot Password?",
-                    fontSize: Resp.size(13),
+                    fontSize:13,
                     color: AppColors.primaryColor,
                     fontWeight: FontWeight.w400,
                   ),
@@ -125,24 +122,19 @@ class _SignInScreenState extends State<SignInScreen> {
                     context: context, PageName: const DemoGraphicsScreen());
               },
             ),
-            HeightBox(
-              Resp.size(40),
-            ),
+            const HeightBox(40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const CustomDivider(),
                 InterText(
                   text: "Or Continue With",
-                  fontSize: Resp.size(13),
+                  fontSize: 13,
                   color: AppColors.lightGrey,
                   fontWeight: FontWeight.w400,
                 ),
                 const CustomDivider(),
               ],
-            ),
-            HeightBox(
-              Resp.size(20),
             ),
             Row(
               children: [
@@ -160,7 +152,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                   ),
                 ),
-                WidthBox(Resp.size(15)),
+                const WidthBox(15),
                 Expanded(
                   child: CommonButton(
                     color: AppColors.lightBlack,
@@ -177,9 +169,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ],
             ),
-            HeightBox(
-              Resp.size(40),
-            ),
+            const HeightBox(40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -187,7 +177,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 InterText(
                    text:"Don’t have an Account?",
                   color: AppColors.lightGrey,
-                  fontSize: Resp.size(14),
+                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),
                 InkWell(
@@ -197,15 +187,13 @@ class _SignInScreenState extends State<SignInScreen> {
                   child: InterText(
                       text:" Sign up",
                     color: AppColors.primaryColor,
-                    fontSize: Resp.size(14),
+                    fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
               ],
             ),
-            HeightBox(
-              Resp.size(25),
-            ),
+            const HeightBox(25),
           ],
         ),
       ),

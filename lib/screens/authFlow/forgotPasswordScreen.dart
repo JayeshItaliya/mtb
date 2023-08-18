@@ -27,10 +27,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       backgroundColor: Colors.black,
       body: ListView(
         shrinkWrap: true,
-        padding: EdgeInsets.symmetric(horizontal: Resp.size(4)),
+        padding: EdgeInsets.symmetric(horizontal: Resp.size(12)),
         physics: const ClampingScrollPhysics(),
         children: [
           customAppBar(title: 'Forgot Password',isSuffix: false,context: context),
+          const HeightBox(18),
           Image.asset(
             'assets/authFlow/forgotPassword.png',
             scale: 2.5,
@@ -42,6 +43,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               inputAction: TextInputAction.done,
               keyboardType: TextInputType.emailAddress,
               textEditingController: forgotController.emailController.value),
+          const HeightBox(12),
           Padding(
             padding: EdgeInsets.only(right: Resp.size(20)),
             child: InterText(
