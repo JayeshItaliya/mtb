@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mtb/screens/following/followingScreen.dart';
 import 'package:mtb/screens/homeFlow/billDetailsScreen.dart';
 import 'package:mtb/screens/homeFlow/forScreen.dart';
+import 'package:mtb/screens/homeFlow/homeScreen.dart';
+import 'package:mtb/screens/trending/topicsForYou.dart';
+import 'package:mtb/screens/trending/trendingScreen.dart';
 import 'package:mtb/utils/appColors.dart';
 import 'package:mtb/utils/responsiveUi.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -62,9 +66,9 @@ class _MainPageScreenState extends State<MainPageScreen> {
   ];
 
   List<Widget> widgetScreen = [
-    const BillDetailsScreen(),
-    Container(),
-    Container(),
+    const TrendingScreen(),
+    const FollowingScreen(),
+    const HomeScreen(),
     Container(),
     Container(),
   ];

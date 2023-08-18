@@ -51,6 +51,8 @@ flutter:
    - assets/authFlow/
    - assets/homeFlow/
    - assets/common/
+   - assets/following/
+   - assets/trending/
 
   # fonts:
   #   - family: Schyler
