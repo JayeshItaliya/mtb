@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mtb/utils/interText.dart';
 import 'package:mtb/utils/utils.dart';
-
 import '../../utils/appColors.dart';
 import '../../utils/commonButton.dart';
 import '../../utils/pageNavgation.dart';
@@ -28,14 +26,14 @@ class _SettingScreenState extends State<SettingScreen> {
           customAppBar(title: 'Settings', context: context,isSuffix: false,
           fontSize: 18,
           fontWeight: FontWeight.w600),
-          HeightBox(38),
+          const HeightBox(38),
           btn('Change Password',(){
             toPushNavigator(
-                context: context, PageName: const ChangePasswordScreen());
+                context: context, pageName: const ChangePasswordScreen());
           }),
-          HeightBox(12),
+          const HeightBox(12),
           btn('Delete Account',(){dialog(false);}),
-          HeightBox(12),
+          const HeightBox(12),
           btn('Log Out',(){
             dialog(true);
           }),
@@ -48,6 +46,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
   Widget btn(String label,Function onTap) {
     return InkWell(
+      overlayColor: MaterialStateProperty.all(Colors.transparent),
       onTap: (){
         onTap();
       },
@@ -91,7 +90,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 children: [
                   InterText(text: logout?'Log Out':'Delete Account',fontSize: 18,
                   fontWeight: FontWeight.w500),
-                  HeightBox(15),
+                  const HeightBox(15),
                   InterText(text: 'Are You Sure You Want To ${logout?'Logout':'Delete'} This\nAccount?',fontSize: 14,
                       fontWeight: FontWeight.w400,color: AppColors.white,maxLines: 2,textAlign: TextAlign.center,),
                   CommonButton(
@@ -102,12 +101,12 @@ class _SettingScreenState extends State<SettingScreen> {
                       Navigator.pop(context);
                     },
                   ),
-                  HeightBox(30),
+                  const HeightBox(30),
                   GestureDetector(
                     onTap: (){
                       Navigator.pop(context);
                     },
-                    child: InterText(text: 'No thanks!',fontSize: 16,
+                    child: const InterText(text: 'No thanks!',fontSize: 16,
                         fontWeight: FontWeight.w600,color: AppColors.white,),
                   ),
                 ],

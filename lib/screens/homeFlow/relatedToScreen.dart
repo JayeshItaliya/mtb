@@ -101,7 +101,7 @@ class _RelatedToScreenState extends State<RelatedToScreen> {
                     ),
                   ),
                   const HeightBox(10),
-                  InterText(
+                  const InterText(
                     text: 'Immigration Bill',
                     fontWeight: FontWeight.w400,
                     fontSize: 12,

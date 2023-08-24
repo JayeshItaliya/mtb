@@ -69,16 +69,17 @@ class _FollowingScreenState extends State<FollowingScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            InterText(
+                            const InterText(
                               text: 'You are following 3 Bills',
                               fontWeight: FontWeight.w600,
                               fontSize: 14,
                             ),
                             InkWell(
+                              overlayColor: MaterialStateProperty.all(Colors.transparent),
                               onTap: () {
                                 toPushNavigator(
                                     context: context,
-                                    PageName: const FilterBillsScreen());
+                                    pageName: const FilterBillsScreen());
                               },
                               child: SvgPicture.asset(
                                   'assets/following/filter.svg',
@@ -140,9 +141,10 @@ class _FollowingScreenState extends State<FollowingScreen> {
                         ),
                       ),
                       InkWell(
+                        overlayColor: MaterialStateProperty.all(Colors.transparent),
                         onTap: (){
                           toPushNavigator(
-                              context: context, PageName: const FollowingBill());
+                              context: context, pageName: const FollowingBill());
                         },
                         child: Padding(
                           padding: EdgeInsets.fromLTRB(
@@ -159,7 +161,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                             ),
                             alignment: Alignment.center,
-                            child: InterText(
+                            child: const InterText(
                               text:'See More',
                               color: AppColors.primaryColor,
                               textAlign: TextAlign.center,
@@ -193,12 +195,13 @@ class _FollowingScreenState extends State<FollowingScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            InterText(
+                            const InterText(
                               text: '8 Congress Person',
                               fontWeight: FontWeight.w600,
                               fontSize: 14,
                             ),
                             InkWell(
+                              overlayColor: MaterialStateProperty.all(Colors.transparent),
                               onTap: () {
                                 // toPushNavigator(
                                 //     context: context,
@@ -217,15 +220,16 @@ class _FollowingScreenState extends State<FollowingScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          PersonCard(),
-                          PersonCard(),
-                          PersonCard(),
+                          personCard(),
+                          personCard(),
+                          personCard(),
                         ],
                       ),
                       InkWell(
+                        overlayColor: MaterialStateProperty.all(Colors.transparent),
                         onTap: (){
                           toPushNavigator(
-                              context: context, PageName: const FollowingCongressPerson());
+                              context: context, pageName: const FollowingCongressPerson());
                         },
                         child: Padding(
                           padding: EdgeInsets.fromLTRB(
@@ -242,7 +246,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                             ),
                             alignment: Alignment.center,
-                            child: InterText(
+                            child: const InterText(
                               text:'See More',
                               color: AppColors.primaryColor,
                               textAlign: TextAlign.center,
@@ -276,16 +280,17 @@ class _FollowingScreenState extends State<FollowingScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            InterText(
+                            const InterText(
                               text: '6 Topics',
                               fontWeight: FontWeight.w600,
                               fontSize: 14,
                             ),
                             InkWell(
+                              overlayColor: MaterialStateProperty.all(Colors.transparent),
                               onTap: () {
                                 toPushNavigator(
                                     context: context,
-                                    PageName: const FilterTopicScreen());
+                                    pageName: const FilterTopicScreen());
                               },
                               child: SvgPicture.asset(
                                 'assets/following/filter.svg',
@@ -306,10 +311,11 @@ class _FollowingScreenState extends State<FollowingScreen> {
                         ],
                       ),
                       InkWell(
+                        overlayColor: MaterialStateProperty.all(Colors.transparent),
                         onTap: (){
                           toPushNavigator(
                               context: context,
-                              PageName: const FollowingTopic());
+                              pageName: const FollowingTopic());
                         },
                         child: Padding(
                           padding: EdgeInsets.fromLTRB(
@@ -326,7 +332,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                             ),
                             alignment: Alignment.center,
-                            child: InterText(
+                            child: const InterText(
                               text:'See More',
                               color: AppColors.primaryColor,
                               textAlign: TextAlign.center,
@@ -348,33 +354,6 @@ class _FollowingScreenState extends State<FollowingScreen> {
     );
   }
 
-  Widget StatusCard(String text, {bool isActive = false}) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: !isActive && text == 'Introduced' ? Resp.size(11) : 0,
-        right: !isActive && text == 'In Effect' ? Resp.size(11) : 0,
-      ),
-      child: Container(
-        decoration: ShapeDecoration(
-          color:
-          isActive ? AppColors.grey.withOpacity(0.25) : Colors.transparent,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(Resp.size(5))),
-        ),
-        padding: isActive
-            ? EdgeInsets.symmetric(
-            vertical: Resp.size(10), horizontal: Resp.size(8))
-            : EdgeInsets.symmetric(vertical: Resp.size(13)),
-        margin: EdgeInsets.all(Resp.size(3)),
-        child: InterText(
-          text: text,
-          textAlign: TextAlign.center,
-          fontWeight: FontWeight.w400,
-          fontSize: 10,
-        ),
-      ),
-    );
-  }
 
   Widget commonContainer(String text, {bool isTag = true}) {
     return Container(
@@ -394,7 +373,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
     );
   }
 
-  Widget BillCharacteristicsCard(String text, int value) {
+  Widget billCharacteristicsCard(String text, int value) {
     return Container(
       padding: EdgeInsets.only(
           left: Resp.size(11),
@@ -459,7 +438,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
                     });
               },
           )
-              : TextSpan(text: ''),
+              : const TextSpan(text: ''),
         ],
       ),
     );
@@ -472,7 +451,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
           shape:
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
           insetPadding: EdgeInsets.zero,
-          child: Container(
+          child: SizedBox(
             width: cx.width / 1.15,
             height: cx.height / 1.1,
             child: Column(
@@ -509,7 +488,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(12.0, 8, 10, 8),
                         child: InterText(
-                          color: Color(0xFF444444),
+                          color: const Color(0xFF444444),
                           fontWeight: FontWeight.w500,
                           fontSize: cx.height > 800 ? 18 : 16,
                           textAlign: TextAlign.start,
@@ -517,7 +496,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
                           maxLines: 100000,
                         ),
                       ),
-                      HeightBox(20),
+                      const HeightBox(20),
                     ],
                   ),
                 ),
@@ -527,7 +506,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
         );
       });
 
-  Widget PersonCard() {
+  Widget personCard() {
     return Expanded(
       child: Row(
         children: [
@@ -554,7 +533,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
                     ),
                   ),
                   const HeightBox(10),
-                  InterText(
+                  const InterText(
                     text: 'Ralph Edwards',
                     fontWeight: FontWeight.w400,
                     fontSize: 12,
@@ -569,7 +548,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
               ),
             ),
           ),
-          WidthBox(12),
+          const WidthBox(12),
         ],
       ),
     );
@@ -607,7 +586,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
               ),
             ),
           ),
-          WidthBox(12),
+          const WidthBox(12),
         ],
       ),
     );
@@ -635,7 +614,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
                     ),
                   ),
                   const HeightBox(10),
-                  InterText(
+                  const InterText(
                     text: 'Immigration Bill',
                     fontWeight: FontWeight.w500,
                     fontSize: 10,

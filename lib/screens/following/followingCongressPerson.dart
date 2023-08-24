@@ -59,7 +59,7 @@ class _FollowingCongressPersonState extends State<FollowingCongressPerson> {
                     child:Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        PersonCard(),
+                        personCard(),
                       ],
                     ),
                   );
@@ -67,11 +67,12 @@ class _FollowingCongressPersonState extends State<FollowingCongressPerson> {
               ),
             ),
           ),
+          const HeightBox(110),
         ],
       ),
     );
   }
-  Widget PersonCard(){
+  Widget personCard(){
     return Expanded(
       child: Row(
         children: [
@@ -97,7 +98,7 @@ class _FollowingCongressPersonState extends State<FollowingCongressPerson> {
                     ),
                   ),
                   const HeightBox(10),
-                  InterText(
+                  const InterText(
                     text: 'Albert Obama',
                     fontWeight: FontWeight.w400,
                     fontSize: 12,

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -8,12 +9,14 @@ import 'package:mtb/utils/responsiveUi.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../controller/commonController/commonController.dart';
+import '../services/networkApiServices.dart';
 
 CommonController cx = Get.put(CommonController());
+var apiServices = NetWorkApiServices();
+
 String location = '';
 String address = '';
 String bookingId = '';
-String demoText = 'Lorem It is a long established fact that a reader will betai by the readable content of a page when looking at its is layout. The point of using Lorem Ipsum is that it has and more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English. Many desktop publishing packagesdf and web page editors now use Lorem Ipsum as their dei ult model text, and a search for lorem ipsum will uncov er many web sites still in their infancy. Various versions have evolved over the years, sometimes by accidentsc sometimes on \n\nLorem It is a long established fact that a reader will betai by the readable content of a page when looking at its is layout. The point of using Lorem Ipsum is that it has and more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English. Many desktop publishing packagesdf and web page editors now use Lorem Ipsum as their dei ult model text, and a search for lorem ipsum will uncov er many web sites still in their infancy. Various versions have evolved over the years, sometimes by accidentsc sometimes on ';
 
 showLongToast(String s) {
   Fluttertoast.showToast(
@@ -60,26 +63,27 @@ Widget noInternetLottie({bool? backbutton}) {
     children: [
       backbutton ?? false
           ? Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(
-                left: cx.responsive(20, 15, 12),
-                top: cx.responsive(43, 35, 30)),
-            child: Container(
-                alignment: Alignment.centerLeft,
-                child: InkWell(
-                  onTap: () => Get.back(),
-                  child: const Icon(
-                    Icons.arrow_back_ios_new_rounded,
-                    size: 27,
-                    color: Colors.black,
-                  ),
-                )),
-          ),
-        ],
-      )
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                      left: cx.responsive(20, 15, 12),
+                      top: cx.responsive(43, 35, 30)),
+                  child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: InkWell(
+                        overlayColor: MaterialStateProperty.all(Colors.transparent),
+                        onTap: () => Get.back(),
+                        child: const Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          size: 27,
+                          color: Colors.black,
+                        ),
+                      )),
+                ),
+              ],
+            )
           : Container(),
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -91,6 +95,7 @@ Widget noInternetLottie({bool? backbutton}) {
             cx.height / 9,
           ),
           InkWell(
+            overlayColor: MaterialStateProperty.all(Colors.transparent),
             onTap: () {
               // Get.offAll(
               //   WonderEvents(),
@@ -105,7 +110,7 @@ Widget noInternetLottie({bool? backbutton}) {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.refresh_rounded,
                     color: Colors.white,
                   ),
@@ -142,7 +147,7 @@ Widget customAppBar({
   double? suffixImagePadding,
   String? suffixImage,
   Color? suffixBackgroundColor,
-  Function? suffixOnTap,
+  Function? onTapSuffix,
   Color? suffixImageColor,
   Color? prefixBackgroundColor,
   String? prefixImage,
@@ -158,7 +163,7 @@ Widget customAppBar({
   double? prefixImageHeight,
   double? prefixImageWidth,
   Color? fontColor,
-  bool showCrossBackButton=false,
+  bool showCrossBackButton = false,
   required String? title,
   required BuildContext context,
 }) {
@@ -166,21 +171,13 @@ Widget customAppBar({
     children: [
       isPrefix
           ? InkWell(
-        onTap: () {
-          onBack(context);
-        },
-        child: Image.asset(
-          'assets/common/back.png',
-          fit: BoxFit.cover,
-          alignment: Alignment.center,
-          scale: 3,
-        ),
-      )
+
+              overlayColor: MaterialStateProperty.all(Colors.transparent),
               onTap: () {
                 onBack(context);
               },
               child: Image.asset(
-                'assets/common/${!showCrossBackButton?'back':'cross_back'}.png',
+                'assets/common/${!showCrossBackButton ? 'back' : 'cross_back'}.png',
                 fit: BoxFit.cover,
                 alignment: Alignment.center,
                 scale: 3,
@@ -200,13 +197,26 @@ Widget customAppBar({
       ),
       if (isPrefix && !isSuffix) ...{Container(width: Resp.size(30))},
       isSuffix
-          ? Image.asset(
-        'assets/common/filter.png',
-        fit: BoxFit.cover,
-        alignment: Alignment.center,
-        scale: 3,
-      )
+          ? InkWell(
+              overlayColor: MaterialStateProperty.all(Colors.transparent),
+              onTap: () => isSuffix ? onTapSuffix!() : () {},
+              child: Image.asset(
+                'assets/common/filter.png',
+                fit: BoxFit.cover,
+                alignment: Alignment.center,
+                scale: 3,
+              ),
+            )
           : Container(),
     ],
   );
+}
+
+String demoText =
+    'Lorem It is a long established fact that a reader will betai by the readable content of a page when looking at its is layout. The point of using Lorem Ipsum is that it has and more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English. Many desktop publishing packagesdf and web page editors now use Lorem Ipsum as their dei ult model text, and a search for lorem ipsum will uncov er many web sites still in their infancy. Various versions have evolved over the years, sometimes by accidentsc sometimes on \n\nLorem It is a long established fact that a reader will betai by the readable content of a page when looking at its is layout. The point of using Lorem Ipsum is that it has and more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English. Many desktop publishing packagesdf and web page editors now use Lorem Ipsum as their dei ult model text, and a search for lorem ipsum will uncov er many web sites still in their infancy. Various versions have evolved over the years, sometimes by accidentsc sometimes on ';
+
+customPrint(var printValue){
+  if (kDebugMode) {
+    print(printValue);
+  }
 }

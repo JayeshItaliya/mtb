@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:mtb/screens/trending/trendingScreen.dart';
+
 import '../../utils/appColors.dart';
 import '../../utils/responsiveUi.dart';
 import '../../utils/utils.dart';
@@ -19,7 +22,8 @@ class _TopicsForYouState extends State<TopicsForYou> {
       body: Column(
         children: [
           const HeightBox(15),
-          customAppBar(title: 'Topics For You', isSuffix: false, context: context),
+          customAppBar(
+              title: 'Topics For You', isSuffix: false, context: context),
           const HeightBox(20),
           Expanded(
             child: Container(
@@ -64,7 +68,9 @@ class _TopicsForYouState extends State<TopicsForYou> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        topicCard(),
+                        topicCard(() {
+                          Get.to(const TrendingScreen());
+                        }),
                       ],
                     ),
                   );
@@ -77,40 +83,44 @@ class _TopicsForYouState extends State<TopicsForYou> {
     );
   }
 
-  Widget topicCard() {
+  Widget topicCard(Function navigation) {
     return Expanded(
-      child: Row(
-        children: [
-          Expanded(
-            child: Container(
-              decoration: ShapeDecoration(
-                color: AppColors.grey.withOpacity(0.13),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-              ),
-              padding: EdgeInsets.fromLTRB(
-                  Resp.size(7), Resp.size(12), Resp.size(7), Resp.size(8)),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: Resp.size(55),
-                    width: Resp.size(55),
-                    child: SvgPicture.asset(
-                      'assets/common/labor.svg',
+      child: InkWell(
+        overlayColor: MaterialStateProperty.all(Colors.transparent),
+        onTap: () => navigation(),
+        child: Row(
+          children: [
+            Expanded(
+              child: Container(
+                decoration: ShapeDecoration(
+                  color: AppColors.grey.withOpacity(0.13),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                ),
+                padding: EdgeInsets.fromLTRB(
+                    Resp.size(7), Resp.size(12), Resp.size(7), Resp.size(8)),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: Resp.size(55),
+                      width: Resp.size(55),
+                      child: SvgPicture.asset(
+                        'assets/common/labor.svg',
+                      ),
                     ),
-                  ),
-                  const HeightBox(10),
-                  SvgPicture.asset(
-                    'assets/homeFlow/following.svg',
-                    width: Resp.size(85),
-                    height: Resp.size(28),
-                  ),
-                ],
+                    const HeightBox(10),
+                    SvgPicture.asset(
+                      'assets/homeFlow/following.svg',
+                      width: Resp.size(85),
+                      height: Resp.size(28),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          // WidthBox(12),
-        ],
+            // WidthBox(12),
+          ],
+        ),
       ),
     );
   }

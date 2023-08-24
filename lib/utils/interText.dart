@@ -3,18 +3,18 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mtb/utils/responsiveUi.dart';
 
 class InterText extends StatelessWidget {
-  String? text;
-  double? fontSize;
-  Color? color;
-  FontWeight? fontWeight;
-  TextDecoration? textDecoration;
-  TextAlign? textAlign;
-  double? height;
-  List<Shadow>? shadow;
-  int? maxLines;
-  TextOverflow? textOverflow;
-  bool? softWrap;
-  InterText({
+  final String? text;
+  final double? fontSize;
+  final Color? color;
+  final FontWeight? fontWeight;
+  final TextDecoration? textDecoration;
+  final TextAlign? textAlign;
+  final double? height;
+  final List<Shadow>? shadow;
+  final int? maxLines;
+  final TextOverflow? textOverflow;
+  final bool? softWrap;
+  const InterText({
     Key? key,
     required this.text,
     this.fontSize,

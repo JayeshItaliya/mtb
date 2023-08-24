@@ -10,7 +10,6 @@ import 'package:mtb/utils/responsiveUi.dart';
 
 import '../../mainPage.dart';
 import '../../utils/utils.dart';
-import '../homeFlow/homeScreen.dart';
 
 class DemoGraphicsScreen extends StatefulWidget {
   final bool isFromProfile;
@@ -30,48 +29,21 @@ class _DemoGraphicsScreenState extends State<DemoGraphicsScreen> {
       body: ListView(
         shrinkWrap: true,
         padding: EdgeInsets.symmetric(horizontal: Resp.size(15)),
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         children: [
           if(widget.isFromProfile)...{
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: Resp.size(12)),
-        decoration: const BoxDecoration(color: Colors.black),
-        child: ListView(
-          shrinkWrap: true,
-          physics: ClampingScrollPhysics(),
-          children: [
-            const HeightBox(20),
-            InterText(
-                text: "Input your Demographic",
-                fontSize: 24,
-                fontWeight: FontWeight.w600),
-            InterText(
-                text: "Information", fontSize: 24, fontWeight: FontWeight.w600),
-            const HeightBox(10),
-            Padding(
-              padding: const EdgeInsets.only(right: 26),
-              child: InterText(
-                  text:
-                      "This information is used to personalize your legislative feed. It will not be used or sent anywhere.",
-                  fontSize: 12,
-                  textOverflow: TextOverflow.clip,
-                  color: AppColors.lightGrey,
-                  maxLines: 2,
-                  fontWeight: FontWeight.w600),
-            ),
-            const HeightBox(30),
             customAppBar(title: '', context: context, isSuffix: false),
           },
           const HeightBox(20),
-          InterText(
+          const InterText(
               text: "Input your Demographic",
               fontSize: 24,
               fontWeight: FontWeight.w600),
-          InterText(
+          const InterText(
               text: "Information", fontSize: 24, fontWeight: FontWeight.w600),
           const HeightBox(10),
-          Padding(
-            padding: const EdgeInsets.only(right: 26),
+          const Padding(
+            padding: EdgeInsets.only(right: 26),
             child: InterText(
                 text:
                     "This information is used to personalize your legislative feed. It will not be used or sent anywhere.",
@@ -82,61 +54,61 @@ class _DemoGraphicsScreenState extends State<DemoGraphicsScreen> {
                 fontWeight: FontWeight.w600),
           ),
           const HeightBox(30),
-          CommonDropDown(
+          commonDropDown(
               context: context,
               list: demoGraphicsController.ageList,
               mycontrollerValue: demoGraphicsController.selectAgeValue,
               hint: "Age"),
-          CommonDropDown(
+          commonDropDown(
               context: context,
               list: demoGraphicsController.genderList,
               mycontrollerValue: demoGraphicsController.selectGenderValue,
               hint: "Gender"),
-          CommonDropDown(
+          commonDropDown(
               context: context,
               list: demoGraphicsController.stateList,
               mycontrollerValue:
                   demoGraphicsController.selectedState,
               hint: "State"),
-          CommonDropDown(
+          commonDropDown(
               context: context,
               list: demoGraphicsController.cityList,
               mycontrollerValue:
                   demoGraphicsController.selectedCity,
               hint: "City"),
-          CommonDropDown(
+          commonDropDown(
               context: context,
               list: demoGraphicsController.parentalStatusList,
               mycontrollerValue:
                   demoGraphicsController.selectedParentalStatusValue,
               hint: "Parental Status"),
-          CommonDropDown(
+          commonDropDown(
               context: context,
               list: demoGraphicsController.sexualOrientationList,
               mycontrollerValue:
                   demoGraphicsController.selectedSexualOrientationValue,
               hint: "Sexual Orientation"),
-          CommonDropDown(
+          commonDropDown(
               context: context,
               list: demoGraphicsController.citizenShipList,
               mycontrollerValue: demoGraphicsController.selectedCitizenShip,
               hint: "CitizenShip Status"),
-          CommonDropDown(
+          commonDropDown(
               context: context,
               list: demoGraphicsController.homeOwnerStatusList,
               mycontrollerValue: demoGraphicsController.selectedHomeOwner,
               hint: "Home-owner Status"),
-          CommonDropDown(
+          commonDropDown(
               context: context,
               list: demoGraphicsController.healthCareList,
               mycontrollerValue: demoGraphicsController.selectedHealthCare,
               hint: "Healthcare"),
-          CommonDropDown(
+          commonDropDown(
               context: context,
               list: demoGraphicsController.employeeStatusList,
               mycontrollerValue: demoGraphicsController.selectedEmployment,
               hint: "Employment Status"),
-          CommonDropDown(
+          commonDropDown(
               context: context,
               list: demoGraphicsController.serviceStatusList,
               mycontrollerValue: demoGraphicsController.selectedServiceStatus,
@@ -147,7 +119,7 @@ class _DemoGraphicsScreenState extends State<DemoGraphicsScreen> {
             text: widget.isFromProfile?'Save':"Continue",
             onTap: () {
               toPushNavigator(
-                  context: context, PageName: const MainPageScreen());
+                  context: context, pageName: const MainPageScreen());
             },
           ),
           HeightBox(

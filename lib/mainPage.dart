@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mtb/screens/following/followingScreen.dart';
 import 'package:mtb/screens/homeFlow/homeScreen.dart';
+import 'package:mtb/screens/profileFlow/profileScreen.dart';
 import 'package:mtb/screens/searchFlow/searchScreen.dart';
 import 'package:mtb/screens/trending/trendingScreen.dart';
 import 'package:mtb/utils/appColors.dart';
@@ -68,11 +69,12 @@ class _MainPageScreenState extends State<MainPageScreen> {
     const SearchScreen(),
     const FollowingScreen(),
     const TrendingScreen(),
-    Container(),
+    const ProfileScreen(),
   ];
 
   PersistentTabController controller = PersistentTabController(initialIndex: 0);
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
