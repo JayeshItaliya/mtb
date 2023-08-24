@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mtb/utils/appColors.dart';
 import 'package:mtb/utils/commonButton.dart';
-import 'package:mtb/utils/commonCard.dart';
 import 'package:mtb/utils/interText.dart';
 import 'package:mtb/utils/utils.dart';
 
@@ -26,14 +24,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           padding: EdgeInsets.symmetric(horizontal: Resp.size(12)),
           child: Column(
             children: [
-              HeightBox(15),
+              const HeightBox(15),
               customAppBar(
                   title: 'Edit Profile',
                   context: context,
                   isSuffix: false,
                   fontSize: 18,
                   fontWeight: FontWeight.w600),
-              HeightBox(58),
+              const HeightBox(58),
               Stack(
                 children: [
                   ClipRRect(
@@ -55,7 +53,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   )
                 ],
               ),
-              HeightBox(65),
+              const HeightBox(65),
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -70,7 +68,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   color: Colors.white,
                 ),
               ),
-              HeightBox(20),
+              const HeightBox(20),
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -85,7 +83,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   color: Colors.white,
                 ),
               ),
-              HeightBox(20),
+              const HeightBox(20),
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -100,7 +98,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   color: Colors.white,
                 ),
               ),
-              HeightBox(100),
+              const HeightBox(100),
               CommonButton(onTap: (){},text: 'Save',)
             ],
           ),

@@ -1,12 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mtb/screens/profileFlow/editProfileScreen.dart';
 import 'package:mtb/screens/profileFlow/settingScreen.dart';
 import 'package:mtb/utils/appColors.dart';
-import 'package:mtb/utils/commonButton.dart';
-import 'package:mtb/utils/commonCard.dart';
 import 'package:mtb/utils/interText.dart';
 import 'package:mtb/utils/utils.dart';
 
@@ -31,14 +28,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
           padding: EdgeInsets.symmetric(horizontal: Resp.size(12)),
           child: Column(
             children: [
-              HeightBox(15),
+              const HeightBox(15),
               customAppBar(
                   title: 'Profile',
                   context: context,
                   isSuffix: false,
+                  isPrefix: false,
                   fontSize: 18,
                   fontWeight: FontWeight.w600),
-              HeightBox(20),
+              const HeightBox(20),
               Container(
                 alignment: Alignment.center,
                 width: double.infinity,
@@ -51,7 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     GestureDetector(
                       onTap:()=>toPushNavigator(
-                          context: context, PageName: const EditProfileScreen()),
+                          context: context, pageName: const EditProfileScreen()),
                       child: Stack(
                         children: [
                           ClipRRect(
@@ -74,13 +72,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ],
                       ),
                     ),
-                    HeightBox(12),
-                    InterText(
+                    const HeightBox(12),
+                    const InterText(
                       text: 'Kristin Watson',
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
                     ),
-                    HeightBox(8),
+                    const HeightBox(8),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -102,23 +100,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 ),
               ),
-              HeightBox(12),
+              const HeightBox(12),
               option('Demographics', 'demographics',(){
                 toPushNavigator(
-                    context: context, PageName: const DemoGraphicsScreen(isFromProfile: true,));
+                    context: context, pageName: const DemoGraphicsScreen(isFromProfile: true,));
               }),
-              HeightBox(12),
+              const HeightBox(12),
               option('Notifications', 'notifications',(){
 
               }),
-              HeightBox(12),
+              const HeightBox(12),
               option('Following', 'following',(){
 
               }),
-              HeightBox(12),
+              const HeightBox(12),
               option('Settings ', 'settings',(){
                 toPushNavigator(
-                    context: context, PageName: const SettingScreen());
+                    context: context, pageName: const SettingScreen());
               }),
 
               // HeightBox(Resp.size(100)),
@@ -131,6 +129,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget option(String title, String img,Function onTap) {
     return InkWell(
+      overlayColor: MaterialStateProperty.all(Colors.transparent),
       onTap: (){
         onTap();
       },

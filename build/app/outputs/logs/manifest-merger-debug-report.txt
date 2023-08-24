@@ -30,6 +30,7 @@ INJECTED from /Users/SMIINFOTECH/Downloads/mtb/android/app/src/main/AndroidManif
 INJECTED from /Users/SMIINFOTECH/Downloads/mtb/android/app/src/main/AndroidManifest.xml:1:1-33:12
 MERGED from /Users/SMIINFOTECH/Downloads/mtb/android/app/src/main/AndroidManifest.xml:1:1-33:12
 MERGED from [:shared_preferences_android] /Users/SMIINFOTECH/Downloads/mtb/build/shared_preferences_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
+MERGED from [:sms_autofill] /Users/SMIINFOTECH/Downloads/mtb/build/sms_autofill/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:share_plus] /Users/SMIINFOTECH/Downloads/mtb/build/share_plus/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-37:12
 MERGED from [:fluttertoast] /Users/SMIINFOTECH/Downloads/mtb/build/fluttertoast/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:path_provider_android] /Users/SMIINFOTECH/Downloads/mtb/build/path_provider_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
@@ -39,6 +40,7 @@ MERGED from [androidx.multidex:multidex:2.0.0] /Users/SMIINFOTECH/.gradle/caches
 MERGED from [androidx.window:window-java:1.0.0-beta04] /Users/SMIINFOTECH/.gradle/caches/transforms-3/6de6e83fce0af87d8efd51a8ce7d4a1f/transformed/jetified-window-java-1.0.0-beta04/AndroidManifest.xml:17:1-23:12
 MERGED from [androidx.window:window:1.0.0-beta04] /Users/SMIINFOTECH/.gradle/caches/transforms-3/6e951e46e213cb9f2e945851dbb4819c/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:17:1-33:12
 MERGED from [com.google.android.gms:play-services-auth:20.6.0] /Users/SMIINFOTECH/.gradle/caches/transforms-3/742dbb94cb8422723fdce54acf4f37db/transformed/jetified-play-services-auth-20.6.0/AndroidManifest.xml:17:1-40:12
+MERGED from [androidx.core:core-ktx:1.10.1] /Users/SMIINFOTECH/.gradle/caches/transforms-3/557a06757dadd60ec13380fbe6ff1067/transformed/jetified-core-ktx-1.10.1/AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.1] /Users/SMIINFOTECH/.gradle/caches/transforms-3/4f3b55897578e862cb2ba00844fc07b0/transformed/jetified-play-services-auth-api-phone-18.0.1/AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.gms:play-services-auth-base:18.0.4] /Users/SMIINFOTECH/.gradle/caches/transforms-3/8dc03dfcae48d57c4a18030775fa03f8/transformed/jetified-play-services-auth-base-18.0.4/AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.gms:play-services-fido:20.0.1] /Users/SMIINFOTECH/.gradle/caches/transforms-3/391c2beb27304a1fcd98fab1b5e3c426/transformed/jetified-play-services-fido-20.0.1/AndroidManifest.xml:2:1-10:12
@@ -51,7 +53,6 @@ MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/SMIINFOTECH/.gradle/cach
 MERGED from [androidx.activity:activity:1.0.0] /Users/SMIINFOTECH/.gradle/caches/transforms-3/175fa3d2c1e3c67bfc7b6681e15a0443/transformed/jetified-activity-1.0.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.customview:customview:1.0.0] /Users/SMIINFOTECH/.gradle/caches/transforms-3/9f1973a25166e12bbd4244657692fbf7/transformed/customview-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.core:core:1.10.1] /Users/SMIINFOTECH/.gradle/caches/transforms-3/7716558d8a01a724478474eda67ba33c/transformed/core-1.10.1/AndroidManifest.xml:17:1-30:12
-MERGED from [androidx.core:core-ktx:1.10.1] /Users/SMIINFOTECH/.gradle/caches/transforms-3/557a06757dadd60ec13380fbe6ff1067/transformed/jetified-core-ktx-1.10.1/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.annotation:annotation-experimental:1.3.0] /Users/SMIINFOTECH/.gradle/caches/transforms-3/b3d5edb1061ace8d0fbb1f0fd37c87a9/transformed/jetified-annotation-experimental-1.3.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.tracing:tracing:1.0.0] /Users/SMIINFOTECH/.gradle/caches/transforms-3/4090fb60ab683377d3eaacba7e60dd0b/transformed/jetified-tracing-1.0.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/SMIINFOTECH/.gradle/caches/transforms-3/bd608c7e55a29bf79b99b224a4bcfd1f/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:17:1-27:12
@@ -85,6 +86,8 @@ INJECTED from /Users/SMIINFOTECH/Downloads/mtb/android/app/src/main/AndroidManif
 INJECTED from /Users/SMIINFOTECH/Downloads/mtb/android/app/src/main/AndroidManifest.xml
 MERGED from [:shared_preferences_android] /Users/SMIINFOTECH/Downloads/mtb/build/shared_preferences_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:shared_preferences_android] /Users/SMIINFOTECH/Downloads/mtb/build/shared_preferences_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:sms_autofill] /Users/SMIINFOTECH/Downloads/mtb/build/sms_autofill/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:sms_autofill] /Users/SMIINFOTECH/Downloads/mtb/build/sms_autofill/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:share_plus] /Users/SMIINFOTECH/Downloads/mtb/build/share_plus/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:share_plus] /Users/SMIINFOTECH/Downloads/mtb/build/share_plus/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:fluttertoast] /Users/SMIINFOTECH/Downloads/mtb/build/fluttertoast/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
@@ -103,6 +106,8 @@ MERGED from [androidx.window:window:1.0.0-beta04] /Users/SMIINFOTECH/.gradle/cac
 MERGED from [androidx.window:window:1.0.0-beta04] /Users/SMIINFOTECH/.gradle/caches/transforms-3/6e951e46e213cb9f2e945851dbb4819c/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.android.gms:play-services-auth:20.6.0] /Users/SMIINFOTECH/.gradle/caches/transforms-3/742dbb94cb8422723fdce54acf4f37db/transformed/jetified-play-services-auth-20.6.0/AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-auth:20.6.0] /Users/SMIINFOTECH/.gradle/caches/transforms-3/742dbb94cb8422723fdce54acf4f37db/transformed/jetified-play-services-auth-20.6.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core-ktx:1.10.1] /Users/SMIINFOTECH/.gradle/caches/transforms-3/557a06757dadd60ec13380fbe6ff1067/transformed/jetified-core-ktx-1.10.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.10.1] /Users/SMIINFOTECH/.gradle/caches/transforms-3/557a06757dadd60ec13380fbe6ff1067/transformed/jetified-core-ktx-1.10.1/AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.1] /Users/SMIINFOTECH/.gradle/caches/transforms-3/4f3b55897578e862cb2ba00844fc07b0/transformed/jetified-play-services-auth-api-phone-18.0.1/AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.1] /Users/SMIINFOTECH/.gradle/caches/transforms-3/4f3b55897578e862cb2ba00844fc07b0/transformed/jetified-play-services-auth-api-phone-18.0.1/AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-auth-base:18.0.4] /Users/SMIINFOTECH/.gradle/caches/transforms-3/8dc03dfcae48d57c4a18030775fa03f8/transformed/jetified-play-services-auth-base-18.0.4/AndroidManifest.xml:5:5-44
@@ -127,8 +132,6 @@ MERGED from [androidx.customview:customview:1.0.0] /Users/SMIINFOTECH/.gradle/ca
 MERGED from [androidx.customview:customview:1.0.0] /Users/SMIINFOTECH/.gradle/caches/transforms-3/9f1973a25166e12bbd4244657692fbf7/transformed/customview-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.core:core:1.10.1] /Users/SMIINFOTECH/.gradle/caches/transforms-3/7716558d8a01a724478474eda67ba33c/transformed/core-1.10.1/AndroidManifest.xml:20:5-44
 MERGED from [androidx.core:core:1.10.1] /Users/SMIINFOTECH/.gradle/caches/transforms-3/7716558d8a01a724478474eda67ba33c/transformed/core-1.10.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.core:core-ktx:1.10.1] /Users/SMIINFOTECH/.gradle/caches/transforms-3/557a06757dadd60ec13380fbe6ff1067/transformed/jetified-core-ktx-1.10.1/AndroidManifest.xml:5:5-44
-MERGED from [androidx.core:core-ktx:1.10.1] /Users/SMIINFOTECH/.gradle/caches/transforms-3/557a06757dadd60ec13380fbe6ff1067/transformed/jetified-core-ktx-1.10.1/AndroidManifest.xml:5:5-44
 MERGED from [androidx.annotation:annotation-experimental:1.3.0] /Users/SMIINFOTECH/.gradle/caches/transforms-3/b3d5edb1061ace8d0fbb1f0fd37c87a9/transformed/jetified-annotation-experimental-1.3.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.annotation:annotation-experimental:1.3.0] /Users/SMIINFOTECH/.gradle/caches/transforms-3/b3d5edb1061ace8d0fbb1f0fd37c87a9/transformed/jetified-annotation-experimental-1.3.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.tracing:tracing:1.0.0] /Users/SMIINFOTECH/.gradle/caches/transforms-3/4090fb60ab683377d3eaacba7e60dd0b/transformed/jetified-tracing-1.0.0/AndroidManifest.xml:20:5-22:41

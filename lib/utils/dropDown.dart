@@ -6,9 +6,7 @@ import 'package:mtb/utils/interText.dart';
 import 'package:mtb/utils/responsiveUi.dart';
 import 'package:mtb/utils/utils.dart';
 
-import 'customDivider.dart';
-
-Widget CommonDropDown(
+Widget commonDropDown(
     {required BuildContext context,
       required List<String> list,
       required RxString mycontrollerValue,
@@ -62,7 +60,7 @@ Widget CommonDropDown(
           //value:createReminderController.selectedValue.value,
           onChanged: (value) {
             mycontrollerValue.value = value as String;
-            print("dropDownValue==${mycontrollerValue.value.toString()}");
+            customPrint("dropDownValue==${mycontrollerValue.value.toString()}");
           },
           buttonStyleData: ButtonStyleData(
             width: Resp.w,

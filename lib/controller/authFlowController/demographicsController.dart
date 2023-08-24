@@ -90,8 +90,9 @@ class DemoGraphicsController extends GetxController{
 
   List<String> serviceStatusList=
   [
-    "Hindu",
-    "Muslim",
-    "Sikh",
+    "Veteran",
+    "Current Military Personel",
+    "In Active Duty",
+    "Not affiliated with the Army",
   ];
 }

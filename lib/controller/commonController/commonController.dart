@@ -72,7 +72,7 @@ class CommonController extends GetxController{
 
   var lat="".obs;
   var lng="".obs;
-  final GlobalKey<FormState> ChangePassFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> changePassFormKey = GlobalKey<FormState>();
 
   var totalFavourites = 0.obs;
 
@@ -123,11 +123,11 @@ class CommonController extends GetxController{
   //
   // }
   dynamic read(String key){
-    return storage.read('$key');
+    return storage.read(key);
   }
 
   void write(String key,var value){
-    storage.write('$key',value);
+    storage.write(key,value);
   }
 
   double responsive(double tabletDevice,double bigMobileDevice,double smallMobileDevice,){

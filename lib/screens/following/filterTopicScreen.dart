@@ -30,30 +30,26 @@ class _FilterTopicScreenState extends State<FilterTopicScreen> {
             shrinkWrap: true,
             // physics: ClampingScrollPhysics(),
             children: [
-              Column(
-                children: [
-                  const HeightBox(30),
-                  customAppBar(
-                      title: 'Filters',
-                      showCrossBackButton: true,
-                      context: context,
-                      fontSize: Resp.size(18),
-                      isSuffix: false),
-                  const HeightBox(30),
-                  checkBoxDropdown(0, 'Topic', filterController.topicList),
-                  const HeightBox(180),
-                  CommonButton(
-                    text: "Apply filters",
-                    color: AppColors.lightGrey,
-                    fontWeight: FontWeight.w600,
-                    onTap: () {
-                      toPushNavigator(
-                          context: context, PageName: const MainPageScreen());
-                    },
-                  ),
-                  const HeightBox(25),
-                ],
+              const HeightBox(30),
+              customAppBar(
+                  title: 'Filters',
+                  showCrossBackButton: true,
+                  context: context,
+                  fontSize: Resp.size(18),
+                  isSuffix: false),
+              const HeightBox(30),
+              checkBoxDropdown(0, 'Topic', filterController.topicList),
+              const HeightBox(5),
+              CommonButton(
+                text: "Apply filters",
+                color: AppColors.lightGrey,
+                fontWeight: FontWeight.w600,
+                onTap: () {
+                  toPushNavigator(
+                      context: context, pageName: const MainPageScreen());
+                },
               ),
+              const HeightBox(25),
             ],
           ),
         ),
@@ -73,6 +69,7 @@ class _FilterTopicScreenState extends State<FilterTopicScreen> {
       child: Column(
         children: [
           InkWell(
+            overlayColor: MaterialStateProperty.all(Colors.transparent),
             onTap: () {
               if (i == filterController.dropDownIndex.value) {
                 filterController.dropDownIndex.value = 99;
@@ -108,6 +105,7 @@ class _FilterTopicScreenState extends State<FilterTopicScreen> {
                   return Column(
                     children: [
                       InkWell(
+                        overlayColor: MaterialStateProperty.all(Colors.transparent),
                         onTap: () {
                           if (list[index][1] == 0) {
                             list[index][1] = 1;

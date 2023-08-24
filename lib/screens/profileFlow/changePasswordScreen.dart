@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mtb/controller/authFlowController/changePasswordController.dart';
-import 'package:mtb/screens/authFlow/verificationScreen.dart';
 import 'package:mtb/utils/textFormFields.dart';
-import '../../utils/appColors.dart';
+
 import '../../utils/commonButton.dart';
-import '../../utils/interText.dart';
-import '../../utils/pageNavgation.dart';
 import '../../utils/responsiveUi.dart';
 import '../../utils/utils.dart';
 
@@ -37,7 +34,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             keyboardType: TextInputType.text,
             textEditingController: changeController.oldPasswordController.value,
           ),
-          HeightBox(20),
+          const HeightBox(20),
           AppWidget.getTextField(
               hintText: "Enter New Password",
               inputAction: TextInputAction.done,
@@ -45,7 +42,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               textEditingController: changeController.newPasswordController.value,
               isPassword: true
           ),
-          HeightBox(20),
+          const HeightBox(20),
           AppWidget.getTextField(
               hintText: "Confirm Password",
               inputAction: TextInputAction.done,

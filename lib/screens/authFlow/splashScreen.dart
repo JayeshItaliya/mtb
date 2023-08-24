@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
   navigateToScreen() async {
     await Future.delayed(const Duration(seconds: 2), (){
-          offNavigator(context: context,PageName: const SignInScreen());
+          offNavigator(context: context,pageName:   const SignInScreen());
     });
   }
 }

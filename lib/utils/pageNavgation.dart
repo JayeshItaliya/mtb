@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 /// Get To
-toPushNavigator({context, PageName}){
-  Navigator.push(context, MaterialPageRoute(builder: (context) => PageName));
+toPushNavigator({context, pageName}){
+  Navigator.push(context, MaterialPageRoute(builder: (context) => pageName));
 }
 
 /// Get offAll
-offNavigator({context, PageName}){
+offNavigator({context, pageName}){
   Navigator.pushAndRemoveUntil(
-    context, MaterialPageRoute(builder: (context) => PageName), (Route<dynamic> route) => false,
+    context, MaterialPageRoute(builder: (context) => pageName), (Route<dynamic> route) => false,
   );
 }
 

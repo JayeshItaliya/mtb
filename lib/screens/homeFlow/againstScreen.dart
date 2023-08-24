@@ -60,7 +60,7 @@ class _AgainstScreenState extends State<AgainstScreen> {
                     child:Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        PersonCard(),
+                        personCard(),
                       ],
                     ),
                   );
@@ -72,7 +72,7 @@ class _AgainstScreenState extends State<AgainstScreen> {
       ),
     );
   }
-  Widget PersonCard(){
+  Widget personCard(){
     return Expanded(
       child: Row(
         children: [

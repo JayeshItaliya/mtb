@@ -1,8 +1,9 @@
 import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:mtb/utils/utils.dart';
+
 import 'strings.dart';
 
 class Resp{

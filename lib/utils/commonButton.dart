@@ -8,6 +8,7 @@ class CommonButton extends StatefulWidget {
   final String? text;
   final Function onTap;
   final double? width;
+  final double? height;
   final double? fontSize;
   final Color? color;
   final Widget? child;
@@ -18,6 +19,7 @@ class CommonButton extends StatefulWidget {
       required this.onTap,
       this.fontSize,
       this.width,
+      this.height,
       this.child,
       this.color,
         this.fontWeight= FontWeight.w700
@@ -33,7 +35,7 @@ class _CommonButtonState extends State<CommonButton> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        HeightBox(40),
+        const HeightBox(40),
         GestureDetector(
           onTap: () {
             widget.onTap();
@@ -44,6 +46,7 @@ class _CommonButtonState extends State<CommonButton> {
               vertical: Resp.crosslength * 0.016,
             ),
             width: widget.width,
+            height: widget.height,
             decoration: BoxDecoration(
                 color: widget.color ?? AppColors.primaryColor,
                 borderRadius:

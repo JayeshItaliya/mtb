@@ -1,8 +1,14 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:mtb/screens/trending/topicsForYou.dart';
 import 'package:mtb/utils/appColors.dart';
 import 'package:mtb/utils/interText.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import '../../controller/trendingController/trendingController.dart';
+import '../../utils/follow.dart';
+import '../../utils/following.dart';
 import '../../utils/pageNavgation.dart';
 import '../../utils/responsiveUi.dart';
 import '../../utils/utils.dart';
@@ -16,14 +22,19 @@ class TrendingScreen extends StatefulWidget {
 }
 
 class _TrendingScreenState extends State<TrendingScreen> {
+  CarouselController buttonCarouselController = CarouselController();
+  TrendingController cx = Get.put(TrendingController());
+  int i = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       body: InkWell(
+        overlayColor: MaterialStateProperty.all(Colors.transparent),
         onTap: () {
           toPushNavigator(
-              context: context, PageName: const BillDetailsScreen());
+              context: context, pageName: const BillDetailsScreen());
         },
         child: Column(
           children: [
@@ -33,6 +44,48 @@ class _TrendingScreenState extends State<TrendingScreen> {
                 isPrefix: false,
                 isSuffix: false,
                 context: context),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                CarouselSlider.builder(
+                  itemCount: 6,
+                  carouselController: buttonCarouselController,
+                  itemBuilder: (BuildContext context, int itemIndex,
+                          int pageViewIndex) =>
+                      Image.asset('assets/common/slider_img.png'),
+                  options: CarouselOptions(
+                      aspectRatio: 16 / 9,
+                      viewportFraction: 1,
+                      initialPage: 0,
+                      onPageChanged: (index, reason) {
+                        cx.index.value = index;
+                      },
+                      enableInfiniteScroll: true,
+                      reverse: false,
+                      autoPlay: true,
+                      autoPlayInterval: const Duration(seconds: 2),
+                      autoPlayAnimationDuration:
+                          const Duration(milliseconds: 800),
+                      autoPlayCurve: Curves.fastOutSlowIn,
+                      enlargeCenterPage: true,
+                      enlargeFactor: 0.3,
+                      scrollDirection: Axis.horizontal,
+                      padEnds: false),
+                ),
+                Obx(
+                  () => SmoothPageIndicator(
+                    controller: PageController(initialPage: cx.index.value),
+                    count: 6,
+                    effect: ExpandingDotsEffect(
+                      dotColor: AppColors.grey.withOpacity(0.35),
+                      activeDotColor: Colors.white,
+                      dotWidth: Resp.size(8),
+                      dotHeight: Resp.size(8),
+                    ),
+                  ),
+                )
+              ],
+            ),
             const HeightBox(20),
             Expanded(
               child: ListView(
@@ -70,7 +123,7 @@ class _TrendingScreenState extends State<TrendingScreen> {
                                     width: Resp.size(45),
                                     height: Resp.size(45),
                                   ),
-                                  title: InterText(
+                                  title: const InterText(
                                     text: 'Healthcare Bill',
                                     fontWeight: FontWeight.w600,
                                     fontSize: 14,
@@ -89,9 +142,7 @@ class _TrendingScreenState extends State<TrendingScreen> {
                                   dense: true,
                                   contentPadding: EdgeInsets.zero,
                                 ),
-                                index == 9
-                                    ? const HeightBox(75)
-                                    : const HeightBox(12),
+                                const HeightBox(12)
                               ],
                             ),
                           ),
@@ -125,7 +176,7 @@ class _TrendingScreenState extends State<TrendingScreen> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    InterText(
+                                    const InterText(
                                       text: 'Top Bills',
                                       fontWeight: FontWeight.w500,
                                       fontSize: 12,
@@ -147,7 +198,7 @@ class _TrendingScreenState extends State<TrendingScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            InterText(
+                                            const InterText(
                                               text: 'Immigration Bill',
                                               fontWeight: FontWeight.w600,
                                               fontSize: 14,
@@ -172,29 +223,22 @@ class _TrendingScreenState extends State<TrendingScreen> {
                                           height: Resp.size(31),
                                           decoration: BoxDecoration(
                                               borderRadius:
-                                                  BorderRadius.circular(Resp.size(5)),
+                                                  BorderRadius.circular(
+                                                      Resp.size(5)),
                                               color: AppColors.grey
                                                   .withOpacity(0.3)),
                                           alignment: Alignment.center,
-                                          child: InterText(
+                                          child: const InterText(
                                             text: 'Proposed',
                                             fontWeight: FontWeight.w400,
                                           ),
                                         ),
                                         const WidthBox(10),
-                                        Container(
-                                          width: Resp.size(75),
-                                          height: Resp.size(31),
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                              BorderRadius.circular(Resp.size(5)),
-                                              color: AppColors.primaryColor),
-                                          alignment: Alignment.center,
-                                          child: InterText(
-                                            text: 'Following',
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
+                                        InkWell(
+                                            onTap: () {
+
+                                            },
+                                            child: followBill()),
                                         const WidthBox(12),
                                         SvgPicture.asset(
                                           'assets/trending/trendingDown.svg',
@@ -225,7 +269,7 @@ class _TrendingScreenState extends State<TrendingScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            InterText(
+                                            const InterText(
                                               text: 'Immigration Bill',
                                               fontWeight: FontWeight.w600,
                                               fontSize: 14,
@@ -254,25 +298,13 @@ class _TrendingScreenState extends State<TrendingScreen> {
                                               color: AppColors.grey
                                                   .withOpacity(0.3)),
                                           alignment: Alignment.center,
-                                          child: InterText(
+                                          child: const InterText(
                                             text: 'Proposed',
                                             fontWeight: FontWeight.w400,
                                           ),
                                         ),
                                         const WidthBox(10),
-                                        Container(
-                                          width: Resp.size(75),
-                                          height: Resp.size(31),
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                              BorderRadius.circular(Resp.size(5)),
-                                              color: AppColors.primaryColor),
-                                          alignment: Alignment.center,
-                                          child: InterText(
-                                            text: 'Following',
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
+                                        followingBill(),
                                         const WidthBox(12),
                                         SvgPicture.asset(
                                           'assets/trending/trendingUp.svg',
@@ -305,7 +337,7 @@ class _TrendingScreenState extends State<TrendingScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              InterText(
+                              const InterText(
                                 text: 'Top Issues',
                                 fontWeight: FontWeight.w500,
                                 fontSize: 12,
@@ -380,18 +412,20 @@ class _TrendingScreenState extends State<TrendingScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            InterText(
+                            const InterText(
                               text: 'For You',
                               fontWeight: FontWeight.w600,
                               fontSize: 14,
                             ),
                             InkWell(
+                              overlayColor:
+                                  MaterialStateProperty.all(Colors.transparent),
                               onTap: () {
                                 toPushNavigator(
                                     context: context,
-                                    PageName: const TopicsForYou());
+                                    pageName: const TopicsForYou());
                               },
-                              child: InterText(
+                              child: const InterText(
                                 text: 'See More',
                                 fontWeight: FontWeight.w400,
                                 fontSize: 12,
@@ -434,86 +468,12 @@ class _TrendingScreenState extends State<TrendingScreen> {
                       ],
                     ),
                   ),
+                  const HeightBox(75),
                 ],
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget StatusCard(String text, {bool isActive = false}) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: !isActive && text == 'Introduced' ? Resp.size(11) : 0,
-        right: !isActive && text == 'In Effect' ? Resp.size(11) : 0,
-      ),
-      child: Container(
-        decoration: ShapeDecoration(
-          color:
-              isActive ? AppColors.grey.withOpacity(0.25) : Colors.transparent,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(Resp.size(5))),
-        ),
-        padding: isActive
-            ? EdgeInsets.symmetric(
-                vertical: Resp.size(10), horizontal: Resp.size(8))
-            : EdgeInsets.symmetric(vertical: Resp.size(13)),
-        margin: EdgeInsets.all(Resp.size(3)),
-        child: InterText(
-          text: text,
-          textAlign: TextAlign.center,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-    );
-  }
-
-  Widget PersonCard() {
-    return Expanded(
-      child: Row(
-        children: [
-          Expanded(
-            child: Container(
-              decoration: ShapeDecoration(
-                color: AppColors.grey.withOpacity(0.13),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-              ),
-              padding: EdgeInsets.fromLTRB(
-                  Resp.size(7), Resp.size(12), Resp.size(7), Resp.size(8)),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: Resp.size(55),
-                    width: Resp.size(55),
-                    child: const CircleAvatar(
-                      backgroundColor: Colors.transparent,
-                      radius: 55,
-                      backgroundImage: AssetImage(
-                        'assets/homeFlow/dummyPerson.png',
-                      ),
-                    ),
-                  ),
-                  const HeightBox(10),
-                  InterText(
-                    text: 'Ralph Edwards',
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12,
-                  ),
-                  const HeightBox(8),
-                  SvgPicture.asset(
-                    'assets/homeFlow/followPerson.svg',
-                    width: Resp.size(85),
-                    height: Resp.size(28),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          WidthBox(12),
-        ],
       ),
     );
   }

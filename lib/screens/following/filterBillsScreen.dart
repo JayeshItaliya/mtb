@@ -55,7 +55,7 @@ class _FilterBillsScreenState extends State<FilterBillsScreen> {
                 fontWeight: FontWeight.w600,
                 onTap: () {
                   toPushNavigator(
-                      context: context, PageName: const MainPageScreen());
+                      context: context, pageName: const MainPageScreen());
                 },
               ),
               const HeightBox(25),
@@ -78,6 +78,7 @@ class _FilterBillsScreenState extends State<FilterBillsScreen> {
       child: Column(
         children: [
           InkWell(
+            overlayColor: MaterialStateProperty.all(Colors.transparent),
             onTap: (){
               if(i==filterController.dropDownIndex.value){
                 filterController.dropDownIndex.value=99;
@@ -114,6 +115,7 @@ class _FilterBillsScreenState extends State<FilterBillsScreen> {
                   return Column(
                     children: [
                       InkWell(
+                        overlayColor: MaterialStateProperty.all(Colors.transparent),
                         onTap: () {
                             if (list[index][1] == 0) {
                               list[index][1] = 1;
