@@ -35,6 +35,7 @@ MERGED from [:share_plus] /Users/SMIINFOTECH/Downloads/mtb/build/share_plus/inte
 MERGED from [:fluttertoast] /Users/SMIINFOTECH/Downloads/mtb/build/fluttertoast/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:path_provider_android] /Users/SMIINFOTECH/Downloads/mtb/build/path_provider_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:google_sign_in_android] /Users/SMIINFOTECH/Downloads/mtb/build/google_sign_in_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:flutter_svprogresshud] /Users/SMIINFOTECH/Downloads/mtb/build/flutter_svprogresshud/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:connectivity_plus] /Users/SMIINFOTECH/Downloads/mtb/build/connectivity_plus/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.multidex:multidex:2.0.0] /Users/SMIINFOTECH/.gradle/caches/transforms-3/87a6b0773e8eb7ccf00020e1d858276e/transformed/multidex-2.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.window:window-java:1.0.0-beta04] /Users/SMIINFOTECH/.gradle/caches/transforms-3/6de6e83fce0af87d8efd51a8ce7d4a1f/transformed/jetified-window-java-1.0.0-beta04/AndroidManifest.xml:17:1-23:12
@@ -96,6 +97,8 @@ MERGED from [:path_provider_android] /Users/SMIINFOTECH/Downloads/mtb/build/path
 MERGED from [:path_provider_android] /Users/SMIINFOTECH/Downloads/mtb/build/path_provider_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:google_sign_in_android] /Users/SMIINFOTECH/Downloads/mtb/build/google_sign_in_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:google_sign_in_android] /Users/SMIINFOTECH/Downloads/mtb/build/google_sign_in_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:flutter_svprogresshud] /Users/SMIINFOTECH/Downloads/mtb/build/flutter_svprogresshud/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:flutter_svprogresshud] /Users/SMIINFOTECH/Downloads/mtb/build/flutter_svprogresshud/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:connectivity_plus] /Users/SMIINFOTECH/Downloads/mtb/build/connectivity_plus/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:connectivity_plus] /Users/SMIINFOTECH/Downloads/mtb/build/connectivity_plus/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [androidx.multidex:multidex:2.0.0] /Users/SMIINFOTECH/.gradle/caches/transforms-3/87a6b0773e8eb7ccf00020e1d858276e/transformed/multidex-2.0.0/AndroidManifest.xml:20:5-43
