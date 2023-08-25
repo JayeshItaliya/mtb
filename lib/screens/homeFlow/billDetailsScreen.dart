@@ -24,496 +24,509 @@ class BillDetailsScreen extends StatefulWidget {
 }
 
 class _BillDetailsScreenState extends State<BillDetailsScreen> {
-  final billDetailsController = Get.put(BillDetailsController());
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BillDetailsController>(
-      builder: (controller) {
-        return Scaffold(
-          backgroundColor: Colors.black,
-          body: Column(
-            children: [
-              const HeightBox(15),
-              customAppBar(
-                  title: 'Healthcare Bill', isSuffix: false, context: context),
-              const HeightBox(20),
-              Expanded(
-                child: ListView(
-                  shrinkWrap: true,
-                  physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsets.symmetric(horizontal: Resp.size(4)),
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(Resp.size(12)),
-                      decoration: ShapeDecoration(
-                        color: AppColors.lightBlack,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(Resp.size(10)),
+        init: Get.put(BillDetailsController()),
+        builder: (controller) {
+          return Scaffold(
+            backgroundColor: Colors.black,
+            body: Column(
+              children: [
+                const HeightBox(15),
+                customAppBar(
+                    title: 'Healthcare Bill',
+                    isSuffix: false,
+                    context: context),
+                const HeightBox(20),
+                Expanded(
+                  child: ListView(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    padding: EdgeInsets.symmetric(horizontal: Resp.size(4)),
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(Resp.size(12)),
+                        decoration: ShapeDecoration(
+                          color: AppColors.lightBlack,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(Resp.size(10)),
+                          ),
+                        ),
+                        child: Column(
+                          children: [
+                            ListTile(
+                              leading: SvgPicture.asset(
+                                'assets/common/health.svg',
+                                width: Resp.size(45),
+                                height: Resp.size(45),
+                              ),
+                              title: const InterText(
+                                text: 'Healthcare Bill',
+                                fontWeight: FontWeight.w600,
+                                fontSize: 14,
+                              ),
+                              subtitle: InterText(
+                                text: 'Proposed on 12/04/2023',
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12,
+                                color: Colors.white.withOpacity(0.5),
+                              ),
+                              trailing: followBill(width: 69),
+                              dense: true,
+                              contentPadding: EdgeInsets.zero,
+                            ),
+                            const HeightBox(6),
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: ShapeDecoration(
+                                color: AppColors.grey.withOpacity(0.13),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(Resp.size(8))),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const InterText(
+                                    text: 'Status in Congress',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  const HeightBox(10),
+                                  Container(
+                                    decoration: ShapeDecoration(
+                                      color: AppColors.lightBlack,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              Resp.size(5))),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        statusCard('Introduced',
+                                            isActive: true),
+                                        statusCard('Passed House'),
+                                        statusCard('Passed Senate'),
+                                        statusCard('In Effect'),
+                                      ],
+                                    ),
+                                  ),
+                                  const HeightBox(8),
+                                  Container(
+                                    decoration: ShapeDecoration(
+                                      color: AppColors.lightBlack,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              Resp.size(5))),
+                                    ),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: Resp.size(11),
+                                        vertical: Resp.size(13)),
+                                    child: const Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        InterText(
+                                          text: 'Efficacy Rating',
+                                          textAlign: TextAlign.center,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 12,
+                                        ),
+                                        InterText(
+                                          text: '4',
+                                          textAlign: TextAlign.center,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 12,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const HeightBox(10),
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: ShapeDecoration(
+                                color: AppColors.grey.withOpacity(0.13),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(Resp.size(8))),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // InterText(
+                                  //   text: 'Status in CongressLorem ipsum dolor sit amet, consectetur adcinge lit.Maecenas pretium lacus quis massa blandit, ettristilectus pretium. In sed turpis fertum, placerat auguenon, maximus lorem',
+                                  //   fontSize: 10,
+                                  //   fontWeight: FontWeight.w400,
+                                  //   textOverflow: TextOverflow.clip,
+                                  //   maxLines: 3,
+                                  // ),
+                                  handleDescription("Bill Description",
+                                      'Status in CongressLorem ipsum dolor sit amet, consectetur adcinge lit.Maecenas pretium lacus quis massa blandit, ettristilectus pretium. In sed turpis fertum, placerat auguenon, maximus lorem'),
+                                  const HeightBox(10),
+                                  Container(
+                                    decoration: ShapeDecoration(
+                                      color: AppColors.lightBlack,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              Resp.size(5))),
+                                    ),
+                                    // padding: EdgeInsets.symmetric(
+                                    //     horizontal: Resp.size(11),
+                                    //     vertical: Resp.size(13)),
+                                    child: Column(
+                                      children: [
+                                        billCharacteristicsCard(
+                                            'Efficacy Rating', 4),
+                                        billCharacteristicsCard('Clarity', 4),
+                                        billCharacteristicsCard(
+                                            'Redundancy', 4),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      child: Column(
-                        children: [
-                          ListTile(
-                            leading: SvgPicture.asset(
-                              'assets/common/health.svg',
-                              width: Resp.size(45),
-                              height: Resp.size(45),
-                            ),
-                            title: const InterText(
-                              text: 'Healthcare Bill',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                            ),
-                            subtitle: InterText(
-                              text: 'Proposed on 12/04/2023',
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12,
-                              color: Colors.white.withOpacity(0.5),
-                            ),
-                            trailing: followBill(width: 69),
-                            dense: true,
-                            contentPadding: EdgeInsets.zero,
-                          ),
-                          const HeightBox(6),
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: ShapeDecoration(
-                              color: AppColors.grey.withOpacity(0.13),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(Resp.size(8))),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const InterText(
-                                  text: 'Status in Congress',
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                const HeightBox(10),
-                                Container(
-                                  decoration: ShapeDecoration(
-                                    color: AppColors.lightBlack,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(Resp.size(5))),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      statusCard('Introduced', isActive: true),
-                                      statusCard('Passed House'),
-                                      statusCard('Passed Senate'),
-                                      statusCard('In Effect'),
-                                    ],
-                                  ),
-                                ),
-                                const HeightBox(8),
-                                Container(
-                                  decoration: ShapeDecoration(
-                                    color: AppColors.lightBlack,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(Resp.size(5))),
-                                  ),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: Resp.size(11),
-                                      vertical: Resp.size(13)),
-                                  child: const Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      InterText(
-                                        text: 'Efficacy Rating',
-                                        textAlign: TextAlign.center,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 12,
-                                      ),
-                                      InterText(
-                                        text: '4',
-                                        textAlign: TextAlign.center,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 12,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const HeightBox(10),
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: ShapeDecoration(
-                              color: AppColors.grey.withOpacity(0.13),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(Resp.size(8))),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // InterText(
-                                //   text: 'Status in CongressLorem ipsum dolor sit amet, consectetur adcinge lit.Maecenas pretium lacus quis massa blandit, ettristilectus pretium. In sed turpis fertum, placerat auguenon, maximus lorem',
-                                //   fontSize: 10,
-                                //   fontWeight: FontWeight.w400,
-                                //   textOverflow: TextOverflow.clip,
-                                //   maxLines: 3,
-                                // ),
-                                handleDescription("Bill Description",
-                                    'Status in CongressLorem ipsum dolor sit amet, consectetur adcinge lit.Maecenas pretium lacus quis massa blandit, ettristilectus pretium. In sed turpis fertum, placerat auguenon, maximus lorem'),
-                                const HeightBox(10),
-                                Container(
-                                  decoration: ShapeDecoration(
-                                    color: AppColors.lightBlack,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(Resp.size(5))),
-                                  ),
-                                  // padding: EdgeInsets.symmetric(
-                                  //     horizontal: Resp.size(11),
-                                  //     vertical: Resp.size(13)),
-                                  child: Column(
-                                    children: [
-                                      billCharacteristicsCard('Efficacy Rating', 4),
-                                      billCharacteristicsCard('Clarity', 4),
-                                      billCharacteristicsCard('Redundancy', 4),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const HeightBox(12),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(
-                        Resp.size(12),
-                        Resp.size(12),
-                        Resp.size(0),
-                        Resp.size(12),
-                      ),
-                      decoration: ShapeDecoration(
-                        color: AppColors.lightBlack,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(Resp.size(10)),
+                      const HeightBox(12),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(
+                          Resp.size(12),
+                          Resp.size(12),
+                          Resp.size(0),
+                          Resp.size(12),
                         ),
-                      ),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(right: Resp.size(12)),
-                            child: Row(
+                        decoration: ShapeDecoration(
+                          color: AppColors.lightBlack,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(Resp.size(10)),
+                          ),
+                        ),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(right: Resp.size(12)),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const InterText(
+                                    text: 'For',
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
+                                  ),
+                                  InkWell(
+                                    overlayColor: MaterialStateProperty.all(
+                                        Colors.transparent),
+                                    onTap: () {
+                                      toPushNavigator(
+                                          context: context,
+                                          pageName: const ForScreen());
+                                    },
+                                    child: const InterText(
+                                      text: 'See More',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12,
+                                      color: AppColors.primaryColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const HeightBox(12),
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const InterText(
-                                  text: 'For',
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14,
-                                ),
-                                InkWell(
-                                  overlayColor:
-                                      MaterialStateProperty.all(Colors.transparent),
-                                  onTap: () {
-                                    toPushNavigator(
-                                        context: context,
-                                        pageName: const ForScreen());
-                                  },
-                                  child: const InterText(
-                                    text: 'See More',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 12,
-                                    color: AppColors.primaryColor,
-                                  ),
-                                ),
+                                personCard(),
+                                personCard(),
+                                personCard(),
                               ],
                             ),
-                          ),
-                          const HeightBox(12),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              personCard(),
-                              personCard(),
-                              personCard(),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    const HeightBox(12),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(
-                        Resp.size(12),
-                        Resp.size(12),
-                        Resp.size(0),
-                        Resp.size(12),
-                      ),
-                      decoration: ShapeDecoration(
-                        color: AppColors.lightBlack,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(Resp.size(10)),
+                          ],
                         ),
                       ),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(right: Resp.size(12)),
-                            child: Row(
+                      const HeightBox(12),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(
+                          Resp.size(12),
+                          Resp.size(12),
+                          Resp.size(0),
+                          Resp.size(12),
+                        ),
+                        decoration: ShapeDecoration(
+                          color: AppColors.lightBlack,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(Resp.size(10)),
+                          ),
+                        ),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(right: Resp.size(12)),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const InterText(
+                                    text: 'Against',
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
+                                  ),
+                                  InkWell(
+                                    overlayColor: MaterialStateProperty.all(
+                                        Colors.transparent),
+                                    onTap: () {
+                                      toPushNavigator(
+                                          context: context,
+                                          pageName: const AgainstScreen());
+                                    },
+                                    child: const InterText(
+                                      text: 'See More',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12,
+                                      color: AppColors.primaryColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const HeightBox(12),
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const InterText(
-                                  text: 'Against',
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14,
-                                ),
-                                InkWell(
-                                  overlayColor:
-                                      MaterialStateProperty.all(Colors.transparent),
-                                  onTap: () {
-                                    toPushNavigator(
-                                        context: context,
-                                        pageName: const AgainstScreen());
-                                  },
-                                  child: const InterText(
-                                    text: 'See More',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 12,
-                                    color: AppColors.primaryColor,
-                                  ),
-                                ),
+                                personCard(),
+                                personCard(),
+                                personCard(),
                               ],
                             ),
-                          ),
-                          const HeightBox(12),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              personCard(),
-                              personCard(),
-                              personCard(),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    const HeightBox(12),
-                    Image.asset(
-                      'assets/homeFlow/map.png',
-                      width: Resp.size(343),
-                      height: Resp.size(165),
-                    ),
-                    const HeightBox(30),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        InkWell(
-                            overlayColor:
-                                MaterialStateProperty.all(Colors.transparent),
-                            onTap: () {
-                              billDetailsController.upValue.value =
-                                  !billDetailsController.upValue.value;
-                              billDetailsController.update();
-                            },
-                            child: SvgPicture.asset(
-                              billDetailsController.upValue.value
-                                  ? 'assets/homeFlow/up.svg'
-                                  : 'assets/homeFlow/noneUp.svg',
-                              width: Resp.size(55),
-                              height: Resp.size(55),
-                            )),
-                        InkWell(
-                            overlayColor:
-                                MaterialStateProperty.all(Colors.transparent),
-                            onTap: () {
-                              billDetailsController.downValue.value =
-                                  !billDetailsController.downValue.value;
-                              billDetailsController.update();
-                            },
-                            child: SvgPicture.asset(
-                              billDetailsController.downValue.value
-                                  ? 'assets/homeFlow/down.svg'
-                                  : 'assets/homeFlow/noneDown.svg',
-                              width: Resp.size(55),
-                              height: Resp.size(55),
-                            )),
-                      ],
-                    ),
-                    const HeightBox(30),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(
-                        Resp.size(12),
-                        Resp.size(12),
-                        Resp.size(0),
-                        Resp.size(12),
-                      ),
-                      decoration: ShapeDecoration(
-                        color: AppColors.lightBlack,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(Resp.size(10)),
+                          ],
                         ),
                       ),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(right: Resp.size(12)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const InterText(
-                                  text: 'Related To',
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14,
-                                ),
-                                InkWell(
-                                  overlayColor:
-                                      MaterialStateProperty.all(Colors.transparent),
-                                  onTap: () {
-                                    toPushNavigator(
-                                        context: context,
-                                        pageName: const RelatedToScreen());
-                                  },
-                                  child: const InterText(
-                                    text: 'View All',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 12,
-                                    color: AppColors.primaryColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const HeightBox(12),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              topicsCard('Infrastructure Bill'),
-                              topicsCard('Infrastructure Bill'),
-                              topicsCard('Healthcare Bill'),
-                            ],
-                          ),
-                        ],
+                      const HeightBox(12),
+                      Image.asset(
+                        'assets/homeFlow/map.png',
+                        width: Resp.size(343),
+                        height: Resp.size(165),
                       ),
-                    ),
-                    const HeightBox(89),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          extendBody: true,
-          bottomNavigationBar: BottomSheet(
-            backgroundColor: Colors.transparent,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(Resp.size(15)),
-                topRight: Radius.circular(Resp.size(15)),
-                bottomRight: Radius.circular(Resp.size(0)),
-                bottomLeft: Radius.circular(Resp.size(0)),
-              ),
-            ),
-            onClosing: () {},
-            builder: (BuildContext context) {
-              return Container(
-                height: Resp.size(76),
-                // color: AppColors.lightBlack,
+                      const HeightBox(30),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          InkWell(
+                              overlayColor:
+                                  MaterialStateProperty.all(Colors.transparent),
+                              onTap: () {
 
-                decoration: ShapeDecoration(
-                  color: AppColors.lightBlack,
-                  shadows: const [
-                    BoxShadow(
-                        color: AppColors.lightBlack,
-                        spreadRadius: 0,
-                        blurRadius: 10),
-                  ],
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(Resp.size(15)),
-                      topRight: Radius.circular(Resp.size(15)),
-                      bottomRight: Radius.circular(Resp.size(0)),
-                      bottomLeft: Radius.circular(Resp.size(0)),
-                    ),
+                                controller.upValue.value =
+                                    !controller.upValue.value;
+                                controller.downValue.value =false;
+                                controller.postTrending(context,'',controller.downValue.value?'1':'0');
+                                controller.update();
+                              },
+                              child: SvgPicture.asset(
+                                controller.upValue.value
+                                    ? 'assets/homeFlow/up.svg'
+                                    : 'assets/homeFlow/noneUp.svg',
+                                width: Resp.size(55),
+                                height: Resp.size(55),
+                              )),
+                          InkWell(
+                              overlayColor:
+                                  MaterialStateProperty.all(Colors.transparent),
+                              onTap: () {
+                                controller.downValue.value =
+                                    !controller.downValue.value;
+                                controller.upValue.value =false;
+
+                                controller.postTrending(context,'',controller.downValue.value?'2':'0');
+                                controller.update();
+                              },
+                              child: SvgPicture.asset(
+                                controller.downValue.value
+                                    ? 'assets/homeFlow/down.svg'
+                                    : 'assets/homeFlow/noneDown.svg',
+                                width: Resp.size(55),
+                                height: Resp.size(55),
+                              )),
+                        ],
+                      ),
+                      const HeightBox(30),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(
+                          Resp.size(12),
+                          Resp.size(12),
+                          Resp.size(0),
+                          Resp.size(12),
+                        ),
+                        decoration: ShapeDecoration(
+                          color: AppColors.lightBlack,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(Resp.size(10)),
+                          ),
+                        ),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(right: Resp.size(12)),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const InterText(
+                                    text: 'Related To',
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
+                                  ),
+                                  InkWell(
+                                    overlayColor: MaterialStateProperty.all(
+                                        Colors.transparent),
+                                    onTap: () {
+                                      toPushNavigator(
+                                          context: context,
+                                          pageName: const RelatedToScreen());
+                                    },
+                                    child: const InterText(
+                                      text: 'View All',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12,
+                                      color: AppColors.primaryColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const HeightBox(12),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                topicsCard('Infrastructure Bill'),
+                                topicsCard('Infrastructure Bill'),
+                                topicsCard('Healthcare Bill'),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      const HeightBox(89),
+                    ],
                   ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          'assets/homeFlow/news.svg',
-                          width: Resp.size(26),
-                          height: Resp.size(26),
-                        ),
-                        const HeightBox(10),
-                        const InterText(
-                          text: 'News',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14,
-                        )
-                      ],
+              ],
+            ),
+            extendBody: true,
+            bottomNavigationBar: BottomSheet(
+              backgroundColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(Resp.size(15)),
+                  topRight: Radius.circular(Resp.size(15)),
+                  bottomRight: Radius.circular(Resp.size(0)),
+                  bottomLeft: Radius.circular(Resp.size(0)),
+                ),
+              ),
+              onClosing: () {},
+              builder: (BuildContext context) {
+                return Container(
+                  height: Resp.size(76),
+                  // color: AppColors.lightBlack,
+
+                  decoration: ShapeDecoration(
+                    color: AppColors.lightBlack,
+                    shadows: const [
+                      BoxShadow(
+                          color: AppColors.lightBlack,
+                          spreadRadius: 0,
+                          blurRadius: 10),
+                    ],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(Resp.size(15)),
+                        topRight: Radius.circular(Resp.size(15)),
+                        bottomRight: Radius.circular(Resp.size(0)),
+                        bottomLeft: Radius.circular(Resp.size(0)),
+                      ),
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          'assets/homeFlow/add.svg',
-                          width: Resp.size(26),
-                          height: Resp.size(26),
-                        ),
-                        const HeightBox(10),
-                        const InterText(
-                          text: 'Follow',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14,
-                        )
-                      ],
-                    ),
-                    InkWell(
-                      overlayColor: MaterialStateProperty.all(Colors.transparent),
-                      onTap: () {
-                        onShareData(
-                            text: "*Download Mind The Bill Now😍"
-                                "*\n\nLink For iOS:\nhttps://apps.apple.com/us/app/domez/id6444339880"
-                                "\n\nLink For Android:"
-                                "\nhttps://play.google.com/store/apps/details?id=domez.io\n");
-                      },
-                      child: Column(
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           SvgPicture.asset(
-                            'assets/homeFlow/share.svg',
+                            'assets/homeFlow/news.svg',
                             width: Resp.size(26),
                             height: Resp.size(26),
                           ),
                           const HeightBox(10),
                           const InterText(
-                            text: 'Share',
+                            text: 'News',
                             fontWeight: FontWeight.w500,
                             fontSize: 14,
                           )
                         ],
                       ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        );
-      }
-    );
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/homeFlow/add.svg',
+                            width: Resp.size(26),
+                            height: Resp.size(26),
+                          ),
+                          const HeightBox(10),
+                          const InterText(
+                            text: 'Follow',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14,
+                          )
+                        ],
+                      ),
+                      InkWell(
+                        overlayColor:
+                            MaterialStateProperty.all(Colors.transparent),
+                        onTap: () {
+                          onShareData(
+                              text: "*Download Mind The Bill Now😍"
+                                  "*\n\nLink For iOS:\nhttps://apps.apple.com/us/app/domez/id6444339880"
+                                  "\n\nLink For Android:"
+                                  "\nhttps://play.google.com/store/apps/details?id=domez.io\n");
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              'assets/homeFlow/share.svg',
+                              width: Resp.size(26),
+                              height: Resp.size(26),
+                            ),
+                            const HeightBox(10),
+                            const InterText(
+                              text: 'Share',
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          );
+        });
   }
 
   Widget commonContainer(String text, {bool isTag = true}) {
