@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mtb/controller/authFlowController/changePasswordController.dart';
+import 'package:mtb/main.dart';
 import 'package:mtb/utils/textFormFields.dart';
 
 import '../../utils/commonButton.dart';
 import '../../utils/responsiveUi.dart';
+import '../../utils/strings.dart';
 import '../../utils/utils.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
@@ -33,6 +35,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             inputAction: TextInputAction.done,
             keyboardType: TextInputType.text,
             textEditingController: changeController.oldPasswordController.value,
+            validationFunction: (val){
+              
+            }
           ),
           const HeightBox(20),
           AppWidget.getTextField(
@@ -54,8 +59,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             height: Resp.size(54),
             text: "Change Password",
             onTap: () {
-              // toPushNavigator(
-              //     context: context, PageName: const VerificationScreen());
+              changeController.changePasswordApiCall(context, storage.read(Keys.userId));
             },
           ),
         ],

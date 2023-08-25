@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mtb/screens/authFlow/splashScreen.dart';
+import 'package:mtb/utils/loader.dart';
 
-void main() {
+final storage = GetStorage();
+void main()async{
+  await GetStorage.init();
   runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
 }
 
 class MyApp extends StatelessWidget {

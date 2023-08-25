@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:mtb/controller/profileController/deleteAccountController.dart';
+import 'package:mtb/controller/profileController/logOutController.dart';
 import 'package:mtb/utils/interText.dart';
 import 'package:mtb/utils/utils.dart';
 import '../../utils/appColors.dart';
@@ -16,6 +19,9 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+
+  final deleteController=Get.put(DeleteAccountController());
+  final logOutController=Get.put(LogOutController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,7 +104,12 @@ class _SettingScreenState extends State<SettingScreen> {
                     text: logout?'Log Out':'Delete Account',
                       fontSize: 18,
                     onTap: () {
-                      Navigator.pop(context);
+                      if(logout==true){
+                        logOutController.logOutApiCall(context);
+                      }
+                      else if(logout==false){
+                        deleteController.deleteAccountApiCall(context);
+                      }
                     },
                   ),
                   const HeightBox(30),

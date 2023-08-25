@@ -10,7 +10,8 @@ import '../../utils/utils.dart';
 
 
 class VerificationScreen extends StatefulWidget {
-  const VerificationScreen({Key? key}) : super(key: key);
+ final String emilAddress;
+ const VerificationScreen({Key? key,required this.emilAddress}) : super(key: key);
 
   @override
   State<VerificationScreen> createState() => _VerificationScreenState();
@@ -124,7 +125,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 CommonButton(
                   text: "Submit",
                   onTap: () {
-                    controller.verificationCodeApiCall(context);
+                    controller.verificationCodeApiCall(context,widget.emilAddress);
                   },
                 ),
               ],

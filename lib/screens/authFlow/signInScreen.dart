@@ -221,9 +221,4 @@ class _SignInScreenState extends State<SignInScreen> {
       }
     );
   }
-  @override
-  void dispose() {
-    super.dispose();
-    Get.delete<SignInController>();
-  }
 }

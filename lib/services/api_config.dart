@@ -10,4 +10,8 @@ class ApiConfig {
   static const String forgotPassword = "${baseUrl}forgotpassword";
   static const String verifyCode = "${baseUrl}verifycode";
   static const String changePassword = "${baseUrl}change-password";
+  static const String users = "${baseUrl}users";
+  static const String logout = "${baseUrl}logout";
+  static const String deleteAccount = "${baseUrl}users";
+  static const String getUserData = "${baseUrl}users";
 }

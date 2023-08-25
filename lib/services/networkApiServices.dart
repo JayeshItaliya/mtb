@@ -51,13 +51,37 @@ class NetWorkApiServices{
     customPrint("post postData==>>${body.toString()}");
     customPrint("post header==>>${userLoginToken.toString()}");
     try {
+      var request = http.MultipartRequest('POST', Uri.parse(url ?? ""),);
+      request.headers.addAll({'Authorization': 'Bearer ${userLoginToken.toString()}'});
+      if(body!=null){
+        request.fields.addAll(body);
+      }
+      var streamedResponse = await request.send();
+      var response = await http.Response.fromStream(streamedResponse);
+      responseJson = returnResponse(response, context);
+      customPrint(responseJson.toString());
+    } on SocketException {
+      showToastMessage(context: context, msg: "No Internet Connection");
+    } on TimeoutException {
+      showToastMessage(context: context, msg: "Connection Time Out");
+    } on Error catch (e) {
+      customPrint(e.stackTrace.toString());
+      showToastMessage(context: context, msg: "Something Went Wrong");
+    }
+    return responseJson;
+  }
+
+  Future deleteResponse({String? url,  context}) async {
+    dynamic responseJson;
+    dynamic userLoginToken = cx.read(Keys.token);
+    customPrint("post apiUrl==>>$url");
+    customPrint("post header==>>${userLoginToken.toString()}");
+    try {
       var request = http.MultipartRequest(
-        'POST',
+        'DELETE',
         Uri.parse(url ?? ""),
       );
-      request.headers
-          .addAll({'Authorization': 'Bearer ${userLoginToken.toString()}'});
-      request.fields.addAll(body);
+      request.headers.addAll({'Authorization': 'Bearer ${userLoginToken.toString()}'});
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
       responseJson = returnResponse(response, context);

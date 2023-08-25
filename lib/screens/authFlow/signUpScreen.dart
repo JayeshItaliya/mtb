@@ -244,10 +244,4 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
-
-  @override
-  void dispose() {
-    super.dispose();
-    Get.delete<SignUpScreen>();
-  }
 }

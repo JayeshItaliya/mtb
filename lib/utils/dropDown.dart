@@ -35,7 +35,7 @@ Widget commonDropDown(
                 Expanded(
                   child: InterText(
                     text: hint,
-                    fontSize:14,
+                    fontSize:Resp.size(14),
                     fontWeight:FontWeight.w400,
                   ),
                 ),

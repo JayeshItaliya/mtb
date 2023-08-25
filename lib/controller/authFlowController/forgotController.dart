@@ -21,7 +21,7 @@ class ForgotController extends GetxController{
       if(response["success"]==true){
         showSuccessDialog(response["message"]);
         if (!context.mounted) return;
-        toPushNavigator(context: context, pageName: const VerificationScreen());
+        toPushNavigator(context: context, pageName:VerificationScreen(emilAddress: emailController.value.text.toString().trim(),));
       }
       else if(response["success"]==false){
         showErrorDialog(response["message"]);

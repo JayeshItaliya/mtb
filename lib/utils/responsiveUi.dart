@@ -14,23 +14,29 @@ class Resp{
       h=MediaQuery.of(context).size.height;
       w=MediaQuery.of(context).size.width;
       crosslength=pow((h*h)+(w*w),1/2) as double;
-      
+
       cx.write(Keys.crossLength,crosslength);
+      customPrint("resp.size local storage done");
     }
   }
   static double size(double size){
     if(cx.read(Keys.crossLength)==null){
+      customPrint("resp.size null");
       h=Get.height;
       w=Get.width;
       crosslength=pow((h*h)+(w*w),1/2) as double;
       cx.write(Keys.crossLength,crosslength);
       double convertValue=size/(cx.read(Keys.crossLength)??crosslength);
       double value=(cx.read(Keys.crossLength)??crosslength)*convertValue;
+      // customPrint(cx.read(Keys.crossLength));
+      // customPrint(value);
       return value;
     }
     else{
+      //customPrint("resp.size not null");
       double convertValue=size/(cx.read(Keys.crossLength)??crosslength);
       double value=(cx.read(Keys.crossLength)??crosslength)*convertValue;
+      //customPrint(value);
       return value;
     }
   }

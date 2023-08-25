@@ -1,7 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:mtb/services/api_config.dart';
+import 'package:mtb/utils/circularLoader.dart';
+import 'package:mtb/utils/utils.dart';
+
+import '../../mainPage.dart';
+import '../../utils/pageNavgation.dart';
 
 class DemoGraphicsController extends GetxController{
+
+
   final ageController =TextEditingController().obs;
   final employeeStatusController =TextEditingController().obs;
   final employmentStatusController =TextEditingController().obs;
@@ -18,13 +26,12 @@ class DemoGraphicsController extends GetxController{
   var selectedEmployment="Employment Status".obs;
   var selectedServiceStatus="Service Status".obs;
 
-
   List<String> ageList=
   [
-    "13-18",
-    "13-25",
-    "18+",
-    "65+",
+    "18",
+    "25",
+    "30",
+    "40",
   ];
 
   List<String> genderList=
@@ -95,4 +102,37 @@ class DemoGraphicsController extends GetxController{
     "In Active Duty",
     "Not affiliated with the Army",
   ];
+
+
+  setDemographicApiCall(BuildContext context)async{
+
+    var data={
+      'gender':ageController.value.text.contains("Male")?'1':ageController.value.text.contains("Female")?"2":"3",
+      'state': selectedState.value.toString(),
+      'city': selectedCity.value.toString(),
+      'sexual_orientation': selectedSexualOrientationValue.value.toString(),
+      'citizenship_status': selectedCitizenShip.value.toString(),
+      'home_owner_status': selectedHomeOwner.value.toString(),
+      'healthcare': selectedHealthCare.value.toString(),
+      'employment_status': selectedEmployment.value.toString(),
+      'service_status': selectedServiceStatus.value.toString(),
+      'parental_status': selectedParentalStatusValue.value.toString(),
+      'age': selectAgeValue.value.toString()
+    };
+    loadingDialog();
+    try {
+      dynamic response= await apiServices.postResponse(context: context,url: ApiConfig.users,body: data);
+      if(response["success"]==true){
+        showSuccessDialog(response["message"]);
+        if (!context.mounted) return;
+        toPushNavigator(context: context, pageName: const MainPageScreen());
+      }
+      else if(response["success"]==false){
+       showErrorDialog(response["message"]);
+      }
+    } on Exception catch (e) {
+      showErrorDialog("OOPS!");
+     customPrint("Error==>${e.toString()}");
+    }
+  }
 }

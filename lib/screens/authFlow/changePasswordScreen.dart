@@ -9,7 +9,8 @@ import '../../utils/responsiveUi.dart';
 import '../../utils/utils.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
-  const ChangePasswordScreen({super.key});
+ final String emailAddress;
+ const ChangePasswordScreen({super.key,required this.emailAddress});
 
   @override
   State<ChangePasswordScreen> createState() => _ChangePasswordScreenState();
@@ -85,7 +86,7 @@ final chPassKey=GlobalKey<FormState>();
                 text: "Submit",
                 onTap: () {
                   if(chPassKey.currentState!.validate()){
-                    controller.changePasswordApiCall(context);
+                    controller.changePasswordApiCall(context,widget.emailAddress);
                   }
                 },
               ),

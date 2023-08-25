@@ -11,17 +11,18 @@ class VerificationPasswordController extends GetxController{
 
   var verificationCode="".obs;
 
-  verificationCodeApiCall(BuildContext context)async{
+  verificationCodeApiCall(BuildContext context,String emailAddress)async{
     var data={
-      'otp': verificationCode.value.toString()
+      'otp': verificationCode.value.toString(),
+      'email': emailAddress.toString()
     };
     loadingDialog();
     try {
       dynamic response=await apiServices.postResponse(context: context,url: ApiConfig.verifyCode,body: data);
       if(response["success"]==true){
-        showSuccessDialog(response["messages"]);
+        showSuccessDialog(response["message"]);
         if (!context.mounted) return;
-        toPushNavigator(context: context, pageName: const ChangePasswordScreen());
+        toPushNavigator(context: context, pageName:ChangePasswordScreen(emailAddress:emailAddress.toString(),));
       }
       else if(response["success"]==false){
         showErrorDialog(response["message"]);

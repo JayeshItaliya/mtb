@@ -13,16 +13,17 @@ class ChangePasswordController extends GetxController{
   final confirmPasswordController=TextEditingController().obs;
 
 
-  changePasswordApiCall(BuildContext context)async{
+  changePasswordApiCall(BuildContext context,String emailAddress)async{
     var data={
       'password': newPasswordController.value.text.toString().trim(),
-      'c_password': confirmPasswordController.value.text.toString().trim()
+      'c_password': confirmPasswordController.value.text.toString().trim(),
+      'email': emailAddress.toString()
     };
     loadingDialog();
     try {
       dynamic response=await apiServices.postResponse(context: context,url: ApiConfig.changePassword,body: data);
       if(response["success"]==true){
-        showSuccessDialog(response["messages"]);
+        showSuccessDialog(response["message"]);
         if (!context.mounted) return;
         offNavigator(context: context, pageName: const SignInScreen());
       }

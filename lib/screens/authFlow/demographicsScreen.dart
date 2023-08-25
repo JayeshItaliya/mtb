@@ -13,7 +13,7 @@ import '../../utils/utils.dart';
 
 class DemoGraphicsScreen extends StatefulWidget {
   final bool isFromProfile;
-  const DemoGraphicsScreen({this.isFromProfile=false,super.key});
+  const DemoGraphicsScreen({this.isFromProfile = false, super.key});
 
   @override
   State<DemoGraphicsScreen> createState() => _DemoGraphicsScreenState();
@@ -31,7 +31,7 @@ class _DemoGraphicsScreenState extends State<DemoGraphicsScreen> {
         padding: EdgeInsets.symmetric(horizontal: Resp.size(15)),
         physics: const ClampingScrollPhysics(),
         children: [
-          if(widget.isFromProfile)...{
+          if (widget.isFromProfile) ...{
             customAppBar(title: '', context: context, isSuffix: false),
           },
           const HeightBox(20),
@@ -67,14 +67,12 @@ class _DemoGraphicsScreenState extends State<DemoGraphicsScreen> {
           commonDropDown(
               context: context,
               list: demoGraphicsController.stateList,
-              mycontrollerValue:
-                  demoGraphicsController.selectedState,
+              mycontrollerValue: demoGraphicsController.selectedState,
               hint: "State"),
           commonDropDown(
               context: context,
               list: demoGraphicsController.cityList,
-              mycontrollerValue:
-                  demoGraphicsController.selectedCity,
+              mycontrollerValue: demoGraphicsController.selectedCity,
               hint: "City"),
           commonDropDown(
               context: context,
@@ -113,13 +111,11 @@ class _DemoGraphicsScreenState extends State<DemoGraphicsScreen> {
               list: demoGraphicsController.serviceStatusList,
               mycontrollerValue: demoGraphicsController.selectedServiceStatus,
               hint: "Service Status",
-            isHeightBox: false
-          ),
+              isHeightBox: false),
           CommonButton(
-            text: widget.isFromProfile?'Save':"Continue",
+            text: widget.isFromProfile ? 'Save' : "Continue",
             onTap: () {
-              toPushNavigator(
-                  context: context, pageName: const MainPageScreen());
+              demoGraphicsController.setDemographicApiCall(context);
             },
           ),
           HeightBox(
@@ -128,10 +124,5 @@ class _DemoGraphicsScreenState extends State<DemoGraphicsScreen> {
         ],
       ),
     );
-  }
-  @override
-  void dispose() {
-    super.dispose();
-    Get.delete<DemoGraphicsController>();
   }
 }
