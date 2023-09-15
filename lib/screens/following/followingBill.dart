@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:mtb/model/followingModel/followModel.dart';
+
+import '../../services/api_call.dart';
 import '../../utils/appColors.dart';
-import '../../utils/interText.dart';
+import '../../utils/commonCard.dart';
+import '../../utils/pageNavgation.dart';
 import '../../utils/responsiveUi.dart';
 import '../../utils/utils.dart';
+import '../homeFlow/billDetailsScreen.dart';
 
 class FollowingBill extends StatefulWidget {
-  const FollowingBill({super.key});
+  List<FollowModel> followList;
+
+  FollowingBill(this.followList, {super.key});
 
   @override
   State<FollowingBill> createState() => _FollowingBillState();
@@ -15,109 +21,93 @@ class FollowingBill extends StatefulWidget {
 class _FollowingBillState extends State<FollowingBill> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Column(
-        children: [
-          const HeightBox(15),
-          customAppBar(title: 'Following Bill', isSuffix: false, context: context),
-          const HeightBox(20),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.fromLTRB(
-                Resp.size(0),
-                Resp.size(12),
-                Resp.size(12),
-                Resp.size(0),
-              ),
-              // margin: EdgeInsets.only(bottom: Resp.size(25),),
-              decoration: ShapeDecoration(
-                color: AppColors.lightBlack,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(Resp.size(10)),
-                ),
-              ),
-              child: GridView.builder(
-                shrinkWrap: true,
-                itemCount: 31,
-                physics: const ClampingScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  // maxCrossAxisExtent: 200,
-                  crossAxisSpacing: 0,
-                  mainAxisSpacing: 0,
-                  childAspectRatio: 0.78,
-                ),
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    padding: EdgeInsets.fromLTRB(
-                      Resp.size(12),
-                      Resp.size(0),
-                      Resp.size(0),
-                      Resp.size(12),
+    return SafeArea(
+      bottom: true,
+      top: true,
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: Padding(
+          padding: defaultScreenPadding(),
+          child: Column(
+            children: [
+              customAppBar(
+                  title: 'Following Bill', isSuffix: false, context: context),
+              const HeightBox(20),
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(
+                    Resp.size(0),
+                    Resp.size(12),
+                    Resp.size(12),
+                    Resp.size(10),
+                  ),
+                  // margin: EdgeInsets.only(bottom: Resp.size(25),),
+                  decoration: ShapeDecoration(
+                    color: AppColors.lightBlack,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(Resp.size(10)),
                     ),
-                    decoration: ShapeDecoration(
-                      color: AppColors.lightBlack,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(Resp.size(10)),
-                      ),
+                  ),
+                  child: GridView.builder(
+                    shrinkWrap: true,
+                    itemCount: widget.followList.length,
+                    physics: const ClampingScrollPhysics(),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      // maxCrossAxisExtent: 200,
+                      crossAxisSpacing: 0,
+                      mainAxisSpacing: 0,
+                      childAspectRatio: 0.78,
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        topicCard(),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+                    itemBuilder: (BuildContext context, int index) {
+                      FollowModel model = widget.followList[index];
+                      return InkWell(
+                        overlayColor:
+                            MaterialStateProperty.all(Colors.transparent),
+                        onTap: () {
+                          toPushNavigator(
+                              context: context,
+                              onBack: (_) {
 
-  Widget topicCard() {
-    return Expanded(
-      child: Row(
-        children: [
-          Expanded(
-            child: Container(
-              decoration: ShapeDecoration(
-                color: AppColors.grey.withOpacity(0.13),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
+                              },
+                              pageName: BillDetailsScreen(
+                                item: model.billdetail[0],
+                              ));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(
+                            Resp.size(12),
+                            Resp.size(0),
+                            Resp.size(0),
+                            Resp.size(8),
+                          ),
+                          decoration: ShapeDecoration(
+                            color: AppColors.lightBlack,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(Resp.size(10)),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              topicCard(model, () {
+                                setState(() {
+                                  widget.followList.removeAt(index);
+                                  TaskProvider().followAPI(
+                                      model.billId.toString(), '0', context);
+                                });
+                              }),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
               ),
-              padding: EdgeInsets.fromLTRB(
-                  Resp.size(7), Resp.size(12), Resp.size(7), Resp.size(8)),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: Resp.size(55),
-                    width: Resp.size(55),
-                    child: SvgPicture.asset(
-                      'assets/common/immigration.svg',
-                    ),
-                  ),
-                  const HeightBox(10),
-                  const InterText(
-                    text: 'Immigration Bill',
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12,
-                  ),
-                  const HeightBox(8),
-                  SvgPicture.asset(
-                    'assets/homeFlow/following.svg',
-                    width: Resp.size(85),
-                    height: Resp.size(28),
-                  ),
-                ],
-              ),
-            ),
+            ],
           ),
-          // WidthBox(12),
-        ],
+        ),
       ),
     );
   }

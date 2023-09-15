@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:mtb/controller/trendingController/trendingController.dart';
 import 'package:mtb/screens/following/followingScreen.dart';
 import 'package:mtb/screens/homeFlow/homeScreen.dart';
 import 'package:mtb/screens/profileFlow/profileScreen.dart';
@@ -6,7 +9,12 @@ import 'package:mtb/screens/searchFlow/searchScreen.dart';
 import 'package:mtb/screens/trending/trendingScreen.dart';
 import 'package:mtb/utils/appColors.dart';
 import 'package:mtb/utils/responsiveUi.dart';
+import 'package:mtb/utils/utils.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+
+import 'controller/followingController/followingController.dart';
+import 'controller/homeController/homeController.dart';
+import 'controller/profileController/getProfileDataController.dart';
 
 class MainPageScreen extends StatefulWidget {
   const MainPageScreen({super.key});
@@ -40,8 +48,8 @@ class _MainPageScreenState extends State<MainPageScreen> {
     iconSize: Resp.size(30),
     activeColorPrimary: AppColors.primaryColor,
     inactiveColorPrimary: AppColors.grey,
-     inactiveIcon:Image.asset("assets/homeFlow/following.png",color: AppColors.grey) ,
-     icon: Image.asset("assets/homeFlow/following.png",color: AppColors.primaryColor),
+     inactiveIcon:Image.asset("assets/homeFlow/followingBottomBar.png",color: AppColors.grey) ,
+     icon: Image.asset("assets/homeFlow/followingBottomBar.png",color: AppColors.primaryColor),
      title: ("Following"),
 
    ),
@@ -61,6 +69,11 @@ class _MainPageScreenState extends State<MainPageScreen> {
       inactiveIcon:Image.asset("assets/homeFlow/profile.png",color: AppColors.grey),
       icon: Image.asset("assets/homeFlow/profile.png",color: AppColors.primaryColor,),
       title: ("Profile"),
+      contentPadding: 0,
+
+      // textStyle: GoogleFonts.inter(
+      //   height: 5
+      // )
     )
   ];
 
@@ -71,46 +84,91 @@ class _MainPageScreenState extends State<MainPageScreen> {
     const TrendingScreen(),
     const ProfileScreen(),
   ];
-
+  HomeController homeController = Get.put(HomeController());
   PersistentTabController controller = PersistentTabController(initialIndex: 0);
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    cx.showBottomSheet.value=true;
+  }
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      bottomSheet: PersistentTabView(
-        context,
-        bottomScreenMargin: 0,
-        margin: EdgeInsets.zero,
-        padding: const NavBarPadding.fromLTRB(5,3,5,3),
-        navBarHeight: Resp.size(70),
-        controller: controller,
-        screens: widgetScreen,
-        items: navBarsItems,
-        resizeToAvoidBottomInset: true,
-        onItemSelected: (value) {
-          setState(() {});
-        },
-        backgroundColor: AppColors.lightBlack,
-        confineInSafeArea: false,
-        stateManagement: true,
-        navBarStyle: NavBarStyle.style3,
-        hideNavigationBarWhenKeyboardShows: false,
-        // hideNavigationBar: false,
-        handleAndroidBackButtonPress: true,
-        screenTransitionAnimation: const ScreenTransitionAnimation(
-          animateTabTransition: true,
-          curve: Curves.ease,
-          duration: Duration(milliseconds: 200),
-        ),
-        decoration: const NavBarDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15.0),
-            topRight: Radius.circular(15.0),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        bottomSheet: Obx(
+              ()=> PersistentTabView(
+            context,
+            bottomScreenMargin: 0,
+            margin: EdgeInsets.zero,
+            padding: NavBarPadding.fromLTRB(Resp.size(05),Resp.size(04),Resp.size(15),Resp.size(15)),
+            navBarHeight: Resp.size(70),
+            controller: controller,
+            screens: widgetScreen,
+            neumorphicProperties: const NeumorphicProperties(
+              bevel: 2,
+              borderRadius: 0,
+              curveType: CurveType.flat
+            ),
+            items: navBarsItems,
+            resizeToAvoidBottomInset: true,
+            onItemSelected: (value) async {
+              if(value==0){
+                await homeController.getBillDataAPI(context);
+              }
+              else if(value==1){
+              }
+              else if(value==2){
+                FollowingController followController = Get.put(FollowingController());
+
+                followController.getFollowDataAPI(context);
+                followController.forYouData.value =
+                (await followController.getForYouData(context))!;
+              }
+              else if(value==3){
+                TrendingController trendingController = Get.put(TrendingController());
+
+                trendingController.billData.value =
+                  (await trendingController.getTrendingBillData(context))!;
+                  trendingController.forYouData.value =
+                  (await trendingController.getForYouData(context))!;
+                  trendingController.topIssuesData.value =
+                  (await trendingController.getTopIssuesData(context))!;
+
+              }
+              else if(value==4){
+                GetProfileDataController getProfileDataController = Get.put(GetProfileDataController());
+
+                getProfileDataController.getUserProfileApiCall(context);
+              }
+            },
+                popAllScreensOnTapAnyTabs: true,
+
+            backgroundColor: AppColors.lightBlack,
+            confineInSafeArea: false,
+            stateManagement: true,
+            navBarStyle: NavBarStyle.style3,
+            hideNavigationBarWhenKeyboardShows: true,
+            hideNavigationBar: !cx.showBottomSheet.value,
+            handleAndroidBackButtonPress: true,
+            // screenTransitionAnimation: const ScreenTransitionAnimation(
+            //   animateTabTransition: true,
+            //   curve: Curves.ease,
+            //   duration: Duration(milliseconds: 100),
+            // ),
+            decoration: const NavBarDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+                topRight: Radius.circular(15.0),
+              ),
+
+            ),
+
           ),
         ),
       ),
     );
   }
-
 }

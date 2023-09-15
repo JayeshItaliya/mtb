@@ -1,510 +1,447 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
+import 'package:mtb/controller/followingController/followingController.dart';
 import 'package:mtb/utils/appColors.dart';
 import 'package:mtb/utils/interText.dart';
 
+import '../../controller/authFlowController/chooseTopicController.dart';
+import '../../model/followingModel/followModel.dart';
+import '../../model/trendingModel/ForYouModel.dart';
+import '../../services/api_call.dart';
+import '../../utils/commonCard.dart';
 import '../../utils/pageNavgation.dart';
 import '../../utils/responsiveUi.dart';
 import '../../utils/utils.dart';
+import '../homeFlow/billDetailsScreen.dart';
 import 'filterBillsScreen.dart';
 import 'filterTopicScreen.dart';
 import 'followingBill.dart';
 import 'followingCongressPerson.dart';
 import 'followingTopicScreen.dart';
 
-
 class FollowingScreen extends StatefulWidget {
-  const FollowingScreen({super.key});
+  final bool isFromProfile;
+
+  const FollowingScreen({super.key, this.isFromProfile = false});
 
   @override
   State<FollowingScreen> createState() => _FollowingScreenState();
 }
 
 class _FollowingScreenState extends State<FollowingScreen> {
+  FollowingController followController = Get.put(FollowingController());
+  ChooseTopicController chooseTopicController =
+      Get.put(ChooseTopicController());
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      followController.getFollowDataAPI(context);
+      followController.forYouData.value =
+          (await followController.getForYouData(context))!;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Column(
-        children: [
-          const HeightBox(15),
-          customAppBar(
-              title: 'Following',
-              isSuffix: false,
-              context: context,
-            isPrefix: false
-          ),
-          const HeightBox(20),
-          Expanded(
-            child: ListView(
-              shrinkWrap: true,
-              physics: const ClampingScrollPhysics(),
-              padding: EdgeInsets.symmetric(horizontal: Resp.size(4)),
-              children: [
-
-                Container(
-                  // padding: EdgeInsets.fromLTRB(
-                  //   Resp.size(12),
-                  //   Resp.size(12),
-                  //   Resp.size(0),
-                  //   Resp.size(12),
-                  // ),
-                  decoration: ShapeDecoration(
-                    color: AppColors.lightBlack,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(Resp.size(10)),
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(
-                          Resp.size(12),
-                          Resp.size(12),
-                          Resp.size(12),
-                          Resp.size(0),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const InterText(
-                              text: 'You are following 3 Bills',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                            ),
-                            InkWell(
-                              overlayColor: MaterialStateProperty.all(Colors.transparent),
-                              onTap: () {
-                                toPushNavigator(
-                                    context: context,
-                                    pageName: const FilterBillsScreen());
-                              },
-                              child: SvgPicture.asset(
-                                  'assets/following/filter.svg',
-                                width: Resp.size(68),
-                                height: Resp.size(31),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const HeightBox(12),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(
-                          Resp.size(0),
-                          Resp.size(0),
-                          Resp.size(12),
-                          Resp.size(0),
-                        ),
-                        // margin: EdgeInsets.only(bottom: Resp.size(25),),
+    return SafeArea(
+      bottom: true,
+      top: true,
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: Padding(
+          padding: defaultScreenPadding(),
+          child: Column(
+            children: [
+              customAppBar(
+                  title: 'Following',
+                  isSuffix: false,
+                  context: context,
+                  isPrefix: widget.isFromProfile),
+              const HeightBox(20),
+              Expanded(
+                child: ListView(
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  padding: EdgeInsets.symmetric(horizontal: Resp.size(4)),
+                  children: [
+                    Obx(
+                      () => Container(
+                        // padding: EdgeInsets.fromLTRB(
+                        //   Resp.size(12),
+                        //   Resp.size(12),
+                        //   Resp.size(0),
+                        //   Resp.size(12),
+                        // ),
                         decoration: ShapeDecoration(
                           color: AppColors.lightBlack,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(Resp.size(10)),
                           ),
                         ),
-                        child: GridView.builder(
-                          shrinkWrap: true,
-                          itemCount: 3,
-                          physics: const ClampingScrollPhysics(),
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            // maxCrossAxisExtent: 200,
-                            crossAxisSpacing: 0,
-                            mainAxisSpacing: 0,
-                            childAspectRatio: 0.75,
-                          ),
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
+                        child: Column(
+                          children: [
+                            Padding(
                               padding: EdgeInsets.fromLTRB(
                                 Resp.size(12),
+                                Resp.size(12),
+                                Resp.size(12),
+                                Resp.size(0),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  InterText(
+                                    text:
+                                        'You are following ${followController.followList.length} ${(followController.followList.length) > 1 ? 'Bills' : 'Bill'}',
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const HeightBox(12),
+                            Container(
+                              padding: EdgeInsets.fromLTRB(
                                 Resp.size(0),
                                 Resp.size(0),
                                 Resp.size(12),
+                                Resp.size(0),
                               ),
+                              // margin: EdgeInsets.only(bottom: Resp.size(25),),
                               decoration: ShapeDecoration(
                                 color: AppColors.lightBlack,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(Resp.size(10)),
+                                  borderRadius:
+                                      BorderRadius.circular(Resp.size(10)),
                                 ),
                               ),
+                              child: Obx(() {
+                                return GridView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: followController.followList.isEmpty
+                                      ? 0
+                                      : followController.followList.length >= 3
+                                          ? 3
+                                          : followController.followList.length,
+                                  physics: const ClampingScrollPhysics(),
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3,
+                                    // maxCrossAxisExtent: 200,
+                                    crossAxisSpacing: 0,
+                                    mainAxisSpacing: 0,
+                                    childAspectRatio: 0.75,
+                                  ),
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    FollowModel model =
+                                        followController.followList[index];
+                                    return InkWell(
+                                      overlayColor: MaterialStateProperty.all(
+                                          Colors.transparent),
+                                      onTap: () {
+                                        cx.showBottomSheet.value = false;
+                                        toPushNavigator(
+                                            context: context,
+                                            onBack: (_) {
+                                              cx.showBottomSheet.value = true;
+                                              followController
+                                                  .getFollowDataAPI(context);
+                                            },
+                                            pageName: BillDetailsScreen(
+                                              item: followController
+                                                  .followList[index]
+                                                  .billdetail[0],
+                                            ));
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.fromLTRB(
+                                          Resp.size(12),
+                                          Resp.size(0),
+                                          Resp.size(0),
+                                          Resp.size(8),
+                                        ),
+                                        decoration: ShapeDecoration(
+                                          color: AppColors.lightBlack,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                Resp.size(10)),
+                                          ),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            topicCard(model, () {
+                                              followController.followList
+                                                  .removeAt(index);
+                                              TaskProvider().followAPI(
+                                                  model.billId.toString(),
+                                                  '0',
+                                                  context);
+                                            }),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              }),
+                            ),
+                            if (followController.followList.length > 3) ...{
+                              InkWell(
+                                overlayColor: MaterialStateProperty.all(
+                                    Colors.transparent),
+                                onTap: () {
+                                  cx.showBottomSheet.value = false;
+                                  toPushNavigator(
+                                      context: context,
+                                      onBack: (_) async {
+                                        cx.showBottomSheet.value = widget.isFromProfile?false:true;
+                                      },
+                                      pageName: FollowingBill(
+                                          followController.followList));
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                    Resp.size(12),
+                                    Resp.size(0),
+                                    Resp.size(12),
+                                    Resp.size(12),
+                                  ),
+                                  child: Container(
+                                    height: Resp.size(42),
+                                    width: double.infinity,
+                                    decoration: ShapeDecoration(
+                                      color: AppColors.grey.withOpacity(0.3),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: const InterText(
+                                      text: 'See More',
+                                      color: AppColors.primaryColor,
+                                      textAlign: TextAlign.center,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            }
+                          ],
+                        ),
+                      ),
+                    ),
+                    const HeightBox(12),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(
+                        Resp.size(12),
+                        Resp.size(12),
+                        Resp.size(0),
+                        Resp.size(12),
+                      ),
+                      decoration: ShapeDecoration(
+                        color: AppColors.lightBlack,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(Resp.size(10)),
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(right: Resp.size(12)),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                InterText(
+                                  text: '31 Congress Person',
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
+                                ),
+                              ],
+                            ),
+                          ),
+                          const HeightBox(12),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              personCard(),
+                              personCard(),
+                              personCard(),
+                            ],
+                          ),
+                          InkWell(
+                            overlayColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            onTap: () {
+                              cx.showBottomSheet.value = false;
+                              toPushNavigator(
+                                  context: context,
+                                  onBack: (_) async {
+                                    cx.showBottomSheet.value = widget.isFromProfile?false:true;
+                                  },
+                                  pageName: const FollowingCongressPerson());
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                Resp.size(0),
+                                Resp.size(12),
+                                Resp.size(12),
+                                Resp.size(0),
+                              ),
+                              child: Container(
+                                height: Resp.size(42),
+                                width: double.infinity,
+                                decoration: ShapeDecoration(
+                                  color: AppColors.grey.withOpacity(0.3),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5)),
+                                ),
+                                alignment: Alignment.center,
+                                child: const InterText(
+                                  text: 'See More',
+                                  color: AppColors.primaryColor,
+                                  textAlign: TextAlign.center,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    const HeightBox(12),
+                    Obx(() {
+                      ForYouModel item = followController.forYouData.value;
+
+                      return Container(
+                        padding: EdgeInsets.fromLTRB(
+                          Resp.size(12),
+                          Resp.size(12),
+                          Resp.size(0),
+                          Resp.size(12),
+                        ),
+                        decoration: ShapeDecoration(
+                          color: AppColors.lightBlack,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(Resp.size(10)),
+                          ),
+                        ),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(right: Resp.size(12)),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  topicCard(),
+                                  InterText(
+                                    text:
+                                        '${item.topicTags?.length ?? 0} ${(item.topicTags?.length ?? 0) > 1 ? 'Topics' : 'Topic'}',
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
+                                  ),
                                 ],
                               ),
-                            );
-                          },
-                        ),
-                      ),
-                      InkWell(
-                        overlayColor: MaterialStateProperty.all(Colors.transparent),
-                        onTap: (){
-                          toPushNavigator(
-                              context: context, pageName: const FollowingBill());
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(
-                            Resp.size(12),
-                            Resp.size(0),
-                            Resp.size(12),
-                            Resp.size(12),
-                          ),
-                          child: Container(
-                            height: Resp.size(42),
-                            width: double.infinity,
-                            decoration: ShapeDecoration(
-                              color: AppColors.grey.withOpacity(0.3),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                             ),
-                            alignment: Alignment.center,
-                            child: const InterText(
-                              text:'See More',
-                              color: AppColors.primaryColor,
-                              textAlign: TextAlign.center,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                const HeightBox(12),
-                Container(
-                  padding: EdgeInsets.fromLTRB(
-                    Resp.size(12),
-                    Resp.size(12),
-                    Resp.size(0),
-                    Resp.size(12),
-                  ),
-                  decoration: ShapeDecoration(
-                    color: AppColors.lightBlack,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(Resp.size(10)),
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(right: Resp.size(12)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const InterText(
-                              text: '8 Congress Person',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                            ),
-                            InkWell(
-                              overlayColor: MaterialStateProperty.all(Colors.transparent),
-                              onTap: () {
-                                // toPushNavigator(
-                                //     context: context,
-                                //     PageName: const ForScreen());
-                              },
-                              child: SvgPicture.asset(
-                                'assets/following/filter.svg',
-                                width: Resp.size(68),
-                                height: Resp.size(31),
+                            GridView.builder(
+                              shrinkWrap: true,
+                              physics: const ClampingScrollPhysics(),
+                              padding: (item.topicTags?.length ?? 0) != 0
+                                  ? EdgeInsets.only(top: Resp.size(12))
+                                  : EdgeInsets.zero,
+                              itemCount: item.topicTags == null ||
+                                      item.topicTags!.isEmpty
+                                  ? 0
+                                  : item.topicTags!.length >= 3
+                                      ? 3
+                                      : item.topicTags!.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3, childAspectRatio: 0.9),
+                              itemBuilder: (context, index) => Container(
+                                margin:
+                                    const EdgeInsets.only(right: 11, bottom: 0),
+                                child: topicsCardFollowing(
+                                    item.topicTags?[index] ?? '', () {
+                                  chooseTopicController.followTopic(
+                                      context, item.topicTags![index], '0');
+                                  setState(() {
+                                    item.topicTags?.removeAt(index);
+                                    item.isFollow?.removeAt(index);
+                                  });
+                                }),
                               ),
                             ),
+                            if ((item.topicTags?.length ?? 0) > 3) ...{
+                              InkWell(
+                                overlayColor: MaterialStateProperty.all(
+                                    Colors.transparent),
+                                onTap: () {
+                                  cx.showBottomSheet.value = false;
+                                  toPushNavigator(
+                                      context: context,
+                                      pageName: FollowingTopic(
+                                        item: item,
+                                      ),
+                                      onBack: (value) async {
+                                        followController.forYouData.value =
+                                            (await followController
+                                                .getForYouData(context))!;
+                                        cx.showBottomSheet.value = widget.isFromProfile?false:true;
+                                      });
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                    Resp.size(0),
+                                    Resp.size(12),
+                                    Resp.size(12),
+                                    Resp.size(0),
+                                  ),
+                                  child: Container(
+                                    height: Resp.size(42),
+                                    width: double.infinity,
+                                    decoration: ShapeDecoration(
+                                      color: AppColors.grey.withOpacity(0.3),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: const InterText(
+                                      text: 'See More',
+                                      color: AppColors.primaryColor,
+                                      textAlign: TextAlign.center,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            }
                           ],
                         ),
-                      ),
-                      const HeightBox(12),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          personCard(),
-                          personCard(),
-                          personCard(),
-                        ],
-                      ),
-                      InkWell(
-                        overlayColor: MaterialStateProperty.all(Colors.transparent),
-                        onTap: (){
-                          toPushNavigator(
-                              context: context, pageName: const FollowingCongressPerson());
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(
-                            Resp.size(0),
-                            Resp.size(12),
-                            Resp.size(12),
-                            Resp.size(0),
-                          ),
-                          child: Container(
-                            height: Resp.size(42),
-                            width: double.infinity,
-                            decoration: ShapeDecoration(
-                              color: AppColors.grey.withOpacity(0.3),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                            ),
-                            alignment: Alignment.center,
-                            child: const InterText(
-                              text:'See More',
-                              color: AppColors.primaryColor,
-                              textAlign: TextAlign.center,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                const HeightBox(12),
-                Container(
-                  padding: EdgeInsets.fromLTRB(
-                    Resp.size(12),
-                    Resp.size(12),
-                    Resp.size(0),
-                    Resp.size(12),
-                  ),
-                  decoration: ShapeDecoration(
-                    color: AppColors.lightBlack,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(Resp.size(10)),
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(right: Resp.size(12)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const InterText(
-                              text: '6 Topics',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                            ),
-                            InkWell(
-                              overlayColor: MaterialStateProperty.all(Colors.transparent),
-                              onTap: () {
-                                toPushNavigator(
-                                    context: context,
-                                    pageName: const FilterTopicScreen());
-                              },
-                              child: SvgPicture.asset(
-                                'assets/following/filter.svg',
-                                width: Resp.size(68),
-                                height: Resp.size(31),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const HeightBox(12),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          topicsCard('Infrastructure Bill'),
-                          topicsCard('Infrastructure Bill'),
-                          topicsCard('Healthcare Bill'),
-                        ],
-                      ),
-                      InkWell(
-                        overlayColor: MaterialStateProperty.all(Colors.transparent),
-                        onTap: (){
-                          toPushNavigator(
-                              context: context,
-                              pageName: const FollowingTopic());
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(
-                            Resp.size(0),
-                            Resp.size(12),
-                            Resp.size(12),
-                            Resp.size(0),
-                          ),
-                          child: Container(
-                            height: Resp.size(42),
-                            width: double.infinity,
-                            decoration: ShapeDecoration(
-                              color: AppColors.grey.withOpacity(0.3),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                            ),
-                            alignment: Alignment.center,
-                            child: const InterText(
-                              text:'See More',
-                              color: AppColors.primaryColor,
-                              textAlign: TextAlign.center,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                const HeightBox(89),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-
-  Widget commonContainer(String text, {bool isTag = true}) {
-    return Container(
-      decoration: ShapeDecoration(
-        color: isTag ? AppColors.purple : AppColors.darkBlue,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(Resp.size(5))),
-      ),
-      padding: EdgeInsets.symmetric(
-          vertical: Resp.size(10), horizontal: Resp.size(8)),
-      child: InterText(
-        text: text,
-        textAlign: TextAlign.center,
-        fontWeight: FontWeight.w400,
-        fontSize: 10,
-      ),
-    );
-  }
-
-  Widget billCharacteristicsCard(String text, int value) {
-    return Container(
-      padding: EdgeInsets.only(
-          left: Resp.size(11),
-          right: Resp.size(11),
-          top: text == 'Efficacy Rating' ? Resp.size(12) : Resp.size(0),
-          bottom: text == 'Redundancy' ? Resp.size(12) : Resp.size(15)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          InterText(
-            text: text,
-            textAlign: TextAlign.center,
-            fontWeight: FontWeight.w400,
-            fontSize: 12,
-          ),
-          InterText(
-            text: value.toString(),
-            textAlign: TextAlign.center,
-            fontWeight: FontWeight.w400,
-            fontSize: 12,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget handleDescription(String title, String desc) {
-    return RichText(
-      maxLines: 10,
-      overflow: TextOverflow.clip,
-      text: TextSpan(
-        text: '',
-        style: GoogleFonts.inter(
-          color: Colors.white.withOpacity(0.4),
-          fontWeight: FontWeight.w500,
-          fontSize: Resp.size(12),
-        ),
-        children: <TextSpan>[
-          desc.length > 150
-              ? TextSpan(
-            text: desc.substring(0, 150),
-          )
-              : TextSpan(
-            text: desc.toString(),
-          ),
-          desc.length > 150
-              ? TextSpan(
-            text: '...See More',
-            style: GoogleFonts.inter(
-              fontWeight: FontWeight.w500,
-              color: AppColors.primaryColor,
-              fontSize: Resp.size(12),
-              // decoration: TextDecoration.underline,
-            ),
-            recognizer: TapGestureRecognizer()
-              ..onTap = () {
-                showDialog(
-                    barrierDismissible: false,
-                    context: context,
-                    builder: (BuildContext context) {
-                      return moreDialog(title, desc);
-                    });
-              },
-          )
-              : const TextSpan(text: ''),
-        ],
-      ),
-    );
-  }
-
-  Widget moreDialog(String title, String desc) =>
-      StatefulBuilder(builder: (BuildContext context,
-          StateSetter setState /*You can rename this!*/) {
-        return Dialog(
-          shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-          insetPadding: EdgeInsets.zero,
-          child: SizedBox(
-            width: cx.width / 1.15,
-            height: cx.height / 1.1,
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      icon: const Icon(
-                        Icons.cancel,
-                        color: Colors.red,
-                        size: 30,
-                      ),
-                    ),
+                      );
+                    }),
+                    widget.isFromProfile
+                        ? const HeightBox(25)
+                        : const HeightBox(89),
                   ],
                 ),
-                InterText(
-                    height: 1.2,
-                    text: title,
-                    fontSize: cx.height > 800 ? 23 : 20,
-                    fontWeight: FontWeight.w600,
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                    textOverflow: TextOverflow.ellipsis,
-                    color: Colors.black),
-                const HeightBox(20),
-                Expanded(
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(12.0, 8, 10, 8),
-                        child: InterText(
-                          color: const Color(0xFF444444),
-                          fontWeight: FontWeight.w500,
-                          fontSize: cx.height > 800 ? 18 : 16,
-                          textAlign: TextAlign.start,
-                          text: desc,
-                          maxLines: 100000,
-                        ),
-                      ),
-                      const HeightBox(20),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        );
-      });
+        ),
+      ),
+    );
+  }
 
   Widget personCard() {
     return Expanded(
@@ -537,6 +474,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
                     text: 'Ralph Edwards',
                     fontWeight: FontWeight.w400,
                     fontSize: 12,
+                    textAlign: TextAlign.center,
                   ),
                   const HeightBox(8),
                   SvgPicture.asset(
@@ -553,98 +491,4 @@ class _FollowingScreenState extends State<FollowingScreen> {
       ),
     );
   }
-
-  Widget topicsCard(String text) {
-    return Expanded(
-      child: Row(
-        children: [
-          Expanded(
-            child: Container(
-              decoration: ShapeDecoration(
-                color: AppColors.grey.withOpacity(0.13),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-              ),
-              padding: EdgeInsets.symmetric(
-                horizontal: Resp.size(8),
-                vertical: Resp.size(12),
-              ),
-              child: Column(
-                children: [
-                  SvgPicture.asset(
-                    'assets/common/labor.svg',
-                    width: Resp.size(45),
-                    height: Resp.size(45),
-                  ),
-                  const HeightBox(10),
-                  SvgPicture.asset(
-                    'assets/homeFlow/following.svg',
-                    width: Resp.size(85),
-                    height: Resp.size(28),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const WidthBox(12),
-        ],
-      ),
-    );
-  }
-  Widget topicCard() {
-    return Expanded(
-      child: Row(
-        children: [
-          Expanded(
-            child: Container(
-              decoration: ShapeDecoration(
-                color: AppColors.grey.withOpacity(0.13),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-              ),
-              padding: EdgeInsets.fromLTRB(
-                  Resp.size(7), Resp.size(12), Resp.size(7), Resp.size(8)),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: Resp.size(55),
-                    width: Resp.size(55),
-                    child: SvgPicture.asset(
-                      'assets/common/immigration.svg',
-                    ),
-                  ),
-                  const HeightBox(10),
-                  const InterText(
-                    text: 'Immigration Bill',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 10,
-                  ),
-                  const HeightBox(8),
-                  SvgPicture.asset(
-                    'assets/homeFlow/following.svg',
-                    width: Resp.size(85),
-                    height: Resp.size(28),
-                  ),                  // Container(
-                  //   decoration: ShapeDecoration(
-                  //     color: AppColors.passedHouse,
-                  //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                  //   ),
-                  //   width: Resp.size(85),
-                  //   height: Resp.size(28),
-                  //   alignment: Alignment.center,
-                  //   child: InterText(
-                  //     text: 'Passed House',
-                  //     fontWeight: FontWeight.w500,
-                  //   ),
-                  // )
-                ],
-              ),
-            ),
-          ),
-          // WidthBox(Resp.size(12)),
-        ],
-      ),
-    );
-  }
-
 }

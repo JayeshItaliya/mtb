@@ -24,7 +24,7 @@ Widget followBill({
       children: [
         SvgPicture.asset(
           'assets/common/followIcon.svg',
-          width: Resp.size(53),
+          width: Resp.size(14),
           height: Resp.size(14),
         ),
         const WidthBox(6),

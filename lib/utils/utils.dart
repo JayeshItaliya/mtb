@@ -6,6 +6,7 @@ import 'package:lottie/lottie.dart';
 import 'package:mtb/utils/interText.dart';
 import 'package:mtb/utils/pageNavgation.dart';
 import 'package:mtb/utils/responsiveUi.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../controller/commonController/commonController.dart';
@@ -13,7 +14,7 @@ import '../services/networkApiServices.dart';
 
 CommonController cx = Get.put(CommonController());
 var apiServices = NetWorkApiServices();
-
+var showBottomSheet=true.obs;
 String location = '';
 String address = '';
 String bookingId = '';
@@ -22,9 +23,16 @@ showLongToast(String s) {
   Fluttertoast.showToast(
     msg: s,
     toastLength: Toast.LENGTH_LONG,
+
   );
 }
 
+const String dummyProfileUrl ="https://mindthebill.com/storage/app/public/profile_images/default.png";
+
+EdgeInsets defaultScreenPadding({double hPadding=8}){
+  return  EdgeInsets.symmetric(horizontal: Resp.size(hPadding));
+}
+ScrollBehavior removeScroll=const ScrollBehavior();
 onShareData({String? text}) async {
   await Share.share(text!);
 }
@@ -41,7 +49,8 @@ class HeightBox extends StatelessWidget {
     );
   }
 }
-
+bool isValid(String email) =>
+    RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
 class WidthBox extends StatelessWidget {
   final double size;
 
@@ -145,7 +154,7 @@ Gradient? backShadowContainer() {
 
 Widget customAppBar({
   double? suffixImagePadding,
-  String? suffixImage,
+  Widget? suffix,
   Color? suffixBackgroundColor,
   Function? onTapSuffix,
   Color? suffixImageColor,
@@ -167,56 +176,114 @@ Widget customAppBar({
   required String? title,
   required BuildContext context,
 }) {
-  return Row(
+  return Column(
     children: [
-      isPrefix
-          ? InkWell(
+      const HeightBox(10),
+      Row(
+        children: [
+          isPrefix
+              ? InkWell(
 
-              overlayColor: MaterialStateProperty.all(Colors.transparent),
-              onTap: () {
-                onBack(context);
-              },
-              child: Image.asset(
-                'assets/common/${!showCrossBackButton ? 'back' : 'cross_back'}.png',
-                fit: BoxFit.cover,
-                alignment: Alignment.center,
-                scale: 3,
-              ),
-            )
-          : Container(),
-      if (!isPrefix && isSuffix) ...{Container(width: Resp.size(30))},
-      Expanded(
-        child: InterText(
-          text: title ?? '',
-          color: fontColor ?? Colors.white,
-          maxLines: 1,
-          fontWeight: fontWeight ?? FontWeight.w600,
-          fontSize: fontSize ?? 16,
-          textAlign: textAlign ?? TextAlign.center,
-        ),
+                  overlayColor: MaterialStateProperty.all(Colors.transparent),
+                  onTap: () {
+                    onBack(context);
+                  },
+                  child: Image.asset(
+                    'assets/common/${!showCrossBackButton ? 'back' : 'cross_back'}.png',
+                    fit: BoxFit.cover,
+                    alignment: Alignment.center,
+                    scale: 3,
+                  ),
+                )
+              : Container(),
+          if (!isPrefix && isSuffix) ...{Container(width: Resp.size(30))},
+          Expanded(
+            child: InterText(
+              text: title ?? '',
+              color: fontColor ?? Colors.white,
+              maxLines: 1,
+              fontWeight: fontWeight ?? FontWeight.w600,
+              fontSize: fontSize ?? 18,
+              textAlign: textAlign ?? TextAlign.center,
+            ),
+          ),
+          if (isPrefix && !isSuffix) ...{Container(width: Resp.size(30))},
+          isSuffix
+              ? Padding(
+                padding: const EdgeInsets.only(right: 2.0),
+                child: suffix??InkWell(
+                    overlayColor: MaterialStateProperty.all(Colors.transparent),
+                    onTap: () => isSuffix ? onTapSuffix!() : () {},
+                    child: Image.asset(
+                      'assets/common/filter.png',
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
+                      scale: 3,
+                    ),
+                  ),
+              )
+              : Container(),
+        ],
       ),
-      if (isPrefix && !isSuffix) ...{Container(width: Resp.size(30))},
-      isSuffix
-          ? InkWell(
-              overlayColor: MaterialStateProperty.all(Colors.transparent),
-              onTap: () => isSuffix ? onTapSuffix!() : () {},
-              child: Image.asset(
-                'assets/common/filter.png',
-                fit: BoxFit.cover,
-                alignment: Alignment.center,
-                scale: 3,
-              ),
-            )
-          : Container(),
     ],
   );
 }
-
-String demoText =
-    'Lorem It is a long established fact that a reader will betai by the readable content of a page when looking at its is layout. The point of using Lorem Ipsum is that it has and more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English. Many desktop publishing packagesdf and web page editors now use Lorem Ipsum as their dei ult model text, and a search for lorem ipsum will uncov er many web sites still in their infancy. Various versions have evolved over the years, sometimes by accidentsc sometimes on \n\nLorem It is a long established fact that a reader will betai by the readable content of a page when looking at its is layout. The point of using Lorem Ipsum is that it has and more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English. Many desktop publishing packagesdf and web page editors now use Lorem Ipsum as their dei ult model text, and a search for lorem ipsum will uncov er many web sites still in their infancy. Various versions have evolved over the years, sometimes by accidentsc sometimes on ';
 
 customPrint(var printValue){
   if (kDebugMode) {
     print(printValue);
   }
+}
+String getTopicImage(String topic){
+  String path='assets/common/';
+  switch(topic){
+    case "Agriculture":
+      return '${path}agriculture.svg';
+    case "Army":
+      return '${path}army.svg';
+    case "Civil Rights":
+      return '${path}civilRights.svg';
+    case "Policing":
+      return '${path}policing.svg';
+    case "Economics":
+      return '${path}economics.svg';
+    case "Education":
+      return '${path}education.svg';
+    case "Immigration":
+      return '${path}immigration.svg';
+    case "Environment & Energy":
+      return '${path}environment.svg';
+    case "Government":
+      return '${path}government.svg';
+    case "Welfare":
+      return '${path}welfare.svg';
+    case "Labor":
+      return '${path}labor.svg';
+    case "Tech":
+      return '${path}tech.svg';
+    case "Health":
+      return '${path}health.svg';
+    case "Taxes":
+      return '${path}taxes.svg';
+    case "IR":
+      return '${path}ir.svg';
+    case "Infrastructure":
+      return '${path}infrastructure.svg';
+    case "Miscellaneous":
+      return '${path}miscellaneous.svg';
+    default:
+      return '${path}government.svg';
+  }
+}
+
+showOpenAppSettingsDialog(context) async {
+  print('Permission denied');
+  await openAppSettings();
+  // return CustomDialog.show(
+  //   context,
+  //   'Permission needed',
+  //   'Photos permission is needed to select photos',
+  //   'Open settings',
+  //   openAppSettings,
+  // );
 }

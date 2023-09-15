@@ -12,8 +12,7 @@ class CommonController extends GetxController{
   var connectionStatus = 0.obs;
   late StreamSubscription<InternetConnectionStatus> listener;
 
-
-
+  var showBottomSheet=true.obs;
   var index=0.obs;
   final storage = GetStorage();
   StreamSubscription? subscription;
@@ -27,7 +26,6 @@ class CommonController extends GetxController{
   var profilePicture="".obs;
 
   var s4complete=false.obs;
-
 
   //calendarPicker Section
   var selDate = DateFormat.d().format(DateTime.now()).obs;

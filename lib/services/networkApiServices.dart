@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
-import '../utils/showToastMessage.dart';
 import '../utils/strings.dart';
 import '../utils/utils.dart';
 
@@ -30,20 +29,20 @@ class NetWorkApiServices{
         customPrint("----- Api Called Successfully -----");
         customPrint("response json ---- $responseJson");
       } else {
-        showToastMessage(context: context, msg: "Token is Null");
+        showLongToast("Token is Null");
       }
     } on SocketException {
-      showToastMessage(context: context, msg: "No Internet Connection");
+      showLongToast( "No Internet Connection");
     } on TimeoutException {
-      showToastMessage(context: context, msg: "Connection Time Out");
+      showLongToast( "Connection Time Out");
     } on Error catch (e) {
       customPrint(e.stackTrace.toString());
-      showToastMessage(context: context, msg: "Oops Exception Occurred");
+      customPrint( "Oops Exception Occurred");
     }
     return responseJson;
   }
 
-  Future postResponse({String? url, dynamic body, context}) async {
+  Future postResponse({String? url, dynamic body, context,bool isImage=false,String imagePath=''}) async {
     dynamic responseJson;
     dynamic userLoginToken = cx.read(Keys.token);
 
@@ -51,24 +50,54 @@ class NetWorkApiServices{
     customPrint("post postData==>>${body.toString()}");
     customPrint("post header==>>${userLoginToken.toString()}");
     try {
-      var request = http.MultipartRequest(
-        'POST',
-        Uri.parse(url ?? ""),
-      );
-      request.headers
-          .addAll({'Authorization': 'Bearer ${userLoginToken.toString()}'});
-      request.fields.addAll(body);
+      var request = http.MultipartRequest('POST', Uri.parse(url ?? ""),);
+      request.headers.addAll({'Authorization': 'Bearer ${userLoginToken.toString()}'});
+      if(isImage){
+        request.files
+            .add(await http.MultipartFile.fromPath('image', imagePath));
+        customPrint("request.files");
+        customPrint(request.files);
+      }
+      if(body!=null){
+        request.fields.addAll(body);
+      }
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
       responseJson = returnResponse(response, context);
       customPrint(responseJson.toString());
     } on SocketException {
-      showToastMessage(context: context, msg: "No Internet Connection");
+      showLongToast("No Internet Connection");
     } on TimeoutException {
-      showToastMessage(context: context, msg: "Connection Time Out");
+      showLongToast("Connection Time Out");
     } on Error catch (e) {
       customPrint(e.stackTrace.toString());
-      showToastMessage(context: context, msg: "Something Went Wrong");
+      showLongToast( "Something Went Wrong");
+    }
+    return responseJson;
+  }
+
+  Future deleteResponse({String? url,  context}) async {
+    dynamic responseJson;
+    dynamic userLoginToken = cx.read(Keys.token);
+    customPrint("post apiUrl==>>$url");
+    customPrint("post header==>>${userLoginToken.toString()}");
+    try {
+      var request = http.MultipartRequest(
+        'DELETE',
+        Uri.parse(url ?? ""),
+      );
+      request.headers.addAll({'Authorization': 'Bearer ${userLoginToken.toString()}'});
+      var streamedResponse = await request.send();
+      var response = await http.Response.fromStream(streamedResponse);
+      responseJson = returnResponse(response, context);
+      customPrint(responseJson.toString());
+    } on SocketException {
+      showLongToast( "No Internet Connection");
+    } on TimeoutException {
+      showLongToast( "Connection Time Out");
+    } on Error catch (e) {
+      customPrint(e.stackTrace.toString());
+      showLongToast( "Something Went Wrong");
     }
     return responseJson;
   }
@@ -76,8 +105,13 @@ class NetWorkApiServices{
   /// Api Response
   dynamic returnResponse(http.Response response, context) {
     customPrint("statusCode=>>${response.statusCode}");
+    customPrint("statusCode=>>${response.body}");
+    // showErrorDialog(context, '');
     switch (response.statusCode) {
       case 200:
+        dynamic responseJson = jsonDecode(response.body);
+        return responseJson;
+      case 201:
         dynamic responseJson = jsonDecode(response.body);
         return responseJson;
       case 401:

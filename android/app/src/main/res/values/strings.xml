@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <string name="app_name">MTB</string>
+    <string name="facebook_app_id">642270341335716</string>
+    <string name="fb_login_protocol_scheme">fb642270341335716</string>
+    <string name="facebook_client_token">2b245edc8502d6fb20ebeb2a96afa782</string>
+</resources>

@@ -6,7 +6,8 @@ import 'package:mtb/utils/utils.dart';
 import '../../utils/responsiveUi.dart';
 
 class BillDescriptionScreen extends StatefulWidget {
-  const BillDescriptionScreen({super.key});
+  final String demoText;
+  const BillDescriptionScreen({super.key,required this.demoText});
 
   @override
   State<BillDescriptionScreen> createState() => _BillDescriptionScreenState();
@@ -15,38 +16,44 @@ class BillDescriptionScreen extends StatefulWidget {
 class _BillDescriptionScreenState extends State<BillDescriptionScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Column(
-        children: [
-          const HeightBox(35),
-          customAppBar(
-              title: 'Bill Description',
-              context: context,
-              fontWeight: FontWeight.w400,
-              isSuffix: false),
-          const HeightBox(20),
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: AppColors.lightBlack,
-                borderRadius: BorderRadius.circular(Resp.size(12)),
+    return SafeArea(
+      bottom: true,
+      top: true,
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: Padding(
+          padding: defaultScreenPadding(),
+          child: Column(
+            children: [
+              customAppBar(
+                  title: 'Bill Description',
+                  context: context,
+                  fontWeight: FontWeight.w400,
+                  isSuffix: false),
+              const HeightBox(20),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.lightBlack,
+                    borderRadius: BorderRadius.circular(Resp.size(12)),
+                  ),
+                  padding: EdgeInsets.all(Resp.size(14)),
+                  child: SingleChildScrollView(
+                      child: InterText(
+                    text: widget.demoText,
+                    maxLines: widget.demoText.length,
+                    fontWeight: FontWeight.w400,
+                    textAlign: TextAlign.justify,
+                    fontSize: 12,
+                    color: Colors.white.withOpacity(0.3),
+                    height: 1.5,
+                  )),
+                ),
               ),
-              padding: EdgeInsets.all(Resp.size(14)),
-              margin: EdgeInsets.symmetric(horizontal: Resp.size(12)),
-              child: SingleChildScrollView(
-                  child: InterText(
-                text: demoText,
-                maxLines: demoText.length,
-                fontWeight: FontWeight.w400,
-                fontSize: 12,
-                color: AppColors.white,
-                height: 1.5,
-              )),
-            ),
+              const HeightBox(12),
+            ],
           ),
-          const HeightBox(12),
-        ],
+        ),
       ),
     );
   }

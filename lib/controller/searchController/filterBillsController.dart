@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../../utils/appColors.dart';
+
 class FilterBillsController extends GetxController {
   var dropDownIndex = 99.obs;
 
@@ -10,7 +12,7 @@ class FilterBillsController extends GetxController {
     ['Bipartisan',0].obs,
   ].obs;
 
-
+  var buttonColor=AppColors.lightGrey.obs;
   var topicList = [
     ['Agriculture',0].obs,
     ['Army',0].obs,
@@ -26,25 +28,26 @@ class FilterBillsController extends GetxController {
     ['Tech',0].obs,
     ['Taxes',0].obs,
     ['Health',0].obs,
-    ['IR',0].obs
+    ['IR',0].obs,
+    ['Infrastructure',0].obs,
+    ['Miscellaneous',0].obs
   ].obs;
 
   var dateList = [
-    ['Date 1',0].obs,
-    ['Date 2',0].obs,
-    ['Date 3',0].obs
+    ['Least Recent',0].obs,
+    ['Most Recent',0].obs,
   ].obs;
 
   var actionList = [
-    ['Action 1',0].obs,
-    ['Action 2',0].obs,
-    ['Action 3',0].obs,
+    ['Introduced',0].obs,
+    ['Passed House',0].obs,
+    ['Passed Senate',0].obs,
+    ['In Effect',0].obs,
   ].obs;
 
   var statusList = [
-    ['Status 1',0].obs,
-    ['Status 2',0].obs,
-    ['Status 3',0].obs,
+    ['Following',0].obs,
+    ['Not Following',0].obs,
   ].obs;
 
   void selectData(var list,int index){

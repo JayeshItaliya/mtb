@@ -15,60 +15,66 @@ class AgainstScreen extends StatefulWidget {
 class _AgainstScreenState extends State<AgainstScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Column(
-        children: [
-          const HeightBox(15),
-          customAppBar(
-            title: 'Against',
-            isSuffix: false,
-              context: context
+    return SafeArea(
+      bottom: true,
+      top: true,
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: Padding(
+          padding: defaultScreenPadding(),
+          child: Column(
+            children: [
+              customAppBar(
+                title: 'Against',
+                isSuffix: false,
+                  context: context
 
-          ),
-          const HeightBox(20),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.fromLTRB(Resp.size(0),Resp.size(12),Resp.size(12),Resp.size(0),),
-              // margin: EdgeInsets.only(bottom: Resp.size(25),),
-              decoration: ShapeDecoration(
-                color: AppColors.lightBlack,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(Resp.size(10)),
+              ),
+              const HeightBox(20),
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(Resp.size(0),Resp.size(12),Resp.size(12),Resp.size(10),),
+                  // margin: EdgeInsets.only(bottom: Resp.size(25),),
+                  decoration: ShapeDecoration(
+                    color: AppColors.lightBlack,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(Resp.size(10)),
+                    ),
+                  ),
+                  child:GridView.builder(
+                    shrinkWrap: true,
+                    itemCount: 31,
+                    physics: const ClampingScrollPhysics(),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      // maxCrossAxisExtent: 200,
+                      crossAxisSpacing: 0,
+                      mainAxisSpacing: 0,
+                      childAspectRatio: 0.78,
+                    ),
+                    itemBuilder: (BuildContext context, int index){
+                      return Container(
+                        padding: EdgeInsets.fromLTRB(Resp.size(12),Resp.size(0),Resp.size(0),Resp.size(12),),
+                        decoration: ShapeDecoration(
+                          color: AppColors.lightBlack,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(Resp.size(10)),
+                          ),
+                        ),
+                        child:Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            personCard(),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
-              child:GridView.builder(
-                shrinkWrap: true,
-                itemCount: 31,
-                physics: const ClampingScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  // maxCrossAxisExtent: 200,
-                  crossAxisSpacing: 0,
-                  mainAxisSpacing: 0,
-                  childAspectRatio: 0.78,
-                ),
-                itemBuilder: (BuildContext context, int index){
-                  return Container(
-                    padding: EdgeInsets.fromLTRB(Resp.size(12),Resp.size(0),Resp.size(0),Resp.size(12),),
-                    decoration: ShapeDecoration(
-                      color: AppColors.lightBlack,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(Resp.size(10)),
-                      ),
-                    ),
-                    child:Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        personCard(),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
