@@ -53,4 +53,21 @@ class BillListModel {
     "isFollow": isFollow,
     "isTrending": isTrending,
   };
+
+
+  @override
+  String toString() {
+    return 'BillListModel{id: $id, billName: $billName, topicSimplified: $topicSimplified, proposedDate: $proposedDate, statusInCongress: $statusInCongress, tags: $tags, type: $type, number: $number, billText: $billText, isFollow: $isFollow, isTrending: $isTrending}';
+  }
+
+  static List<BillListModel>? getListFromJson(List<dynamic> list) {
+    List<BillListModel> unitList = [];
+    for (var unit in list) {
+      if (unit is String) {
+      } else {
+        unitList.add(BillListModel.fromJson(unit));
+      }
+    }
+    return unitList;
+  }
 }

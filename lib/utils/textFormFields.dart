@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -65,7 +64,7 @@ class AppWidget {
 
     return StatefulBuilder(builder: (context, newSetState) {
       return TextFormField(
-        maxLength: maxLength ?? 50,
+        maxLength: maxLength ?? 35,
         enabled: isEnabled != null && !isEnabled ? false : true,
         textAlign: align,
         maxLines: maxLine ?? 1,
@@ -73,15 +72,15 @@ class AppWidget {
         controller: textEditingController,
         keyboardType: keyboardType,
         cursorColor: cursorColor ?? Colors.white,
-        cursorHeight: Resp.size(hintFontSize ?? 15),
+        cursorHeight: Resp.size(hintFontSize ?? 16),
         obscureText: passwordVisible,
         textInputAction: inputAction,
         // obscuringCharacter: isPassword ? '●' : '',
-        inputFormatters: inputFormatter,
+        inputFormatters: inputFormatter??[FilteringTextInputFormatter.allow(RegExp("[A-Za-z0-9#+-.@&\$]*")),],
         autofocus: false,
         style: GoogleFonts.inter(
             color: Colors.white,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w500,
             fontSize: Resp.size(fontSize ?? 16)),
         decoration: InputDecoration(
           hintText: hintText,
@@ -93,7 +92,7 @@ class AppWidget {
             color: hintTextColor,
           ),
           contentPadding: EdgeInsets.only(
-              right: Resp.size(20),
+              right: Resp.size(8),
               left: Resp.size(20),
               bottom: Resp.size(20),
               top: Resp.size(20)),

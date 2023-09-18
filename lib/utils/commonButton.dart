@@ -8,20 +8,20 @@ class CommonButton extends StatefulWidget {
   final String? text;
   final Function onTap;
   final double? width;
-  final double? height;
+  final double? topHeight;
   final double? fontSize;
   final Color? color;
   final Widget? child;
   final FontWeight fontWeight;
   const CommonButton(
       {Key? key,
-      this.text,
-      required this.onTap,
-      this.fontSize,
-      this.width,
-      this.height,
-      this.child,
-      this.color,
+        this.text,
+        required this.onTap,
+        this.fontSize,
+        this.width,
+        this.topHeight,
+        this.child,
+        this.color,
         this.fontWeight= FontWeight.w700
       })
       : super(key: key);
@@ -35,7 +35,7 @@ class _CommonButtonState extends State<CommonButton> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const HeightBox(40),
+        HeightBox(widget.topHeight??40),
         GestureDetector(
           onTap: () {
             widget.onTap();
@@ -43,17 +43,17 @@ class _CommonButtonState extends State<CommonButton> {
           child: Container(
             alignment: Alignment.center,
             padding: EdgeInsets.symmetric(
-              vertical: Resp.crosslength * 0.016,
+              vertical:Resp.size(15),
             ),
             width: widget.width,
-            height: widget.height,
+            height:Resp.size(54),
             decoration: BoxDecoration(
                 color: widget.color ?? AppColors.primaryColor,
                 borderRadius:
-                    BorderRadius.circular(Resp.size(10))),
+                BorderRadius.circular(Resp.size(10))),
             child: widget.child??InterText(
               text: widget.text??"",
-              color: AppColors.white,
+              color: Colors.white,
               fontWeight:widget.fontWeight,
               fontSize: widget.fontSize??Resp.size(18),
             ),

@@ -10,34 +10,55 @@ import 'package:mtb/utils/appColors.dart';
 import 'package:mtb/utils/follow.dart';
 import 'package:mtb/utils/interText.dart';
 import '../../controller/homeController/billDetailsController.dart';
+import '../../model/homeFlowModel/billListModel.dart';
+import '../../model/homeFlowModel/relatedBillModel.dart';
+import '../../services/api_call.dart';
 import '../../utils/commonCard.dart';
+import '../../utils/following.dart';
 import '../../utils/pageNavgation.dart';
 import '../../utils/responsiveUi.dart';
 import '../../utils/utils.dart';
 import 'billDescriptionScreen.dart';
+import 'filterDataScreen.dart';
 
 class BillDetailsScreen extends StatefulWidget {
-  const BillDetailsScreen({super.key});
+  final BillListModel item;
+
+  const BillDetailsScreen({super.key, required this.item});
 
   @override
   State<BillDetailsScreen> createState() => _BillDetailsScreenState();
 }
 
 class _BillDetailsScreenState extends State<BillDetailsScreen> {
+  final myController = Get.put(BillDetailsController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+
+  getData() async {
+    myController.relatedModel.value = (await myController.relatedBillApi(
+        context, widget.item.number.toString(), widget.item.type.toString()))!;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<BillDetailsController>(
-        init: Get.put(BillDetailsController()),
-        builder: (controller) {
-          return Scaffold(
-            backgroundColor: Colors.black,
-            body: Column(
+    return GetBuilder<BillDetailsController>(builder: (controller) {
+      return SafeArea(
+        bottom: true,
+        top: true,
+        child: Scaffold(
+          backgroundColor: Colors.black,
+          body: Padding(
+            padding: defaultScreenPadding(),
+            child: Column(
               children: [
-                const HeightBox(15),
                 customAppBar(
-                    title: 'Healthcare Bill',
-                    isSuffix: false,
-                    context: context),
+                    title: 'Bill Details', isSuffix: false, context: context),
                 const HeightBox(20),
                 Expanded(
                   child: ListView(
@@ -46,7 +67,12 @@ class _BillDetailsScreenState extends State<BillDetailsScreen> {
                     padding: EdgeInsets.symmetric(horizontal: Resp.size(4)),
                     children: [
                       Container(
-                        padding: EdgeInsets.all(Resp.size(12)),
+                        padding: EdgeInsets.fromLTRB(
+                          Resp.size(12),
+                          0,
+                          Resp.size(12),
+                          Resp.size(12),
+                        ),
                         decoration: ShapeDecoration(
                           color: AppColors.lightBlack,
                           shape: RoundedRectangleBorder(
@@ -56,23 +82,53 @@ class _BillDetailsScreenState extends State<BillDetailsScreen> {
                         child: Column(
                           children: [
                             ListTile(
-                              leading: SvgPicture.asset(
-                                'assets/common/health.svg',
-                                width: Resp.size(45),
-                                height: Resp.size(45),
+                              leading: InkWell(
+                                onTap: () {
+                                  toPushNavigator(
+                                      context: context,
+                                      pageName: FilterDataScreen(
+                                          metaData:
+                                              "&topic_tag=${widget.item.topicSimplified.toString()}"));
+                                },
+                                child: SvgPicture.asset(
+                                  getTopicImage(
+                                      widget.item.topicSimplified.toString()),
+                                  width: Resp.size(45),
+                                  height: Resp.size(45),
+                                ),
                               ),
-                              title: const InterText(
-                                text: 'Healthcare Bill',
+                              title: InterText(
+                                text: widget.item.billName,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 14,
                               ),
                               subtitle: InterText(
-                                text: 'Proposed on 12/04/2023',
+                                text: 'Proposed on ${widget.item.proposedDate}',
                                 fontWeight: FontWeight.w400,
                                 fontSize: 12,
                                 color: Colors.white.withOpacity(0.5),
                               ),
-                              trailing: followBill(width: 69),
+                              trailing: InkWell(
+                                child: (widget.item.isFollow ?? false)
+                                    ? followingBill(
+                                        width: 69,
+                                      )
+                                    : followBill(
+                                        width: 69,
+                                      ),
+                                onTap: () {
+                                  setState(() {
+                                    widget.item.isFollow =
+                                        (!(widget.item.isFollow ?? false));
+                                    TaskProvider().followAPI(
+                                        widget.item.id.toString(),
+                                        widget.item.isFollow ?? false
+                                            ? '1'
+                                            : '0',
+                                        context);
+                                  });
+                                },
+                              ),
                               dense: true,
                               contentPadding: EdgeInsets.zero,
                             ),
@@ -106,43 +162,50 @@ class _BillDetailsScreenState extends State<BillDetailsScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         statusCard('Introduced',
-                                            isActive: true),
-                                        statusCard('Passed House'),
-                                        statusCard('Passed Senate'),
-                                        statusCard('In Effect'),
+                                            selectedText:
+                                                widget.item.statusInCongress),
+                                        statusCard('Passed House',
+                                            selectedText:
+                                                widget.item.statusInCongress),
+                                        statusCard('Passed Senate',
+                                            selectedText:
+                                                widget.item.statusInCongress),
+                                        statusCard('In Effect',
+                                            selectedText:
+                                                widget.item.statusInCongress),
                                       ],
                                     ),
                                   ),
-                                  const HeightBox(8),
-                                  Container(
-                                    decoration: ShapeDecoration(
-                                      color: AppColors.lightBlack,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              Resp.size(5))),
-                                    ),
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: Resp.size(11),
-                                        vertical: Resp.size(13)),
-                                    child: const Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        InterText(
-                                          text: 'Efficacy Rating',
-                                          textAlign: TextAlign.center,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 12,
-                                        ),
-                                        InterText(
-                                          text: '4',
-                                          textAlign: TextAlign.center,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 12,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                  // const HeightBox(8),
+                                  // Container(
+                                  //   decoration: ShapeDecoration(
+                                  //     color: AppColors.lightBlack,
+                                  //     shape: RoundedRectangleBorder(
+                                  //         borderRadius: BorderRadius.circular(
+                                  //             Resp.size(5))),
+                                  //   ),
+                                  //   padding: EdgeInsets.symmetric(
+                                  //       horizontal: Resp.size(11),
+                                  //       vertical: Resp.size(13)),
+                                  //   child: const Row(
+                                  //     mainAxisAlignment:
+                                  //         MainAxisAlignment.spaceBetween,
+                                  //     children: [
+                                  //       InterText(
+                                  //         text: 'Efficacy Rating',
+                                  //         textAlign: TextAlign.center,
+                                  //         fontWeight: FontWeight.w400,
+                                  //         fontSize: 12,
+                                  //       ),
+                                  //       InterText(
+                                  //         text: '4',
+                                  //         textAlign: TextAlign.center,
+                                  //         fontWeight: FontWeight.w400,
+                                  //         fontSize: 12,
+                                  //       ),
+                                  //     ],
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),
@@ -166,29 +229,29 @@ class _BillDetailsScreenState extends State<BillDetailsScreen> {
                                   //   textOverflow: TextOverflow.clip,
                                   //   maxLines: 3,
                                   // ),
-                                  handleDescription("Bill Description",
-                                      'Status in CongressLorem ipsum dolor sit amet, consectetur adcinge lit.Maecenas pretium lacus quis massa blandit, ettristilectus pretium. In sed turpis fertum, placerat auguenon, maximus lorem'),
-                                  const HeightBox(10),
-                                  Container(
-                                    decoration: ShapeDecoration(
-                                      color: AppColors.lightBlack,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              Resp.size(5))),
-                                    ),
-                                    // padding: EdgeInsets.symmetric(
-                                    //     horizontal: Resp.size(11),
-                                    //     vertical: Resp.size(13)),
-                                    child: Column(
-                                      children: [
-                                        billCharacteristicsCard(
-                                            'Efficacy Rating', 4),
-                                        billCharacteristicsCard('Clarity', 4),
-                                        billCharacteristicsCard(
-                                            'Redundancy', 4),
-                                      ],
-                                    ),
-                                  ),
+                                  handleDescription(
+                                      widget.item.billText.toString()),
+                                  // const HeightBox(10),
+                                  // Container(
+                                  //   decoration: ShapeDecoration(
+                                  //     color: AppColors.lightBlack,
+                                  //     shape: RoundedRectangleBorder(
+                                  //         borderRadius: BorderRadius.circular(
+                                  //             Resp.size(5))),
+                                  //   ),
+                                  //   // padding: EdgeInsets.symmetric(
+                                  //   //     horizontal: Resp.size(11),
+                                  //   //     vertical: Resp.size(13)),
+                                  //   child: Column(
+                                  //     children: [
+                                  //       billCharacteristicsCard(
+                                  //           'Efficacy Rating', 4),
+                                  //       billCharacteristicsCard('Clarity', 4),
+                                  //       billCharacteristicsCard(
+                                  //           'Redundancy', 4),
+                                  //     ],
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),
@@ -310,10 +373,15 @@ class _BillDetailsScreenState extends State<BillDetailsScreen> {
                         ),
                       ),
                       const HeightBox(12),
-                      Image.asset(
-                        'assets/homeFlow/map.png',
-                        width: Resp.size(343),
-                        height: Resp.size(165),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(Resp.size(10)),
+                        child: Image.asset(
+                          'assets/homeFlow/map.png',
+                          width: double.infinity,
+                          height: Resp.size(165),
+                          scale: 2,
+                          fit: BoxFit.fitWidth,
+                        ),
                       ),
                       const HeightBox(30),
                       Row(
@@ -323,15 +391,15 @@ class _BillDetailsScreenState extends State<BillDetailsScreen> {
                               overlayColor:
                                   MaterialStateProperty.all(Colors.transparent),
                               onTap: () {
-
-                                controller.upValue.value =
-                                    !controller.upValue.value;
-                                controller.downValue.value =false;
-                                controller.postTrending(context,'',controller.downValue.value?'1':'0');
-                                controller.update();
+                                widget.item.isTrending = 1;
+                                myController.postTrending(
+                                    context,
+                                    widget.item.id.toString(),
+                                    widget.item.isTrending == 1 ? '1' : '0');
+                                myController.update();
                               },
                               child: SvgPicture.asset(
-                                controller.upValue.value
+                                widget.item.isTrending == 1
                                     ? 'assets/homeFlow/up.svg'
                                     : 'assets/homeFlow/noneUp.svg',
                                 width: Resp.size(55),
@@ -341,15 +409,16 @@ class _BillDetailsScreenState extends State<BillDetailsScreen> {
                               overlayColor:
                                   MaterialStateProperty.all(Colors.transparent),
                               onTap: () {
-                                controller.downValue.value =
-                                    !controller.downValue.value;
-                                controller.upValue.value =false;
+                                widget.item.isTrending = 2;
 
-                                controller.postTrending(context,'',controller.downValue.value?'2':'0');
-                                controller.update();
+                                myController.postTrending(
+                                    context,
+                                    widget.item.id.toString(),
+                                    widget.item.isTrending == 2 ? '2' : '0');
+                                myController.update();
                               },
                               child: SvgPicture.asset(
-                                controller.downValue.value
+                                widget.item.isTrending == 2
                                     ? 'assets/homeFlow/down.svg'
                                     : 'assets/homeFlow/noneDown.svg',
                                 width: Resp.size(55),
@@ -358,193 +427,222 @@ class _BillDetailsScreenState extends State<BillDetailsScreen> {
                         ],
                       ),
                       const HeightBox(30),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(
-                          Resp.size(12),
-                          Resp.size(12),
-                          Resp.size(0),
-                          Resp.size(12),
-                        ),
-                        decoration: ShapeDecoration(
-                          color: AppColors.lightBlack,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(Resp.size(10)),
-                          ),
-                        ),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(right: Resp.size(12)),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const InterText(
-                                    text: 'Related To',
+                      Obx(() {
+                        RelatedBillModel model =
+                            myController.relatedModel.value;
+
+                        return model.relatedBillName != null &&
+                                model.relatedBillName!.isNotEmpty
+                            ? Container(
+                                padding: EdgeInsets.fromLTRB(
+                                  Resp.size(12),
+                                  Resp.size(12),
+                                  Resp.size(0),
+                                  Resp.size(12),
+                                ),
+                                decoration: ShapeDecoration(
+                                  color: AppColors.lightBlack,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(Resp.size(10)),
+                                  ),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.only(right: Resp.size(12)),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const InterText(
+                                            text: 'Related To',
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 14,
+                                          ),
+                                          if ((model.relatedBillName?.length ??
+                                                  0) >
+                                              3) ...{
+                                            InkWell(
+                                              overlayColor:
+                                                  MaterialStateProperty.all(
+                                                      Colors.transparent),
+                                              onTap: () {
+                                                toPushNavigator(
+                                                    context: context,
+                                                    pageName: RelatedToScreen(
+                                                      item: model,
+                                                    ));
+                                              },
+                                              child: const InterText(
+                                                text: 'View All',
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 12,
+                                                color: AppColors.primaryColor,
+                                              ),
+                                            ),
+                                          },
+                                        ],
+                                      ),
+                                    ),
+                                    const HeightBox(12),
+                                    GridView.builder(
+                                      padding: EdgeInsets.zero,
+                                      itemCount: model.relatedBillName ==
+                                                  null ||
+                                              model.relatedBillName!.isEmpty
+                                          ? 0
+                                          : model.relatedBillName!.length >= 3
+                                              ? 3
+                                              : model.relatedBillName?.length,
+                                      shrinkWrap: true,
+                                      physics: const ClampingScrollPhysics(),
+                                      itemBuilder: (context, index) =>
+                                          topicsCard(
+                                              model.relatedBillName![index]
+                                                      .topicSimplified ??
+                                                  '',
+                                              model.relatedBillName![index]
+                                                      .billname ??
+                                                  ''),
+                                      gridDelegate:
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3,
+                                        childAspectRatio: 1,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            : myController.isLoading.value
+                                ? const Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : const InterText(
+                                    text: 'No Related Bill Found',
+                                    textAlign: TextAlign.center,
                                     fontWeight: FontWeight.w600,
                                     fontSize: 14,
-                                  ),
-                                  InkWell(
-                                    overlayColor: MaterialStateProperty.all(
-                                        Colors.transparent),
-                                    onTap: () {
-                                      toPushNavigator(
-                                          context: context,
-                                          pageName: const RelatedToScreen());
-                                    },
-                                    child: const InterText(
-                                      text: 'View All',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12,
-                                      color: AppColors.primaryColor,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const HeightBox(12),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                topicsCard('Infrastructure Bill'),
-                                topicsCard('Infrastructure Bill'),
-                                topicsCard('Healthcare Bill'),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      const HeightBox(89),
+                                  );
+                      }),
+                      const HeightBox(24),
                     ],
                   ),
                 ),
               ],
             ),
-            extendBody: true,
-            bottomNavigationBar: BottomSheet(
-              backgroundColor: Colors.transparent,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(Resp.size(15)),
-                  topRight: Radius.circular(Resp.size(15)),
-                  bottomRight: Radius.circular(Resp.size(0)),
-                  bottomLeft: Radius.circular(Resp.size(0)),
-                ),
-              ),
-              onClosing: () {},
-              builder: (BuildContext context) {
-                return Container(
-                  height: Resp.size(76),
-                  // color: AppColors.lightBlack,
-
-                  decoration: ShapeDecoration(
-                    color: AppColors.lightBlack,
-                    shadows: const [
-                      BoxShadow(
-                          color: AppColors.lightBlack,
-                          spreadRadius: 0,
-                          blurRadius: 10),
-                    ],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(Resp.size(15)),
-                        topRight: Radius.circular(Resp.size(15)),
-                        bottomRight: Radius.circular(Resp.size(0)),
-                        bottomLeft: Radius.circular(Resp.size(0)),
-                      ),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(
-                            'assets/homeFlow/news.svg',
-                            width: Resp.size(26),
-                            height: Resp.size(26),
-                          ),
-                          const HeightBox(10),
-                          const InterText(
-                            text: 'News',
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                          )
-                        ],
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(
-                            'assets/homeFlow/add.svg',
-                            width: Resp.size(26),
-                            height: Resp.size(26),
-                          ),
-                          const HeightBox(10),
-                          const InterText(
-                            text: 'Follow',
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                          )
-                        ],
-                      ),
-                      InkWell(
-                        overlayColor:
-                            MaterialStateProperty.all(Colors.transparent),
-                        onTap: () {
-                          onShareData(
-                              text: "*Download Mind The Bill Now😍"
-                                  "*\n\nLink For iOS:\nhttps://apps.apple.com/us/app/domez/id6444339880"
-                                  "\n\nLink For Android:"
-                                  "\nhttps://play.google.com/store/apps/details?id=domez.io\n");
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              'assets/homeFlow/share.svg',
-                              width: Resp.size(26),
-                              height: Resp.size(26),
-                            ),
-                            const HeightBox(10),
-                            const InterText(
-                              text: 'Share',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          );
-        });
-  }
-
-  Widget commonContainer(String text, {bool isTag = true}) {
-    return Container(
-      decoration: ShapeDecoration(
-        color: isTag ? AppColors.purple : AppColors.darkBlue,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(Resp.size(5))),
-      ),
-      padding: EdgeInsets.symmetric(
-          vertical: Resp.size(10), horizontal: Resp.size(8)),
-      child: InterText(
-        text: text,
-        textAlign: TextAlign.center,
-        fontWeight: FontWeight.w400,
-        fontSize: 10,
-      ),
-    );
+          ),
+          // extendBody: true,
+          // bottomNavigationBar: BottomSheet(
+          //   backgroundColor: Colors.transparent,
+          //   shape: RoundedRectangleBorder(
+          //     borderRadius: BorderRadius.only(
+          //       topLeft: Radius.circular(Resp.size(15)),
+          //       topRight: Radius.circular(Resp.size(15)),
+          //       bottomRight: Radius.circular(Resp.size(0)),
+          //       bottomLeft: Radius.circular(Resp.size(0)),
+          //     ),
+          //   ),
+          //   onClosing: () {},
+          //   enableDrag: false,
+          //   builder: (BuildContext context) {
+          //     return Container(
+          //       height: Resp.size(76),
+          //       // color: AppColors.lightBlack,
+          //
+          //       decoration: ShapeDecoration(
+          //         color: AppColors.lightBlack,
+          //         shadows: const [
+          //           BoxShadow(
+          //               color: AppColors.lightBlack,
+          //               spreadRadius: 0,
+          //               blurRadius: 10),
+          //         ],
+          //         shape: RoundedRectangleBorder(
+          //           borderRadius: BorderRadius.only(
+          //             topLeft: Radius.circular(Resp.size(15)),
+          //             topRight: Radius.circular(Resp.size(15)),
+          //             bottomRight: Radius.circular(Resp.size(0)),
+          //             bottomLeft: Radius.circular(Resp.size(0)),
+          //           ),
+          //         ),
+          //       ),
+          //       child: Row(
+          //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //         crossAxisAlignment: CrossAxisAlignment.center,
+          //         children: [
+          //           Column(
+          //             mainAxisAlignment: MainAxisAlignment.center,
+          //             crossAxisAlignment: CrossAxisAlignment.center,
+          //             children: [
+          //               SvgPicture.asset(
+          //                 'assets/homeFlow/news.svg',
+          //                 width: Resp.size(26),
+          //                 height: Resp.size(26),
+          //               ),
+          //               const HeightBox(10),
+          //               const InterText(
+          //                 text: 'News',
+          //                 fontWeight: FontWeight.w500,
+          //                 fontSize: 14,
+          //               )
+          //             ],
+          //           ),
+          //           Column(
+          //             mainAxisAlignment: MainAxisAlignment.center,
+          //             crossAxisAlignment: CrossAxisAlignment.center,
+          //             children: [
+          //               SvgPicture.asset(
+          //                 'assets/homeFlow/add.svg',
+          //                 width: Resp.size(26),
+          //                 height: Resp.size(26),
+          //               ),
+          //               const HeightBox(10),
+          //               const InterText(
+          //                 text: 'Follow',
+          //                 fontWeight: FontWeight.w500,
+          //                 fontSize: 14,
+          //               )
+          //             ],
+          //           ),
+          //           InkWell(
+          //             overlayColor:
+          //                 MaterialStateProperty.all(Colors.transparent),
+          //             onTap: () {
+          //               onShareData(
+          //                   text: "*Download Mind The Bill Now😍"
+          //                       "*\n\nLink For iOS:\nhttps://apps.apple.com/us/app/domez/id6444339880"
+          //                       "\n\nLink For Android:"
+          //                       "\nhttps://play.google.com/store/apps/details?id=domez.io\n");
+          //             },
+          //             child: Column(
+          //               mainAxisAlignment: MainAxisAlignment.center,
+          //               crossAxisAlignment: CrossAxisAlignment.center,
+          //               children: [
+          //                 SvgPicture.asset(
+          //                   'assets/homeFlow/share.svg',
+          //                   width: Resp.size(26),
+          //                   height: Resp.size(26),
+          //                 ),
+          //                 const HeightBox(10),
+          //                 const InterText(
+          //                   text: 'Share',
+          //                   fontWeight: FontWeight.w500,
+          //                   fontSize: 14,
+          //                 )
+          //               ],
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     );
+          //   },
+          // ),
+        ),
+      );
+    });
   }
 
   Widget billCharacteristicsCard(String text, int value) {
@@ -574,7 +672,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen> {
     );
   }
 
-  Widget handleDescription(String title, String desc) {
+  Widget handleDescription(String desc) {
     return RichText(
       maxLines: 10,
       overflow: TextOverflow.clip,
@@ -606,7 +704,9 @@ class _BillDetailsScreenState extends State<BillDetailsScreen> {
                     ..onTap = () {
                       toPushNavigator(
                           context: context,
-                          pageName: const BillDescriptionScreen());
+                          pageName: BillDescriptionScreen(
+                            demoText: desc,
+                          ));
                     },
                 )
               : const TextSpan(text: ''),
@@ -646,6 +746,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen> {
                     text: 'Ralph Edwards',
                     fontWeight: FontWeight.w400,
                     fontSize: 12,
+                    textAlign: TextAlign.center,
                   ),
                   const HeightBox(8),
                   SvgPicture.asset(
@@ -663,40 +764,34 @@ class _BillDetailsScreenState extends State<BillDetailsScreen> {
     );
   }
 
-  Widget topicsCard(String text) {
-    return Expanded(
-      child: Row(
+  Widget topicsCard(
+    String text,
+    String billName,
+  ) {
+    return Container(
+      decoration: ShapeDecoration(
+        color: AppColors.grey.withOpacity(0.13),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      ),
+      padding: EdgeInsets.symmetric(
+        horizontal: Resp.size(8),
+        vertical: Resp.size(12),
+      ),
+      child: Column(
         children: [
-          Expanded(
-            child: Container(
-              decoration: ShapeDecoration(
-                color: AppColors.grey.withOpacity(0.13),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-              ),
-              padding: EdgeInsets.symmetric(
-                horizontal: Resp.size(8),
-                vertical: Resp.size(12),
-              ),
-              child: Column(
-                children: [
-                  SvgPicture.asset(
-                    'assets/common/health.svg',
-                    width: Resp.size(45),
-                    height: Resp.size(45),
-                  ),
-                  const HeightBox(10),
-                  InterText(
-                    text: text,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 10,
-                    color: Colors.white,
-                  ),
-                ],
-              ),
-            ),
+          SvgPicture.asset(
+            getTopicImage(text),
+            width: Resp.size(55),
+            height: Resp.size(55),
           ),
-          const WidthBox(12),
+          const HeightBox(10),
+          InterText(
+            text: billName,
+            fontWeight: FontWeight.w500,
+            fontSize: 10,
+            color: Colors.white,
+            textOverflow: TextOverflow.ellipsis,
+          ),
         ],
       ),
     );

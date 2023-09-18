@@ -16,59 +16,65 @@ class ForScreen extends StatefulWidget {
 class _ForScreenState extends State<ForScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Column(
-        children: [
-          const HeightBox(15),
-          customAppBar(
-            title: 'For',
-            isSuffix: false,
-              context: context
-          ),
-          const HeightBox(20),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.fromLTRB(Resp.size(0),Resp.size(12),Resp.size(12),Resp.size(0),),
-              // margin: EdgeInsets.only(bottom: Resp.size(25),),
-              decoration: ShapeDecoration(
-                color: AppColors.lightBlack,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(Resp.size(10)),
+    return SafeArea(
+      bottom: true,
+      top: true,
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: Padding(
+          padding: defaultScreenPadding(),
+          child: Column(
+            children: [
+              customAppBar(
+                title: 'For',
+                isSuffix: false,
+                  context: context
+              ),
+              const HeightBox(20),
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(Resp.size(0),Resp.size(12),Resp.size(12),Resp.size(10),),
+                  // margin: EdgeInsets.only(bottom: Resp.size(25),),
+                  decoration: ShapeDecoration(
+                    color: AppColors.lightBlack,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(Resp.size(10)),
+                    ),
+                  ),
+                  child:GridView.builder(
+                    shrinkWrap: true,
+                    itemCount: 31,
+                    physics: const ClampingScrollPhysics(),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      // maxCrossAxisExtent: 200,
+                      crossAxisSpacing: 0,
+                      mainAxisSpacing: 0,
+                      childAspectRatio: 0.75,
+                    ),
+                    itemBuilder: (BuildContext context, int index){
+                      return Container(
+                        padding: EdgeInsets.fromLTRB(Resp.size(12),Resp.size(0),Resp.size(0),Resp.size(12),),
+                        decoration: ShapeDecoration(
+                          color: AppColors.lightBlack,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(Resp.size(10)),
+                          ),
+                        ),
+                        child:Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            personCard(),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
-              child:GridView.builder(
-                shrinkWrap: true,
-                itemCount: 31,
-                physics: const ClampingScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  // maxCrossAxisExtent: 200,
-                  crossAxisSpacing: 0,
-                  mainAxisSpacing: 0,
-                  childAspectRatio: 0.78,
-                ),
-                itemBuilder: (BuildContext context, int index){
-                  return Container(
-                    padding: EdgeInsets.fromLTRB(Resp.size(12),Resp.size(0),Resp.size(0),Resp.size(12),),
-                    decoration: ShapeDecoration(
-                      color: AppColors.lightBlack,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(Resp.size(10)),
-                      ),
-                    ),
-                    child:Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        personCard(),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -82,7 +88,7 @@ class _ForScreenState extends State<ForScreen> {
                 color: AppColors.grey.withOpacity(0.13),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               ),
-              padding: EdgeInsets.fromLTRB(Resp.size(7), Resp.size(12), Resp.size(7), Resp.size(8)),
+              padding: EdgeInsets.fromLTRB(Resp.size(4), Resp.size(8), Resp.size(7), Resp.size(8)),
               child: Column(
                 children: [
                   SizedBox(
@@ -98,10 +104,11 @@ class _ForScreenState extends State<ForScreen> {
                     ),
                   ),
                   const HeightBox(10),
-                  InterText(
+                  const InterText(
                     text: 'Ralph Edwards',
                     fontWeight: FontWeight.w400,
                     fontSize: 12,
+                    textAlign: TextAlign.center,
                   ),
                   const HeightBox(8),
                   SvgPicture.asset(

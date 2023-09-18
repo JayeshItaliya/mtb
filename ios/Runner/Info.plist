@@ -24,6 +24,14 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+    <key>NSCameraUsageDescription</key>
+    <string>This app requires access to the photo library to upload user profile photo and uniquely identify the user</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>This app requires library access to show your profile photo</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>This app requires library access to uniquely identify the user when they come to play in domes</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>This app requires library access to uniquely identify the user when they come to play in domes</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -47,5 +55,34 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>CFBundleURLName</key>
+        <string></string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <!-- Registered Callback URLs in TwitterApp -->
+          <string>https://mind-the-bill.firebaseapp.com/__/auth/handler</string>
+        </array>
+      </dict>
+    </array>
+    <key>CFBundleURLTypes</key>
+    <array>
+    <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+            <string>fb642270341335716</string>
+        </array>
+    </dict>
+    </array>
+    <key>FacebookAppID</key>
+    <string>642270341335716</string>
+    <key>FacebookClientToken</key>
+    <string>2b245edc8502d6fb20ebeb2a96afa782</string>
+    <key>FacebookDisplayName</key>
+    <string>MTB</string>
 </dict>
 </plist>
